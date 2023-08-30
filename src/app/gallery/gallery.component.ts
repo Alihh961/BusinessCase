@@ -1,9 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Itoken } from '../Interface/Itoken';
-import { HttpClient } from '@angular/common/http';
-
-// import { HttpClientModule } from '@angular/common/http';
-
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Nfts} from "../Interface/Itoken";
 
 
 @Component({
@@ -13,27 +10,51 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GalleryComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  searchInputValue: string = '';
+  constructor(private http: HttpClient) {
+  }
 
 
-  //* Calling tokens to display in Gallery view template 
+  //* Calling tokens to display in Gallery view template
 
-  tokens: Array<Itoken> = [];
+  tokens: Array<Nfts> = [];
 
   ngOnInit() {
+    this.getNfts();
 
-    this.http.get<any[]>('http://localhost/backend/gallerytokens.php?order=' + this.selectedRadioButton ).subscribe(
-      data => {
+  }
+
+  getNfts() {
+
+    this.http.get<Nfts[]>('https://127.0.0.1:8000/api/nft?v=' + this.selectedRadioButton).subscribe(
+      (data: Nfts[]): void => {
+
+        for (let i = 0; i < data.length; i++) {
+          switch (true) {
+            case data[i].image != null :
+              data[i].image.url = "assets/imgs/nfts/" + data[i].image.url;
+              break;
+
+            case data[i].video != null :
+              data[i].video.url = "assets/imgs/nfts/" + data[i].video.url;
+              break;
+
+            case data[i].audio != null :
+              data[i].audio.url = "assets/imgs/nfts/" + data[i].audio.url;
+          }
+        }
         this.tokens = data;
+
       },
       error => {
         console.error(error);
       }
     )
 
+
   }
 
-  searchInputValue: string = '';
+
 
   onSearchTextEntered(searchValue: string) {
     this.searchInputValue = searchValue;
@@ -48,11 +69,13 @@ export class GalleryComponent implements OnInit {
   }
 
   getTransferableTokensQty() {
-    return this.tokens.filter(token => token.type === "transferable").length;
+    return 1;
+    // return this.tokens.filter(token => token.type === "transferable").length;
   }
 
   getNonTransferableTokensQty() {
-    return this.tokens.filter(token => token.type === "non-transferable").length;
+    return 1;
+    // return this.tokens.filter(token => token.type === "non-transferable").length;
   }
 
 
@@ -64,11 +87,8 @@ export class GalleryComponent implements OnInit {
 
     this.selectedRadioButton = data;
     console.log(this.selectedRadioButton);
-    console.log('http://localhost/backend/alltokens.php?order=' + this.selectedRadioButton );
+    console.log('http://localhost/backend/alltokens.php?order=' + this.selectedRadioButton);
   }
-
-
-
 
 
 }

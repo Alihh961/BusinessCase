@@ -12,8 +12,6 @@ import { CookiesNotificationComponent } from './cookies-notification/cookies-not
 import { Error404Component } from './error404/error404.component';
 import { FilterComponent } from './filter/filter.component';
 import { GalleryComponent } from './gallery/gallery.component';
-import { backgroundColorDirective } from './CustomDirective/background.directive';
-import { HighlightDirective } from './CustomDirective/highlight.directive';
 import { SearchComponent } from './search/search.component';
 import { NftsComponent } from './nfts/nfts.component';
 import { HomeComponent } from './home/home.component';
@@ -22,6 +20,7 @@ import { PopularcreatorsComponent } from './popularcreators/popularcreators.comp
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
+import { DateFormatPipe } from './pipes/date-transform.pipe';
 
 const appRoutes: Routes = [
     // { path: '' ,redirectTo: 'home' , pathMatch: 'full'},
@@ -32,7 +31,7 @@ const appRoutes: Routes = [
     { path: 'contact', component: ContactComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent, pathMatch: 'full' },
     { path: '**', component: Error404Component, pathMatch: 'full' },
-    
+
   ];
 
 @NgModule({
@@ -51,6 +50,7 @@ const appRoutes: Routes = [
     PopularcreatorsComponent,
     FooterComponent,
     LoginComponent,
+    DateFormatPipe,
   ],
   imports: [
     BrowserModule,
