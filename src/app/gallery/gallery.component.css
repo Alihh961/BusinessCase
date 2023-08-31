@@ -1,0 +1,182 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100vh;
+}
+
+*::selection {
+  background-color: transparent;
+}
+
+.searchFilterDiv {
+  background-color: #0d192b;
+  padding: 15% 40px 0 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+app-search {
+  align-self: center;
+}
+
+app-filter {
+  width: fit-content;
+  align-self: center;
+}
+
+.homePageGallery {
+  background-color: #0d192b;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 3% 5%;
+}
+.homePageGallery .product-accueil {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 15%;
+  /* max-width: 150px; */
+  height: 335px;
+  padding: 5px;
+  margin-top: 30px;
+  margin-right: 20px;
+  color: #8bacda;
+  background-color: rgb(20, 37, 61);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: 0.2s ease;
+}
+.homePageGallery .product-accueil:hover {
+  filter: brightness(1.1);
+}
+.homePageGallery .product-accueil:hover::before {
+  top: -172%;
+  left: 70%;
+}
+.homePageGallery .product-accueil:hover img:not(.price > img) {
+  transform: scale(1.2);
+  transition: 1s;
+}
+.homePageGallery .product-accueil:hover p::before {
+  top: -178%;
+  left: 100%;
+}
+.homePageGallery .product-accueil:hover .buttons {
+  transition: 1s;
+  opacity: 1;
+}
+.homePageGallery .product-accueil ::before {
+  position: absolute;
+  content: "";
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.5647058824);
+  top: 83%;
+  left: 70%;
+  transform: rotate(-35deg);
+  height: 60rem;
+  transition: 0.6s ease;
+}
+.homePageGallery .product-accueil img:not(.price > img) {
+  width: 100%;
+  height: 200px;
+  transition: 1;
+  border-radius: 25px;
+}
+.homePageGallery .product-accueil p {
+  color: white !important;
+  text-decoration: underline;
+  padding: 5px 10px 0 10px;
+}
+.homePageGallery .product-accueil p::before {
+  position: absolute;
+  content: "";
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1254901961);
+  top: 78%;
+  left: 70%;
+  transform: rotate(-35deg);
+  height: 60rem;
+  transition: 0.6s all;
+}
+.homePageGallery .product-accueil .info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.homePageGallery .product-accueil .price {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.homePageGallery .product-accueil .price img {
+  width: 10px;
+}
+.homePageGallery .product-accueil .quantity-div h5 {
+  display: inline;
+}
+.homePageGallery .product-accueil > h5 {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+.homePageGallery .product-accueil input[type=number] {
+  width: 50px;
+  text-align: center;
+  outline-style: none;
+}
+.homePageGallery .product-accueil .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  right: 0%;
+  opacity: 0;
+  transition: 1s;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(34px);
+}
+.homePageGallery .product-accueil .buttons input[value="Add To Carte"] {
+  width: fit-content;
+  padding: 2%;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.homePageGallery .product-accueil .buttons input[value="Add To Carte"]:hover {
+  transform: scale(0.9);
+  opacity: 0.9;
+}
+.homePageGallery .product-accueil .buttons input[value=View] {
+  width: fit-content;
+  padding: 2%;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.homePageGallery .product-accueil .buttons input[value=View]:hover {
+  transform: scale(0.9);
+  opacity: 0.9;
+}
+.homePageGallery .product-accueil h5 {
+  text-transform: capitalize;
+}
+.homePageGallery .product-accueil > h5:first-of-type {
+  color: #ff0000;
+}
+
+/*# sourceMappingURL=gallery.component.css.map */

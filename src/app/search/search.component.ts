@@ -9,11 +9,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class SearchComponent {
 
-searchInputValue: any = "";
+searchInputValue: string = "";
 
 // search input value event
 @Output()
-searchInputValueEvent: EventEmitter<any> = new EventEmitter<any>();
+searchInputValueEvent: EventEmitter<string> = new EventEmitter<string>();
 
 onSearchValueChange(){
   this.searchInputValueEvent.emit(this.searchInputValue);

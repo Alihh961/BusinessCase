@@ -1,23 +1,20 @@
 .filterDiv {
-
   display: flex;
   justify-content: center;
   gap: 10px;
   align-items: flex-start;
   flex-direction: column;
   color: #ffffff;
-
 }
 
 .filterDiv div {
-
   display: flex;
   align-items: center;
   gap: 10px;
-
-  label{
-    font-size: 20px;
-    font-weight: 500;
-  }
-
 }
+.filterDiv div label {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/*# sourceMappingURL=filter.component.css.map */

@@ -20,7 +20,7 @@ import { PopularcreatorsComponent } from './popularcreators/popularcreators.comp
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
-import { DateFormatPipe } from './pipes/date-transform.pipe';
+import {Console, DateFormatPipe} from './pipes/date-transform.pipe';
 
 const appRoutes: Routes = [
     // { path: '' ,redirectTo: 'home' , pathMatch: 'full'},
@@ -35,23 +35,24 @@ const appRoutes: Routes = [
   ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ContactComponent,
-    BanniereHomePageComponent,
-    CookiesNotificationComponent,
-    Error404Component,
-    FilterComponent,
-    GalleryComponent,
-    SearchComponent,
-    NftsComponent,
-    HomeComponent,
-    HeaderComponent,
-    PopularcreatorsComponent,
-    FooterComponent,
-    LoginComponent,
-    DateFormatPipe,
-  ],
+    declarations: [
+        AppComponent,
+        ContactComponent,
+        BanniereHomePageComponent,
+        CookiesNotificationComponent,
+        Error404Component,
+        FilterComponent,
+        GalleryComponent,
+        SearchComponent,
+        NftsComponent,
+        HomeComponent,
+        HeaderComponent,
+        PopularcreatorsComponent,
+        FooterComponent,
+        LoginComponent,
+        DateFormatPipe,
+        Console,
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

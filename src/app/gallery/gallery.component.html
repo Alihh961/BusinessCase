@@ -1,28 +1,27 @@
 <div class="searchFilterDiv">
 
     <app-search (searchInputValueEvent)="onSearchTextEntered($event)"></app-search>
-    <app-filter [all]="getAllTokensQty()" [transferable]="getTransferableTokensQty()"
-        [non_transferable]="getNonTransferableTokensQty()"
-        (filterSelectionChangedEvent)="onFilterSelectionChanged($event)"></app-filter>
+    <app-filter (filterSelectionChangedEvent)="onFilterSelectionChanged($event)"></app-filter>
 
 </div>
 <section class="homePageGallery">
 
-    <ng-container *ngFor="let token of tokens">
-        <ng-container *ngIf="selectedRadioButton === 'all' || selectedRadioButton === token.subCategory.name ">
-            <div class="product-accueil" (mouseenter)="hovered=true" (mouseleave)="hovered=false" appHighlight
-                *ngIf="searchInputValue === '' || token.image.name.toLowerCase().includes(searchInputValue.toLowerCase())">
-                <img [src]="token.image.url">
+    <ng-container *ngFor="let nft of nfts">
+        <div class="product-accueil" (mouseenter)="hovered=true" (mouseleave)="hovered=false"
+                *ngIf="subCategoryFilterValue === '' || nft.image.name.toLowerCase().includes(searchInputValue.toLowerCase())">
+                <img [src]="nft.image.url">
 
-                <h3>{{token.image.name}}</h3>
+              <div>
+                <p>{{nft.image.name}}</p>
 
                 <div class="info">
                     <div class="price">
-                        <h4>{{token.price}}</h4>
+                        <h4>{{nft.price}}</h4>
                         <img src="../../assets/imgs/Ethereum.png" alt="ETH">
                     </div>
-                  <h5>{{token.createdAt | dateFormat}}</h5>
+                  <h5>{{nft.createdAt | dateFormat}}</h5>
                 </div>
+              </div>
                 <div class="buttons">
                     <a href=""><input type="button" value="Add To Carte"></a>
                     <a href=""><input type="button" value="View"></a>
@@ -34,6 +33,5 @@
 
 
         </ng-container>
-    </ng-container>
 
 </section>

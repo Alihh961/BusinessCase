@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Nfts} from "../Interface/Itoken";
+import {apiURL} from "../../environment/environment";
+import {SubName} from "../Interface/SubCategory";
 
 
 @Component({
@@ -11,13 +13,16 @@ import {Nfts} from "../Interface/Itoken";
 export class GalleryComponent implements OnInit {
 
   searchInputValue: string = '';
+  orderBy:string = "";
+  nfts: Array<Nfts> = [];
+
+  // checked radio button is all by default
+  subCategoryFilterValue: string = "";
+
   constructor(private http: HttpClient) {
   }
 
 
-  //* Calling tokens to display in Gallery view template
-
-  tokens: Array<Nfts> = [];
 
   ngOnInit() {
     this.getNfts();
@@ -25,8 +30,8 @@ export class GalleryComponent implements OnInit {
   }
 
   getNfts() {
-
-    this.http.get<Nfts[]>('https://127.0.0.1:8000/api/nft?v=' + this.selectedRadioButton).subscribe(
+console.log("out");
+    this.http.get<Nfts[]>(`${apiURL}nft?n=${this.searchInputValue}&s=${this.subCategoryFilterValue}&o=${this.orderBy}`).subscribe(
       (data: Nfts[]): void => {
 
         for (let i = 0; i < data.length; i++) {
@@ -43,7 +48,9 @@ export class GalleryComponent implements OnInit {
               data[i].audio.url = "assets/imgs/nfts/" + data[i].audio.url;
           }
         }
-        this.tokens = data;
+
+        this.nfts = data;
+
 
       },
       error => {
@@ -56,8 +63,9 @@ export class GalleryComponent implements OnInit {
 
 
 
-  onSearchTextEntered(searchValue: string) {
-    this.searchInputValue = searchValue;
+  onSearchTextEntered(inputValue: string) {
+    this.searchInputValue = inputValue;
+    this.getNfts();
   }
 
   hovered: boolean = false;
@@ -65,7 +73,7 @@ export class GalleryComponent implements OnInit {
 
   // displaying the qty of each filter option
   getAllTokensQty() {
-    return this.tokens.length;
+    return this.nfts.length;
   }
 
   getTransferableTokensQty() {
@@ -79,15 +87,13 @@ export class GalleryComponent implements OnInit {
   }
 
 
-  // checked radio button is all by default
-  selectedRadioButton: string = "all";
+
 
   // filtering results when the radio button is changed
   onFilterSelectionChanged(data: string) {
 
-    this.selectedRadioButton = data;
-    console.log(this.selectedRadioButton);
-    console.log('http://localhost/backend/alltokens.php?order=' + this.selectedRadioButton);
+    this.subCategoryFilterValue = data;
+    this.getNfts();
   }
 
 
