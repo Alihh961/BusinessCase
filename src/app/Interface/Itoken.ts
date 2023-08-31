@@ -2,8 +2,7 @@ import {SubCategory} from "./SubCategory";
 import {Audio, Image, Video} from "./Media";
 
 
-export interface Nfts{
-
+export interface Nft{
   id: number,
   price: string,
   createdAt :Date ,

@@ -21,12 +21,14 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import {Console, DateFormatPipe} from './pipes/date-transform.pipe';
+import { ShownftComponent } from './shownft/shownft.component';
 
 const appRoutes: Routes = [
     // { path: '' ,redirectTo: 'home' , pathMatch: 'full'},
     { path: '', component: HomeComponent},
     { path: 'home', component: HomeComponent, pathMatch: 'full' },
     { path: 'nfts', component: NftsComponent, pathMatch: 'full' },
+    { path: 'nft', component: ShownftComponent , pathMatch: 'full' },
     { path: 'popularcreators', component: PopularcreatorsComponent, pathMatch: 'full' },
     { path: 'contact', component: ContactComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent, pathMatch: 'full' },
@@ -52,6 +54,7 @@ const appRoutes: Routes = [
         LoginComponent,
         DateFormatPipe,
         Console,
+        ShownftComponent,
     ],
   imports: [
     BrowserModule,

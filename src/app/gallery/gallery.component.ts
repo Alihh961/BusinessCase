@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Nfts} from "../Interface/Itoken";
+import {Nft} from "../Interface/Itoken";
 import {apiURL} from "../../environment/environment";
 import {SubName} from "../Interface/SubCategory";
 
@@ -14,7 +14,7 @@ export class GalleryComponent implements OnInit {
 
   searchInputValue: string = '';
   orderBy:string = "";
-  nfts: Array<Nfts> = [];
+  nfts: Array<Nft> = [];
 
   // checked radio button is all by default
   subCategoryFilterValue: string = "";
@@ -31,8 +31,8 @@ export class GalleryComponent implements OnInit {
 
   getNfts() {
 console.log("out");
-    this.http.get<Nfts[]>(`${apiURL}nft?n=${this.searchInputValue}&s=${this.subCategoryFilterValue}&o=${this.orderBy}`).subscribe(
-      (data: Nfts[]): void => {
+    this.http.get<Nft[]>(`${apiURL}nfts?n=${this.searchInputValue}&s=${this.subCategoryFilterValue}&o=${this.orderBy}`).subscribe(
+      (data: Nft[]): void => {
 
         for (let i = 0; i < data.length; i++) {
           switch (true) {

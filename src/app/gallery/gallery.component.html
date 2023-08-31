@@ -24,7 +24,7 @@
               </div>
                 <div class="buttons">
                     <a href=""><input type="button" value="Add To Carte"></a>
-                    <a href=""><input type="button" value="View"></a>
+                  <a [routerLink]="['/nft']" [queryParams]="{ i: nft.id }"><input type="button" value="View"></a>
                 </div>
 
             </div>

@@ -1,0 +1,21 @@
+
+<div class="product-accueil"
+     *ngIf="nft ; else check">
+  <img [src]="nft.image.url">
+
+  <div>
+    <p>{{nft.image.name}}</p>
+
+    <div class="info">
+      <div class="price">
+        <h4>{{nft.price}}</h4>
+        <img src="../../assets/imgs/Ethereum.png" alt="ETH">
+      </div>
+      <h5>{{nft.createdAt | dateFormat}}</h5>
+    </div>
+  </div>
+
+</div>
+<ng-template #check>
+  <h3>No Results Found</h3>
+</ng-template>
