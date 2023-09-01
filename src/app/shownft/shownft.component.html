@@ -1,21 +1,27 @@
+<div class="container w-100 px-3 mb-5" *ngIf="nft ; else check">
 
-<div class="product-accueil"
-     *ngIf="nft ; else check">
-  <img [src]="nft.image.url">
+  <h2>{{nft.image.name}}</h2>
 
-  <div>
-    <p>{{nft.image.name}}</p>
+  <div class="d-flex justify-content-evenly my-5">
 
-    <div class="info">
-      <div class="price">
-        <h4>{{nft.price}}</h4>
-        <img src="../../assets/imgs/Ethereum.png" alt="ETH">
+    <img [src]="nft.image.url" [alt]="nft.image.name">
+
+    <div class="d-flex flex-column">
+
+      <div class="info d-flex flex-column justify-content-center h-100">
+          <h4>Price : {{nft.price}} <img src="../../assets/imgs/Ethereum.png" alt="ETH"></h4>
+
+        <h5>Created Date : {{nft.createdAt | dateFormat}}</h5>
       </div>
-      <h5>{{nft.createdAt | dateFormat}}</h5>
     </div>
+
   </div>
+
+  <h4>Description :</h4>
+  <p>{{nft.image.description}}</p>
 
 </div>
 <ng-template #check>
   <h3>No Results Found</h3>
 </ng-template>
+<hr>

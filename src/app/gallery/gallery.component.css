@@ -3,6 +3,7 @@ body {
   margin: 0 !important;
   padding: 0 !important;
   box-sizing: border-box;
+  background-color: #0d192b;
 }
 
 html {
@@ -86,7 +87,7 @@ app-filter {
 .homePageGallery .product-accueil img:not(.price > img) {
   width: 100%;
   height: 200px;
-  transition: 1;
+  transition: 1s;
   border-radius: 25px;
 }
 .homePageGallery .product-accueil p {

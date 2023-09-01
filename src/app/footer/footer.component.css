@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  background-color: #0d192b;
+}
+
+html {
+  height: 100vh;
+}
+
+*::selection {
+  background-color: transparent;
+}
+
+footer {
+  background-color: #0d192b;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  padding: 15px;
+}
+footer * {
+  padding: 0;
+  margin: 0;
+}
+footer .container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+footer .container div h3 {
+  margin-bottom: 10px;
+}
+footer .container div ul li {
+  list-style-type: none;
+}
+footer .container div ul li a {
+  text-decoration: none;
+  color: white;
+}
+footer .container div ul li a:hover {
+  color: #088178;
+}
+footer .copywrite {
+  background-color: rgba(128, 128, 128, 0.5490196078);
+  text-align: center;
+  width: 55%;
+  padding: 10px;
+  margin: 20px auto 0 auto;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+/*# sourceMappingURL=footer.component.css.map */

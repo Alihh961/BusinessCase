@@ -1,0 +1,33 @@
+.container {
+  margin-top: 100px;
+  color: white;
+
+  h2 {
+    width: fit-content;
+    margin: auto;
+    color: #0008ff;
+  }
+
+  img:not(img[alt='ETH']) {
+    width: 600px;
+    min-width: 300px;
+  }
+
+  .info {
+
+    h4{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+      img {
+        width: 15px;
+      }
+  }
+
+
+}
+hr{
+  border: 2px solid white;
+}
+
