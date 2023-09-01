@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import {Console, DateFormatPipe} from './pipes/date-transform.pipe';
 import { ShownftComponent } from './shownft/shownft.component';
+import { EthchartComponent } from './ethchart/ethchart.component';
 
 const appRoutes: Routes = [
     // { path: '' ,redirectTo: 'home' , pathMatch: 'full'},
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
     { path: 'nfts', component: NftsComponent, pathMatch: 'full' },
     { path: 'nft', component: ShownftComponent , pathMatch: 'full' },
     { path: 'popularcreators', component: PopularcreatorsComponent, pathMatch: 'full' },
+    { path: 'ethchart', component: EthchartComponent, pathMatch: 'full' },
     { path: 'contact', component: ContactComponent, pathMatch: 'full' },
     { path: 'login', component: LoginComponent, pathMatch: 'full' },
     { path: '**', component: Error404Component, pathMatch: 'full' },
@@ -55,6 +57,7 @@ const appRoutes: Routes = [
         DateFormatPipe,
         Console,
         ShownftComponent,
+        EthchartComponent,
     ],
   imports: [
     BrowserModule,
