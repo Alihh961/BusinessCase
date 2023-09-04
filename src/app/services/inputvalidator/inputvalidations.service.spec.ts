@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InputvalidationsService } from './inputvalidations.service';
+import { InputvalidationsService } from '../inputvalidations.service';
 
 describe('InputValidationsServiceService', () => {
   let service: InputvalidationsService;
