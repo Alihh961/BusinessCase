@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {apiURL} from "../../environment/environment";
+import {SubcategoryService} from '../services/subcategory/subcategory.service';
 import {SubCategory} from "../Interface/SubCategory";
 
 @Component({
@@ -8,40 +7,53 @@ import {SubCategory} from "../Interface/SubCategory";
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent implements OnInit{
+export class FilterComponent implements OnInit {
 
   constructor(
-    private http :HttpClient
-  ) {
-  }
-  subCategories ?: SubCategory[] ;
+    private SubcategoryService :SubcategoryService,
 
-  // inputting the value of the filter from gallery component to filter Component(two way binding)
-  @Input() all: number = 0;
+) {
+}
 
-  subCategoryFilterValue :string = "";
-
-
-  //  create an event to send the value to parent component(gallery) when the radio input is changed
-  @Output()
-  filterSelectionChangedEvent: EventEmitter<string> = new EventEmitter<string>();
+subCategories ? : SubCategory[];
+subCategoryFilterValue :string = "";
+orderBy :string = "ASC";
 
 
-  ngOnInit(){
+//  create an event to send the value to parent component(gallery) when the radio input is changed
+@Output()
+filterBySubCategoryChangedEvent
+:
+EventEmitter<string> = new EventEmitter<string>();
+
+
+ngOnInit()
+{
   this.getAllSubCategories();
-  }
+}
 
-  getAllSubCategories(){
-    this.http.get<SubCategory[]>(`${apiURL}sub-category`).subscribe(
-      (data :SubCategory[]) => {
-        this.subCategories = data;
-      }
-    )
-  }
+getAllSubCategories()
+{
+  this.SubcategoryService.getAllSubCategories().subscribe(
+    (data: SubCategory[]) => {
+      this.subCategories = data;
+    }
+  )
+}
 
-  onFilterSelectionChanged() {
 
-    this.filterSelectionChangedEvent.emit(this.subCategoryFilterValue);
+// sending subcategoryName to gallery to filter the nfts
+onFilterChange()
+{
 
-  }
+  this.filterBySubCategoryChangedEvent.emit(this.subCategoryFilterValue);
+
+}
+
+// Reseting the filter
+onResetFilter()
+{
+  this.subCategoryFilterValue = "";
+  this.filterBySubCategoryChangedEvent.emit("all");
+}
 }

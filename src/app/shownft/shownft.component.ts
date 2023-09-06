@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Nft} from "../Interface/Itoken";
+import {Nft} from "../Interface/Nft";
 import {apiURL} from "../../environment/environment";
 import {ActivatedRoute} from "@angular/router";
 
@@ -12,48 +12,39 @@ import {ActivatedRoute} from "@angular/router";
 export class ShownftComponent {
 
   constructor(
-    private http : HttpClient,
-    private route :ActivatedRoute
-  ) { }
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) {
+  }
 
-  nft ?:Nft;
-  nftId ?:string;
+  nft ?: Nft;
+  nftId ?: string;
 
-  ngOnInit(){
+  ngOnInit() {
     this.getNftId();
     this.getANft();
 
-    }
+  }
 
-    getANft():void{
+  getANft(): void {
     let url = `${apiURL}nft?i=${this.nftId}`;
-    console.log(url);
     this.http.get<Nft>(url).subscribe(
-      nft=>{
-        switch (true) {
-          case nft.image != null :
-            nft.image.url = "assets/imgs/nfts/" + nft.image.url;
-            break;
+      nft => {
 
-          case nft.video != null :
-            nft.video.url = "assets/imgs/nfts/" + nft.video.url;
-            break;
-
-          case nft.audio != null :
-            nft.audio.url = "assets/imgs/nfts/" + nft.audio.url;
-        }
+        nft.image.url = "assets/imgs/nfts/" + nft.image.url;
         this.nft = nft;
       }
     );
-    }
+  }
 
-    getNftId(){
+  getNftId() {
+
     this.route.queryParams.subscribe(
       params => {
 
-          this.nftId = params["i"];
+        this.nftId = params["i"];
       }
     )
-    }
+  }
 
 }

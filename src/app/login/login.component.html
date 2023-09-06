@@ -15,12 +15,11 @@
                         <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"
                             (click)="changingColorOfSpan()" />
                         <label for="reg-log"></label>
-                        <label for="lol"></label>
                         <h6 class="mb-0 pb-3"><span #signinspan>Sign In </span><span #signupspan>Sign Up</span></h6>
                         <div class="card-3d-wrap mx-auto my-0">
                             <div class="card-3d-wrapper">
 
-                               
+
                                 <!-- Login form  -->
                                 <form class="card-front" (ngSubmit)="loginMethod()" [formGroup]="loginFormInfo">
                                     <div class="center-wrap full-height">
@@ -313,7 +312,4 @@
         </div>
     </div>
     <hr>
-    <button (click)="lol()">clickhere</button>
-    <button (click)="del()">clickhere</button>
-
 </section>

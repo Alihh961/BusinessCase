@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CookieServiceService } from '../cookie-service.service';
+import { NftService } from './nft.service';
 
-describe('CookieServiceService', () => {
-  let service: CookieServiceService;
+describe('NftService', () => {
+  let service: NftService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CookieServiceService);
+    service = TestBed.inject(NftService);
   });
 
   it('should be created', () => {

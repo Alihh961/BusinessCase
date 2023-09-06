@@ -1,15 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Feature, FeatureCollection } from '../Interface/AddressResults';
-import { UserInscription, loggedInUserInfo } from '../Interface/userdetails';
-import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { AuthenticationService } from '../services/authentication.service';
-import { InputvalidationsService } from '../services/inputvalidations.service';
-import { CookieService } from 'ngx-cookie-service';
-import { LoggedInUserService } from '../services/logged-in-user.service';
-import { CookieServiceService } from '../services/cookie-service.service';
-import { Token } from '@angular/compiler';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Feature, FeatureCollection} from '../Interface/Address';
+import {UserInscription, User, UserLogin} from '../Interface/User';
+import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {AuthenticationService} from '../services/auth/authentication.service';
+import {InputvalidationsService} from '../services/inputvalidator/inputvalidations.service';
+import {CookieService} from '../services/cookie/cookie.service';
+import {LoggedInUserService} from '../services/loggedinuser/logged-in-user.service';
 
 
 
@@ -21,11 +19,12 @@ import { Token } from '@angular/compiler';
 export class LoginComponent {
 
   constructor(private http: HttpClient, private authService: AuthenticationService,
-    private ageIsValid: InputvalidationsService, private cookieService: CookieService,
-    private loggedInUserInstance: LoggedInUserService) {
+              private ageIsValid: InputvalidationsService, private cookieService: CookieService,
+              private loggedInUserInstance: LoggedInUserService ) {
 
   }
-  //* Variables related to the view template 
+
+  //* Variables related to the view template
 
   passwordMatch !: boolean;
   patternRespected: boolean = false;
@@ -45,7 +44,7 @@ export class LoginComponent {
     gender: ''
   };
 
-  loggedInUserInfo !: loggedInUserInfo;
+  loggedInUserInfo !: User;
 
   loginFormInfo !: FormGroup;
   registrationFormGroup !: FormGroup;
@@ -54,7 +53,7 @@ export class LoginComponent {
   maxDate!: string; // maxDate for the calendar to prevent under 18 from inscrire
 
 
-  // * Variables related to the component class file 
+  // * Variables related to the component class file
   features: Feature[] = [];
 
   //* ViewChild variables
@@ -71,9 +70,6 @@ export class LoginComponent {
   @ViewChild("registrationForm") regForm !: FormGroup;
 
 
-
-
-
   ngOnInit(): void {
     this.initLogForm();
     this.initRegistrationForm();
@@ -86,14 +82,6 @@ export class LoginComponent {
     });
 
     this.setter();
-
-    const token = this.cookieService.get("token");
-    if(token){
-      this.authService.getDataOfUser(token).subscribe(data =>{
-        this.loggedInUserInstance.setLoggedInUserInfo(data);
-        console.log(data);
-      });
-    }
 
   }
 
@@ -123,7 +111,7 @@ export class LoginComponent {
     // targeting the click Div
     const address = divElement.target as HTMLDivElement;
 
-    // asign the value of the div address to the input value 
+    // asign the value of the div address to the input value
     // this.input.nativeElement.value = address.innerHTML;
     this.userinscriptiondetails.street = address.innerHTML;
 
@@ -131,7 +119,7 @@ export class LoginComponent {
     // display none of the container after selecting the address
     this.addressResults.nativeElement.style.display = "none";
 
-    // disable the input after adding the value 
+    // disable the input after adding the value
     this.input.nativeElement.setAttribute('disabled', "");
 
     // display none for the container of the suggessted address
@@ -147,7 +135,7 @@ export class LoginComponent {
     this.userinscriptiondetails.street = "";
     this.userinscriptiondetails.buildingnumber = "";
 
-    // 
+    //
     this.submitbutton.nativeElement.setAttribute('disabled', 'true');
   }
 
@@ -168,44 +156,46 @@ export class LoginComponent {
   //* Submitting the form
   onRegFormSubmit(): void {
 
-    const url = "http://localhost/backend/inscription.php";
+    console.log(this.registrationFormGroup);
 
-    this.http.post<string[]>(url, this.userinscriptiondetails).subscribe(
-      (response) => {
-        // Handle success response
-        console.log(response[0]);
-        if (response[0] === "An account associated to this email!") {
-          Swal.fire(
-            'Ops',
-            response[0],
-            'error'
-          )
-        } else if (response[0] === "Account has been successfully registered") {
-          Swal.fire(
-            'Good job!',
-            response[0],
-            'success'
-          )
-        } else {
-          Swal.fire({
-            title: 'Error!',
-            text: response[0],
-            icon: 'error',
-            confirmButtonText: 'Try Again'
-          })
-        }
-
-      },
-      (error) => {
-        // Handle error response
-        Swal.fire({
-          title: 'Error!',
-          text: error,
-          icon: 'error',
-          confirmButtonText: 'Cool'
-        })
-      }
-    );
+    // const url = "http://localhost/backend/inscription.php";
+    //
+    // this.http.post<string[]>(url, this.userinscriptiondetails).subscribe(
+    //   (response) => {
+    //     // Handle success response
+    //     console.log(response[0]);
+    //     if (response[0] === "An account associated to this email!") {
+    //       Swal.fire(
+    //         'Ops',
+    //         response[0],
+    //         'error'
+    //       )
+    //     } else if (response[0] === "Account has been successfully registered") {
+    //       Swal.fire(
+    //         'Good job!',
+    //         response[0],
+    //         'success'
+    //       )
+    //     } else {
+    //       Swal.fire({
+    //         title: 'Error!',
+    //         text: response[0],
+    //         icon: 'error',
+    //         confirmButtonText: 'Try Again'
+    //       })
+    //     }
+    //
+    //   },
+    //   (error) => {
+    //     // Handle error response
+    //     Swal.fire({
+    //       title: 'Error!',
+    //       text: error,
+    //       icon: 'error',
+    //       confirmButtonText: 'Cool'
+    //     })
+    //   }
+    // );
 
   }
 
@@ -217,7 +207,7 @@ export class LoginComponent {
       return null; // Valid age
     } else {
 
-      return { ageInvalid: true }; // Age is less than 18
+      return {ageInvalid: true}; // Age is less than 18
     }
   }
 
@@ -253,7 +243,7 @@ export class LoginComponent {
     }
   }
 
-  //* Check the password match using ngModelChange 
+  //* Check the password match using ngModelChange
   checkPasswordMatch(): void {
 
     if (this.userinscriptiondetails.password == this.userinscriptiondetails.passwordconfirmation) {
@@ -288,9 +278,11 @@ export class LoginComponent {
     })
     // console.log(this.loginFormInfo);
   };
+
   get logemail() {
     return this.loginFormInfo.get("logemail");
   }
+
   get logPassword() {
     return this.loginFormInfo.get("logPassword");
   }
@@ -333,97 +325,94 @@ export class LoginComponent {
       })
     })
   }
+
   get firstName() {
     return this.registrationFormGroup.get('firstFaceGroup.firstName');
   }
+
   get lastName() {
     return this.registrationFormGroup.get('firstFaceGroup.lastName');
   }
+
   get birthdate() {
     return this.registrationFormGroup.get('firstFaceGroup.birthdate');
   }
+
   get password() {
     return this.registrationFormGroup.get('secondFaceGroup.password');
   }
+
   get confPassword() {
     return this.registrationFormGroup.get('secondFaceGroup.confPassword');
   }
+
   get email() {
     return this.registrationFormGroup.get('secondFaceGroup.email');
   }
+
   get street() {
     return this.registrationFormGroup.get('thirdFaceGroup.street');
   }
+
   get buildingNumber() {
     return this.registrationFormGroup.get('thirdFaceGroup.buildingNumber');
   }
+
   get gender() {
     return this.registrationFormGroup.get('thirdFaceGroup.gender');
   }
 
   //* Logging in method
   loginMethod() {
+    let user :UserLogin = {"username" : this.loginFormInfo.value.logemail , "password" :this.loginFormInfo.value.logpassword};
+
     if (this.loginFormInfo.valid) {
 
-      this.authService.login({ "logemail": `${this.loginFormInfo.value.logemail}`, "logpassword": `${this.loginFormInfo.value.logpassword}` }).subscribe(
-        reponse => {
 
+      this.authService.login(user)
+          .subscribe(
+          response => {
 
-          if (reponse == "Please Check your email and password.") {
-            Swal.fire({
-              icon: 'error',
-              title: 'Failed to connect',
-              text: 'Invalid email or password!',
-            })
-          } else {
+            if (response.error) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Failed to connect',
+                text: 'Invalid email or password!',
+              })
+            } else {
 
-            this.loggedInUserInstance.setLoggedInUserInfo(reponse.user);
-            this.loggedInUserInstance.setLoggedInStatus(true);
+              this.authService.loggedUser = response;
+              this.cookieService.setCookie("loggedUser", JSON.stringify(response));
+              console.log(JSON.parse(this.cookieService.getCookie('loggedUser')))
 
-            const token = reponse.token;
-            this.cookieService.set('token', token);
+              Swal.fire({
+                icon: 'success',
+                title: 'Welcome',
+                // text: `${this.loggedInUserInfo.firstname}`,
+              })
 
-            Swal.fire({
-              icon: 'success',
-              title: 'Welcome',
-              text: `${this.loggedInUserInfo.firstname}`,
-            })
-
+            }
+          },
+          error => {
+            console.log(error);
           }
-        },
-        error => {
-          console.log(error);
-        }
-      )
+        )
 
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error...',
-        text: 'Something went wrong, refresh the page and try again!',
-      })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error...',
+          text: 'Something went wrong, refresh the page and try again!',
+        })
+      }
     }
-  }
+
 
   //* Setting the isLoggedInStatus to true if token exists
   setter() {
-    if (this.cookieService.check("token")) {
+    if (this.cookieService.getCookie("token")) {
       this.loggedInUserInstance.setLoggedInStatus(true);
     }
-  }
-
-  logout(): void {
-    this.cookieService.delete('token');
-    // this.loggedInUserInstance.setLoggedInStatus(false);
-  }
-
-  lol() {
-
-    console.log(this.cookieService.get("token"));
-    console.log(this.isLoggedIn);
-  }
-  del() {
-    this.cookieService.delete("token");
   }
 
 }

@@ -29,6 +29,7 @@ footer .container {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+  max-width: 100%;
 }
 footer .container div h3 {
   margin-bottom: 10px;

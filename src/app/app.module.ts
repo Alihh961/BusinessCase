@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
@@ -16,26 +16,15 @@ import { SearchComponent } from './search/search.component';
 import { NftsComponent } from './nfts/nfts.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
-import { PopularcreatorsComponent } from './popularcreators/popularcreators.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
 import {Console, DateFormatPipe} from './pipes/date-transform.pipe';
 import { ShownftComponent } from './shownft/shownft.component';
 import { EthchartComponent } from './ethchart/ethchart.component';
+import {HttpinterceptorInterceptor} from "./services/httpinterceptor/httpinterceptor.interceptor";
 
 const appRoutes: Routes = [
-    // { path: '' ,redirectTo: 'home' , pathMatch: 'full'},
-    { path: '', component: HomeComponent},
-    { path: 'home', component: HomeComponent, pathMatch: 'full' },
-    { path: 'nfts', component: NftsComponent, pathMatch: 'full' },
-    { path: 'nft', component: ShownftComponent , pathMatch: 'full' },
-    { path: 'popularcreators', component: PopularcreatorsComponent, pathMatch: 'full' },
-    { path: 'ethchart', component: EthchartComponent, pathMatch: 'full' },
-    { path: 'contact', component: ContactComponent, pathMatch: 'full' },
-    { path: 'login', component: LoginComponent, pathMatch: 'full' },
-    { path: '**', component: Error404Component, pathMatch: 'full' },
-
   ];
 
 @NgModule({
@@ -51,7 +40,6 @@ const appRoutes: Routes = [
         NftsComponent,
         HomeComponent,
         HeaderComponent,
-        PopularcreatorsComponent,
         FooterComponent,
         LoginComponent,
         DateFormatPipe,
@@ -65,10 +53,15 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, { useHash: true })
+    RouterModule.forRoot(appRoutes, { useHash: false })
   ],
   providers: [
-    CookieService
+    CookieService,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: HttpinterceptorInterceptor,
+    //   multi: true,
+    // },
   ],
   bootstrap: [AppComponent]
 })

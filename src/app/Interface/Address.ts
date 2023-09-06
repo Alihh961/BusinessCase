@@ -31,3 +31,13 @@ export interface FeatureCollection {
     query: string;
     limit: number;
 }
+
+
+export interface Iaddress{
+  id: string,
+  municipality: string,
+  departement: string,
+  region: string,
+  path: string,
+  buildingNubmer: number,
+}

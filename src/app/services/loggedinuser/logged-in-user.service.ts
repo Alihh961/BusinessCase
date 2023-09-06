@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { loggedInUserInfo } from '../Interface/userdetails';
+import { User } from '../../Interface/User';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 
@@ -10,24 +10,23 @@ export class LoggedInUserService {
 
   constructor() { }
 
-  private loggedInUserInfo: BehaviorSubject<loggedInUserInfo> = new BehaviorSubject<loggedInUserInfo>(  {firstname: '',
-  lastname: '',
+  private loggedInUserInfo: BehaviorSubject<User> = new BehaviorSubject<any>(  {firstName: '',
+  lastName: '',
   email: '',
-  password: '',
-  birthdate: new Date(),
-  street: '',
-  buildingnumber: '',
-  gender: ''
+  dateOfBirth: new Date(),
+  address:undefined ,
+  gender: '',
+    isVerified: false,
 });
 
   private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
-  setLoggedInUserInfo(data: loggedInUserInfo): void {
+  setLoggedInUserInfo(data: User): void {
     this.loggedInUserInfo.next(data);
   }
 
-  getLoggedInUserInfo(): Observable<loggedInUserInfo> {
+  getLoggedInUserInfo(): Observable<User> {
     return this.loggedInUserInfo.asObservable();
   }
 

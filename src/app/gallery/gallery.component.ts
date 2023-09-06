@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Nft} from "../Interface/Itoken";
-import {apiURL} from "../../environment/environment";
-import {SubName} from "../Interface/SubCategory";
+import {Nft} from "../Interface/Nft";
+import {NftService} from "../services/nft/nft.service";
+import {CookieService} from "../services/cookie/cookie.service";
+import { from } from "rxjs";
+import { switchMap } from "rxjs/operators";
 
 
 @Component({
@@ -13,44 +14,54 @@ import {SubName} from "../Interface/SubCategory";
 export class GalleryComponent implements OnInit {
 
   searchInputValue: string = '';
-  orderBy:string = "";
+  orderBy: string = "";
   nfts: Array<Nft> = [];
+  numberOfNftsToShow: number = 7;
+  nftTotalquantity ?: number;
+  showMoreButtonStatus: boolean = true;
 
   // checked radio button is all by default
   subCategoryFilterValue: string = "";
 
-  constructor(private http: HttpClient) {
+  constructor(private nftService: NftService , private CookieService :CookieService) {
   }
 
 
+  hovered: boolean = false;
 
-  ngOnInit() {
-    this.getNfts();
-
+  ngOnInit(): void {
+    this.getAllNfts();
+    this.getAllNftsQuantity();
   }
 
-  getNfts() {
-console.log("out");
-    this.http.get<Nft[]>(`${apiURL}nfts?n=${this.searchInputValue}&s=${this.subCategoryFilterValue}&o=${this.orderBy}`).subscribe(
-      (data: Nft[]): void => {
+  showes(){
+  //   console.log(this.CookieService.getUserInfo());
+  }
 
+  // get all nfts
+  getAllNfts(): void {
+    this.nftService.getAllNfts(this.numberOfNftsToShow).subscribe(
+      data => {
         for (let i = 0; i < data.length; i++) {
-          switch (true) {
-            case data[i].image != null :
-              data[i].image.url = "assets/imgs/nfts/" + data[i].image.url;
-              break;
-
-            case data[i].video != null :
-              data[i].video.url = "assets/imgs/nfts/" + data[i].video.url;
-              break;
-
-            case data[i].audio != null :
-              data[i].audio.url = "assets/imgs/nfts/" + data[i].audio.url;
-          }
+          data[i].image.url = "assets/imgs/nfts/" + data[i].image.url;
         }
-
         this.nfts = data;
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
 
+
+  // If a filter is added
+  getFilteredNfts(): void {
+    this.nftService.getFilteredNfts(this.searchInputValue, this.subCategoryFilterValue, this.orderBy, this.numberOfNftsToShow).subscribe(
+      (data: Nft[]): void => {
+        for (let i = 0; i < data.length; i++) {
+          data[i].image.url = "assets/imgs/nfts/" + data[i].image.url;
+        }
+        this.nfts = data;
 
       },
       error => {
@@ -61,40 +72,39 @@ console.log("out");
 
   }
 
-
-
-  onSearchTextEntered(inputValue: string) {
+  onSearchTextEntered(inputValue: string): void {
     this.searchInputValue = inputValue;
-    this.getNfts();
+    this.getFilteredNfts();
   }
-
-  hovered: boolean = false;
-
-
-  // displaying the qty of each filter option
-  getAllTokensQty() {
-    return this.nfts.length;
-  }
-
-  getTransferableTokensQty() {
-    return 1;
-    // return this.tokens.filter(token => token.type === "transferable").length;
-  }
-
-  getNonTransferableTokensQty() {
-    return 1;
-    // return this.tokens.filter(token => token.type === "non-transferable").length;
-  }
-
-
-
 
   // filtering results when the radio button is changed
-  onFilterSelectionChanged(data: string) {
+  onFilterSelectionChanged(data: string): void {
 
     this.subCategoryFilterValue = data;
-    this.getNfts();
+    this.getFilteredNfts();
   }
 
+
+  // check the total number of nfts ,so we hide the button when all nfts are displayed
+  getAllNftsQuantity() {
+    this.nftService.getAllNftsQuantity().subscribe(
+      quantity => {
+        this.nftTotalquantity = quantity;
+      }
+    )
+  }
+
+  // show more nfts if there is more on button clicked
+  showMoreNfts() {
+    this.numberOfNftsToShow += 5;
+
+    if (this.nftTotalquantity) {
+      if (this.numberOfNftsToShow >= this.nftTotalquantity) {
+        this.showMoreButtonStatus = false;
+      }
+    }
+    this.getFilteredNfts();
+    this.getAllNfts();
+  }
 
 }

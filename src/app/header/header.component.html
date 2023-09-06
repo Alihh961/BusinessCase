@@ -1,19 +1,18 @@
 <header class="" #header>
   <a routerLink=""><img [src]="logoSource" alt='Logo'></a>
-  <div class="" id="menuList" #menuList [ngClass]="{'openedMenu': isOpened}">
+  <div class="" id="menuList" [ngClass]="{'openedMenu': isOpened}">
 
     <ul>
       <li [routerLinkActive]="'activeLink'" [routerLinkActiveOptions]="{exact: true}"><a routerLink="">Home</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/nfts">NFTs</a></li>
-      <li routerLinkActive="activeLink"><a routerLink="/popularcreators">Popular Creators</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/ethchart">Eth Chart</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/contact">Contact</a></li>
       <li *ngIf="!isLoggedIn" routerLinkActive="activeLink"><a routerLink="/login">Sign in / Sign up</a></li>
       <li *ngIf="isLoggedIn" routerLinkActive="activeLink"><a
-        routerLink="/profile">{{loggedInUserInfo.firstname + " " + loggedInUserInfo.lastname }}</a></li>
+        routerLink="/profile">{{loggedInUserInfo.firstName + " " + loggedInUserInfo.lastName }}</a></li>
 
       <!-- <li *ngIf="isLoggedIn" routerLinkActive="activeLink" (click)="logOut()"><a (click)="logOut">Logout {{isLoggedIn}}</a></li> -->
-      <button *ngIf="false" (click)="lolheader()">clickhere</button>
+      <button *ngIf="User" (click)="logout()">Logout</button>
 
 
     </ul>
