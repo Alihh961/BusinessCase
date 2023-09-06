@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Feature, FeatureCollection} from '../Interface/Address';
@@ -10,7 +10,7 @@ import {CookieService} from '../services/cookie/cookie.service';
 import {LoggedInUserService} from '../services/loggedinuser/logged-in-user.service';
 import {UserService} from "../services/user/user.service";
 import {Router} from "@angular/router";
-
+import {catchError} from "rxjs";
 
 
 @Component({
@@ -22,9 +22,9 @@ export class LoginComponent {
 
   constructor(private http: HttpClient, private authService: AuthenticationService,
               private ageIsValid: InputvalidationsService, private cookieService: CookieService,
-              private userService : UserService,
-              private router : Router
-              ) {
+              private userService: UserService,
+              private router: Router
+  ) {
 
   }
 
@@ -33,8 +33,12 @@ export class LoginComponent {
   passwordMatch !: boolean;
   patternRespected: boolean = false;
   pattern: any = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-  isLoggedIn: boolean = false;
+  loggedUserStatus: boolean = false;
 
+  loggedInUserInfo !: User;
+
+  loginFormInfo !: FormGroup;
+  registrationFormGroup !: FormGroup;
 
 
   userinscriptiondetails: UserInscription = {
@@ -48,11 +52,6 @@ export class LoginComponent {
     buildingnumber: '',
     gender: ''
   };
-
-  loggedInUserInfo !: User;
-
-  loginFormInfo !: FormGroup;
-  registrationFormGroup !: FormGroup;
 
 
   maxDate!: string; // maxDate for the calendar to prevent under 18 from inscrire
@@ -78,6 +77,8 @@ export class LoginComponent {
   ngOnInit(): void {
     this.initLogForm();
     this.initRegistrationForm();
+    this.checker();
+
   }
 
   //* Searching for address when a change happens
@@ -357,51 +358,51 @@ export class LoginComponent {
     return this.registrationFormGroup.get('thirdFaceGroup.gender');
   }
 
+  // check if the user is logged in , then navigate to home page
+  checker() {
+    console.log(this.userService.getLoggedUserStatus());
+    if (this.userService.getLoggedUserStatus() || this.userService.getUserInfo() || this.cookieService.getToken()) {
+      this.router.navigate(["home"]);
+    }
+  }
+
   //* Logging in method
   loginMethod() {
-    let user :UserLogin = {"username" : this.loginFormInfo.value.logemail , "password" :this.loginFormInfo.value.logpassword};
+    let user: UserLogin = {
+      "username": this.loginFormInfo.value.logemail,
+      "password": this.loginFormInfo.value.logpassword
+    };
 
     if (this.loginFormInfo.valid) {
+      this.authService.login(user).subscribe(
+        (response: User | any): void => {
+          this.userService.setUserInfo(response);
+          this.userService.setLoggedUserStatus(true);
+          this.router.navigate(['home']);
 
+          const fullName: string | undefined = `${response.firstName} ${response?.lastName}`.toUpperCase();
 
-      this.authService.login(user)
-          .subscribe(
-          response => {
-            console.log(response);
-            if (response.error) {
-              Swal.fire({
-                icon: 'error',
-                title: 'Failed to connect',
-                text: 'Invalid email or password!',
-              })
-            } else {
-
-              this.userService.setUserInfo(response);
-
-              const fullName :string | undefined =`${response.firstName} ${response?.lastName}`.toUpperCase();
-
-              Swal.fire({
-                icon: 'success',
-                title: 'Welcome',
-                text: `${fullName}`,
-              }),
-                this.router.navigate(['home'])
-
-            }
-          },
-          error => {
-            console.log(error);
-          }
-        )
-
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error...',
-          text: 'Something went wrong, refresh the page and try again!',
+          Swal.fire({
+            icon: 'success',
+            title: 'Welcome',
+            text: `${fullName}`,
+          }).then((): void => {
+          });
+        }
+        ,
+        () => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error...',
+            text: 'Please Check your Email and Password!',
+          });
         })
-      }
     }
 
 
+  } ;
 }
+
+
+
+

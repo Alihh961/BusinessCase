@@ -12,7 +12,7 @@ import {User} from '../Interface/User';
 import {AuthenticationService} from "../services/auth/authentication.service";
 import {CookieService} from "../services/cookie/cookie.service";
 import {UserService} from "../services/user/user.service";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 
 
 @Component({
@@ -39,6 +39,17 @@ export class HeaderComponent implements AfterViewChecked {
 
   ngOnInit(): void {
     this.checkUser(); // check if we have a token and if it valid then return back user
+
+    // Forcing the information related to the loggeduser and loginstatus to be changed
+    // if we don't force it , the informations related to the user will stay the say (full name for example)
+    this.router.events.subscribe(
+      event=>{
+        if(event instanceof NavigationEnd){
+          this.loginInStatus = this.userService.getLoggedUserStatus();
+          this.loggedUser = this.userService.getUserInfo();
+        }
+      }
+    )
   }
 
 
@@ -70,10 +81,14 @@ export class HeaderComponent implements AfterViewChecked {
     if (token) {
       this.authService.getUser(token).subscribe(
         response => {
+
           this.userService.setUserInfo(response);
           this.userService.setLoggedUserStatus(true);
           this.loggedUser = response;
           this.loginInStatus = true;
+        },
+        ()=>{
+          console.log("Try to connect!")
         }
       )
     }
@@ -84,7 +99,9 @@ export class HeaderComponent implements AfterViewChecked {
     this.userService.setUserInfo(undefined);
     this.cookieService.removeCookie("token");
     this.loginInStatus = false;
+    this.loggedUser = undefined;
     this.router.navigate(['login']);
+
   }
 
 

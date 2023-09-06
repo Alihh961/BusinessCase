@@ -1,4 +1,4 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable, switchMap, tap ,catchError} from 'rxjs';
 import { throwError } from 'rxjs';
@@ -19,35 +19,22 @@ export class AuthenticationService {
               private cookieService :CookieService,
               private userService :UserService) {  }
 
-  login(credentials:UserLogin){
-
+  login(credentials: UserLogin): Observable<User | any> {
     let headers : HttpHeaders = new HttpHeaders({'Content-Type' : 'application/json'});
-    return this.http.post<Itoken>(`${apiURL}login_check`,credentials , {headers : headers}).pipe(
-      tap(
-        (dataToken: Itoken | any)=>{
-console.log("ici");
-          if(!dataToken.error){
-            Swal.fire({
-              icon: "error",
-              title: "Login Failed",
-              text : "Check your email and password!"
-            })
-          }
-          this.cookieService.setToken(dataToken.token)
-        }
-      ),
-      switchMap((dataToken :Itoken)=>this.getUser(dataToken.token)),
-      catchError((error) => {
-        console.error('HTTP request error:', error);
-        return throwError(error);
+    return this.http.post<Itoken>(`${apiURL}login_check`, credentials , {headers : headers}).pipe(
+      switchMap((data: Itoken) => {
+        this.cookieService.setToken(data.token);
+        return this.getUser(data.token);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError('Error getting token');
       })
-    )
-}
+    );
+  }
 
 
-  getUser(token :string):Observable<any>{
+  getUser(token :string):Observable<User | any>{
 
-    console.log(token);
     const headers :HttpHeaders = new HttpHeaders( {
       'Content-Type' : 'application/json',
       Authorization : `Bearer ${token}`
@@ -55,7 +42,10 @@ console.log("ici");
     const httpOptions = {
       headers: headers
     };
-    return this.http.get<User>(`${apiURL}user`, httpOptions);
+    return this.http.get<User>(`${apiURL}user`, httpOptions).pipe(
+      catchError((error :HttpErrorResponse)=>{
+        return throwError("Errrrrrror")
+      }));
   }
 
   logout(){

@@ -36,6 +36,7 @@ header a {
   padding: 5px 10px;
   margin-right: 25px;
   border-radius: 5px;
+  text-transform: capitalize;
 }
 
 .onScroll {
