@@ -19,6 +19,15 @@ header {
     }
 }
 
+.profile {
+  a{
+    background-color: #22bc29;
+    padding: 5px 10px;
+    margin-right: 25px;
+    border-radius: 5px;
+  }
+}
+
 .onScroll {
 
 
@@ -86,7 +95,7 @@ header a img[alt='Logo'] {
 
 }
 
-header div {
+header div:not(.profile) {
 
     display: flex;
     justify-content: space-between;

@@ -9,13 +9,25 @@ export class UserService {
 
   constructor( private CookieService : CookieNgx) { }
 
-  setUserInfo(User:User):void{
-    this.CookieService.set("User", JSON.stringify(User));
+  private loggedUser ?:User;
+  private loggedStatus :boolean = false;
+
+
+
+  setUserInfo(User:User | undefined):void{
+    this.loggedUser = User;
   }
 
-  getUserInfo():string{
-    return JSON.parse(this.CookieService.get("User"));
+  getUserInfo():User | undefined{
+    return this.loggedUser;
   }
 
+  setLoggedUserStatus(value :boolean): void{
+    this.loggedStatus = value;
+  }
+
+  getLoggedUserStatus() :boolean{
+    return this.loggedStatus;
+  }
 
 }

@@ -8,6 +8,8 @@ import {AuthenticationService} from '../services/auth/authentication.service';
 import {InputvalidationsService} from '../services/inputvalidator/inputvalidations.service';
 import {CookieService} from '../services/cookie/cookie.service';
 import {LoggedInUserService} from '../services/loggedinuser/logged-in-user.service';
+import {UserService} from "../services/user/user.service";
+import {Router} from "@angular/router";
 
 
 
@@ -20,7 +22,9 @@ export class LoginComponent {
 
   constructor(private http: HttpClient, private authService: AuthenticationService,
               private ageIsValid: InputvalidationsService, private cookieService: CookieService,
-              private loggedInUserInstance: LoggedInUserService ) {
+              private userService : UserService,
+              private router : Router
+              ) {
 
   }
 
@@ -30,6 +34,7 @@ export class LoginComponent {
   patternRespected: boolean = false;
   pattern: any = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
   isLoggedIn: boolean = false;
+
 
 
   userinscriptiondetails: UserInscription = {
@@ -73,16 +78,6 @@ export class LoginComponent {
   ngOnInit(): void {
     this.initLogForm();
     this.initRegistrationForm();
-
-    this.loggedInUserInstance.getLoggedInUserInfo().subscribe(value => {
-      this.loggedInUserInfo = value;
-    });
-    this.loggedInUserInstance.getLoggedInStatus().subscribe(value => {
-      this.isLoggedIn = value;
-    });
-
-    this.setter();
-
   }
 
   //* Searching for address when a change happens
@@ -372,7 +367,7 @@ export class LoginComponent {
       this.authService.login(user)
           .subscribe(
           response => {
-
+            console.log(response);
             if (response.error) {
               Swal.fire({
                 icon: 'error',
@@ -381,15 +376,16 @@ export class LoginComponent {
               })
             } else {
 
-              this.authService.loggedUser = response;
-              this.cookieService.setCookie("loggedUser", JSON.stringify(response));
-              console.log(JSON.parse(this.cookieService.getCookie('loggedUser')))
+              this.userService.setUserInfo(response);
+
+              const fullName :string | undefined =`${response.firstName} ${response?.lastName}`.toUpperCase();
 
               Swal.fire({
                 icon: 'success',
                 title: 'Welcome',
-                // text: `${this.loggedInUserInfo.firstname}`,
-              })
+                text: `${fullName}`,
+              }),
+                this.router.navigate(['home'])
 
             }
           },
@@ -407,12 +403,5 @@ export class LoginComponent {
       }
     }
 
-
-  //* Setting the isLoggedInStatus to true if token exists
-  setter() {
-    if (this.cookieService.getCookie("token")) {
-      this.loggedInUserInstance.setLoggedInStatus(true);
-    }
-  }
 
 }

@@ -1,7 +1,18 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, asNativeElements, HostListener, Input, AfterViewChecked } from '@angular/core';
-import { LoggedInUserService } from '../services/loggedinuser/logged-in-user.service';
-import { User } from '../Interface/User';
-import {CookieService} from "ngx-cookie-service";
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  asNativeElements,
+  HostListener,
+  Input,
+  AfterViewChecked
+} from '@angular/core';
+import {User} from '../Interface/User';
+import {AuthenticationService} from "../services/auth/authentication.service";
+import {CookieService} from "../services/cookie/cookie.service";
+import {UserService} from "../services/user/user.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -12,26 +23,22 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class HeaderComponent implements AfterViewChecked {
 
-  constructor(private loggedInUserInstance: LoggedInUserService , private CookieSer : CookieService) { }
+  constructor(private authService: AuthenticationService,
+              private cookieService: CookieService,
+              private userService: UserService,
+              private router: Router) {
+  }
 
 
   @ViewChild('header') header!: ElementRef; // getting header tag from view template
 
   logoSource: string = './assets/imgs/WIKA_Logo.png';
   isOpened: boolean = false;
-  isLoggedIn : boolean = false;
-  loggedInUserInfo!: User;
-  User ?: User;
+  loginInStatus: boolean = false;
+  loggedUser ?: User;
+
   ngOnInit(): void {
-
-    this.loggedInUserInstance.getLoggedInStatus().subscribe(booleanValue =>{
-      this.isLoggedIn = booleanValue;
-    })
-
-    this.loggedInUserInstance.getLoggedInUserInfo().subscribe(userInfo =>{
-      this.loggedInUserInfo = userInfo;
-    })
-
+    this.checkUser(); // check if we have a token and if it valid then return back user
   }
 
 
@@ -51,15 +58,33 @@ export class HeaderComponent implements AfterViewChecked {
       headerElement.classList.remove("onScroll");
     }
   }
+
   openAndCloseMenuBurger() {
 
     this.isOpened = !this.isOpened;
 
   }
 
+  checkUser() {
+    let token = this.cookieService.getCookie("token");
+    if (token) {
+      this.authService.getUser(token).subscribe(
+        response => {
+          this.userService.setUserInfo(response);
+          this.userService.setLoggedUserStatus(true);
+          this.loggedUser = response;
+          this.loginInStatus = true;
+        }
+      )
+    }
+  }
 
-  logout(){
-
+  logout() {
+    this.userService.setLoggedUserStatus(false);
+    this.userService.setUserInfo(undefined);
+    this.cookieService.removeCookie("token");
+    this.loginInStatus = false;
+    this.router.navigate(['login']);
   }
 
 

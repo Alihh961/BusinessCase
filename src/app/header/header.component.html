@@ -7,17 +7,17 @@
       <li routerLinkActive="activeLink"><a routerLink="/nfts">NFTs</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/ethchart">Eth Chart</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/contact">Contact</a></li>
-      <li *ngIf="!isLoggedIn" routerLinkActive="activeLink"><a routerLink="/login">Sign in / Sign up</a></li>
-      <li *ngIf="isLoggedIn" routerLinkActive="activeLink"><a
-        routerLink="/profile">{{loggedInUserInfo.firstName + " " + loggedInUserInfo.lastName }}</a></li>
-
-      <!-- <li *ngIf="isLoggedIn" routerLinkActive="activeLink" (click)="logOut()"><a (click)="logOut">Logout {{isLoggedIn}}</a></li> -->
-      <button *ngIf="User" (click)="logout()">Logout</button>
+      <li *ngIf="!loggedUser" routerLinkActive="activeLink"><a routerLink="/login">Sign in / Sign up</a></li>
 
 
     </ul>
+    <div class="profile">
 
+      <a *ngIf="loggedUser"
+         routerLink="/profile">{{loggedUser.firstName + " " + loggedUser.lastName }}</a>
+      <button *ngIf="loggedUser" (click)="logout()">Logout</button>
 
+    </div>
   </div>
 
   <a class="menuburger-icon" id="menuburger-icon"
