@@ -7,7 +7,6 @@ import {User, UserLogin} from "../../Interface/User";
 import {Itoken} from "../../Interface/Token";
 import { CookieService} from "../cookie/cookie.service";
 import {UserService} from "../user/user.service";
-import Swal from "sweetalert2";
 
 
 @Injectable({

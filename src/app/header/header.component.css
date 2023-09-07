@@ -25,37 +25,76 @@ header {
   top: 0;
   z-index: 100;
 }
-header a {
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
+header .profile {
+  position: relative;
 }
-
-.profile a {
+header .profile > a {
   background-color: #22bc29;
   padding: 5px 10px;
   margin-right: 25px;
   border-radius: 5px;
   text-transform: capitalize;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
 }
-
-.onScroll {
+header .profile > a span {
+  display: inline-block;
+  width: 15px;
+  border-bottom: 10px solid transparent;
+  border-top: 10px solid transparent;
+  border-left: 10px solid black;
+  transform: rotateZ(90deg) rotateY(180deg);
+  transition: 0.7s;
+}
+header .profile > a span.openedArrow {
+  transform: rotateZ(90deg);
+}
+header .profile div {
+  position: absolute;
+  right: 10%;
+  width: 175px;
+  height: 0px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: 1s;
+  overflow: hidden;
+}
+header .profile div a {
+  display: inline-block;
+  padding: 15px 15px;
+  width: 100%;
+  text-align: center;
+}
+header .profile div a:hover {
+  background-color: grey;
+}
+header .profile div.opennedProfiler {
+  height: 182px;
+}
+header.onScroll {
   background: rgb(150, 150, 150) !important;
   padding: 10px 15px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
-
-ul li a {
+header ul.nav li a {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
   position: relative;
   padding-bottom: 5px;
 }
-
-ul li:hover a,
-ul li.activeLink a {
+header ul.nav li:hover a,
+header ul.nav li.activeLink a {
   color: #088178;
 }
-
-ul li a::before {
+header ul.nav li a::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -67,13 +106,11 @@ ul li a::before {
   transform-origin: right;
   transition: transform 0.5s ease-in-out;
 }
-
-ul li:hover a::before,
-ul li.activeLink a::before {
+header ul.nav li:hover a::before,
+header ul.nav li.activeLink a::before {
   transform: scaleX(1);
   transform-origin: left;
 }
-
 @keyframes afterlines {
   from {
     width: 0;
@@ -82,35 +119,30 @@ ul li.activeLink a::before {
     width: 100%;
   }
 }
-header a:first-child {
+header > a {
   max-width: 7%;
 }
-
-header a img[alt=Logo] {
+header > a img[alt=Logo] {
   width: 100%;
   min-width: 75px;
 }
-
 header div:not(.profile) {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-basis: 80%;
 }
-
-header div ul {
+header div ul.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-basis: 66%;
   margin: 0;
 }
-
-header div ul li {
+header div ul.nav li {
   list-style-type: none;
   font-weight: bold;
 }
-
 header .menuburger-icon {
   display: none;
   justify-content: space-between;
@@ -124,7 +156,6 @@ header .menuburger-icon {
   padding: 5px;
   z-index: 5;
 }
-
 header .menuburger-icon span {
   display: inline-block;
   width: 25px;
@@ -133,26 +164,21 @@ header .menuburger-icon span {
   border-radius: 5px;
   transition: 2s;
 }
-
-.openedMenu {
+header .openedMenu {
   right: 0% !important;
   top: 0%;
 }
-
-.openedMenu span {
+header .openedMenu span {
   background-color: red !important;
   position: absolute;
 }
-
-.openedMenu span:first-of-type {
+header .openedMenu span:first-of-type {
   rotate: 45deg !important;
 }
-
-.openedMenu span:nth-of-type(2) {
+header .openedMenu span:nth-of-type(2) {
   opacity: 0;
 }
-
-.openedMenu span:nth-of-type(3) {
+header .openedMenu span:nth-of-type(3) {
   rotate: -45deg !important;
 }
 

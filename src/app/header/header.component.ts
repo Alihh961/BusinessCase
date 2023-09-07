@@ -36,6 +36,8 @@ export class HeaderComponent implements AfterViewChecked {
   isOpened: boolean = false;
   loginInStatus: boolean = false;
   loggedUser ?: User;
+  @ViewChild("profilerContainer") profileContainer!: ElementRef;
+  @ViewChild("profilerOpenArrow") profilerOpenArrow!: ElementRef;
 
   ngOnInit(): void {
     this.checkUser(); // check if we have a token and if it valid then return back user
@@ -43,8 +45,8 @@ export class HeaderComponent implements AfterViewChecked {
     // Forcing the information related to the loggeduser and loginstatus to be changed
     // if we don't force it , the informations related to the user will stay the say (full name for example)
     this.router.events.subscribe(
-      event=>{
-        if(event instanceof NavigationEnd){
+      event => {
+        if (event instanceof NavigationEnd) {
           this.loginInStatus = this.userService.getLoggedUserStatus();
           this.loggedUser = this.userService.getUserInfo();
         }
@@ -76,33 +78,42 @@ export class HeaderComponent implements AfterViewChecked {
 
   }
 
-  checkUser() {
-    let token = this.cookieService.getCookie("token");
-    if (token) {
-      this.authService.getUser(token).subscribe(
-        response => {
-
-          this.userService.setUserInfo(response);
-          this.userService.setLoggedUserStatus(true);
-          this.loggedUser = response;
-          this.loginInStatus = true;
-        },
-        ()=>{
-          console.log("Try to connect!")
-        }
-      )
-    }
+  openProfiler() {
+    let profilerContainer = this.profileContainer.nativeElement;
+    let arrowProfiler = this.profilerOpenArrow.nativeElement;
+    profilerContainer.classList.toggle("opennedProfiler");
+    arrowProfiler.classList.toggle("openedArrow");
   }
 
-  logout() {
-    this.userService.setLoggedUserStatus(false);
-    this.userService.setUserInfo(undefined);
-    this.cookieService.removeCookie("token");
-    this.loginInStatus = false;
-    this.loggedUser = undefined;
-    this.router.navigate(['login']);
+checkUser()
+{
+  let token = this.cookieService.getCookie("token");
+  if (token) {
+    this.authService.getUser(token).subscribe(
+      response => {
 
+        this.userService.setUserInfo(response);
+        this.userService.setLoggedUserStatus(true);
+        this.loggedUser = response;
+        this.loginInStatus = true;
+      },
+      () => {
+        console.log("Try to connect!")
+      }
+    )
   }
+}
+
+logout()
+{
+  this.userService.setLoggedUserStatus(false);
+  this.userService.setUserInfo(undefined);
+  this.cookieService.removeCookie("token");
+  this.loginInStatus = false;
+  this.loggedUser = undefined;
+  this.router.navigate(['login']);
+
+}
 
 
 }

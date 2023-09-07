@@ -2,20 +2,25 @@
   <a routerLink=""><img [src]="logoSource" alt='Logo'></a>
   <div class="" id="menuList" [ngClass]="{'openedMenu': isOpened}">
 
-    <ul>
+    <ul class="nav">
       <li [routerLinkActive]="'activeLink'" [routerLinkActiveOptions]="{exact: true}"><a routerLink="">Home</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/nfts">NFTs</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/ethchart">Eth Chart</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/contact">Contact</a></li>
       <li *ngIf="!loggedUser" routerLinkActive="activeLink"><a routerLink="/login">Sign in / Sign up</a></li>
 
-
     </ul>
-    <div class="profile">
+    <div class="profile" (click)="openProfiler()">
 
       <a *ngIf="loggedUser"
-         routerLink="/profile">{{loggedUser.firstName + " " + loggedUser.lastName }}</a>
-      <button *ngIf="loggedUser" (click)="logout()">Logout</button>
+         >{{loggedUser.firstName + " " + loggedUser.lastName }} <span #profilerOpenArrow></span></a>
+
+      <div *ngIf="loggedUser" #profilerContainer><!-- we add *ngIf to display none fast when we logout-->
+        <a>Dashboard</a>
+        <a>Basket</a>
+        <a (click)="logout()">Logout</a>
+      </div>
+
 
     </div>
   </div>
