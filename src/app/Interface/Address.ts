@@ -34,10 +34,11 @@ export interface FeatureCollection {
 
 
 export interface Iaddress{
-  id: string,
+  id: string | null,
   municipality: string,
   departement: string,
   region: string,
   path: string,
-  buildingNubmer: number,
+  buildingNumber: number | null,
+  postCode: number | null
 }

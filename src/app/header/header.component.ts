@@ -85,35 +85,33 @@ export class HeaderComponent implements AfterViewChecked {
     arrowProfiler.classList.toggle("openedArrow");
   }
 
-checkUser()
-{
-  let token = this.cookieService.getCookie("token");
-  if (token) {
-    this.authService.getUser(token).subscribe(
-      response => {
+  checkUser() {
+    let token = this.cookieService.getCookie("token");
+    if (token) {
+      this.authService.getUser(token).subscribe(
+        response => {
 
-        this.userService.setUserInfo(response);
-        this.userService.setLoggedUserStatus(true);
-        this.loggedUser = response;
-        this.loginInStatus = true;
-      },
-      () => {
-        console.log("Try to connect!")
-      }
-    )
+          this.userService.setUserInfo(response);
+          this.userService.setLoggedUserStatus(true);
+          this.loggedUser = response;
+          this.loginInStatus = true;
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+    }
   }
-}
 
-logout()
-{
-  this.userService.setLoggedUserStatus(false);
-  this.userService.setUserInfo(undefined);
-  this.cookieService.removeCookie("token");
-  this.loginInStatus = false;
-  this.loggedUser = undefined;
-  this.router.navigate(['login']);
+  logout() {
+    this.userService.setLoggedUserStatus(false);
+    this.userService.setUserInfo(undefined);
+    this.cookieService.removeCookie("token");
+    this.loginInStatus = false;
+    this.loggedUser = undefined;
+    this.router.navigate(['login']);
 
-}
+  }
 
 
 }

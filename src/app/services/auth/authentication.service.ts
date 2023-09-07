@@ -43,6 +43,7 @@ export class AuthenticationService {
     };
     return this.http.get<User>(`${apiURL}user`, httpOptions).pipe(
       catchError((error :HttpErrorResponse)=>{
+        this.cookieService.removeCookie("token");// remove the token if login failled
         return throwError("Errrrrrror")
       }));
   }

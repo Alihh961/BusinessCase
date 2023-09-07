@@ -2,16 +2,14 @@ import {Iaddress} from "./Address";
 
 export interface UserInscription {
 
-  firstname: string,
-  lastname: string,
+  firstName: string,
+  lastName: string,
   email: string,
   password: string,
-  passwordconfirmation: string,
-  birthdate: Date | null,
-  street: string,
-  buildingnumber: string,
+  confPassword: string,
+  dateOfBirth: Date | null,
   gender: string,
-
+  address: Iaddress
 }
 
 export interface UserLogin {

@@ -71,6 +71,7 @@ header .profile div a {
   padding: 15px 15px;
   width: 100%;
   text-align: center;
+  cursor: pointer;
 }
 header .profile div a:hover {
   background-color: grey;
