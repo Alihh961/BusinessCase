@@ -36,7 +36,7 @@ export interface FeatureCollection {
 export interface Iaddress{
   id: string | null,
   municipality: string,
-  departement: string,
+  department: string,
   region: string,
   path: string,
   buildingNumber: number | null,
