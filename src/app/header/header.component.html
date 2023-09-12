@@ -8,15 +8,16 @@
       <li routerLinkActive="activeLink"><a routerLink="/ethchart">Eth Chart</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/contact">Contact</a></li>
       <li *ngIf="!loggedUser" routerLinkActive="activeLink"><a routerLink="/login">Sign in / Sign up</a></li>
-
     </ul>
+
     <div class="profile" (click)="openProfiler()">
 
       <a *ngIf="loggedUser"
          >{{loggedUser.firstName + " " + loggedUser.lastName }} <span #profilerOpenArrow></span></a>
 
       <div *ngIf="loggedUser" #profilerContainer><!-- we add *ngIf to display none fast when we logout-->
-        <a>Dashboard</a>
+        <a routerLink="/dashboard">Dashboard</a>
+        <a routerLink="/profile">My Profile</a>
         <a>Basket</a>
         <a (click)="logout()">Logout</a>
       </div>

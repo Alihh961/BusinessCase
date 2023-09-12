@@ -21,3 +21,13 @@ html {
 *::selection{
     background-color: transparent;
 }
+
+app-dashboard{
+  display: block;
+  min-height: 90vh;
+}
+
+app-profile{
+  display: block;
+  min-height: 90vh;
+}

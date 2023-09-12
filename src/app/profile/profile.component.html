@@ -1,0 +1,24 @@
+<section>
+<h3>Edit Profile</h3>
+<form (ngSubmit)="editProfileMethod()" [formGroup]="editForm">
+
+  <label for="firstName">First Name</label>
+  <input type="text" id="firstName" formControlName="firstName" required>
+
+  <label for="lastName">Last Name</label>
+  <input type="text" id="lastName" formControlName="lastName" required>
+
+  <label for="currentPassword">Current Password</label>
+  <input type="password" id="currentPassword" formControlName="currentPassword" required>
+
+  <label for="newPassword">New Password</label>
+  <input type="password" id="newPassword" formControlName="newPassword" required>
+
+  <label for="confNewPassword">Re-type New Password</label>
+  <input type="password" id="confNewPassword" formControlName="confNewPassword" required>
+
+  <button type="submit">Submit</button>
+
+</form>
+
+</section>

@@ -6,7 +6,7 @@ import {
   asNativeElements,
   HostListener,
   Input,
-  AfterViewChecked
+  AfterViewChecked, AfterContentInit
 } from '@angular/core';
 import {User} from '../Interface/User';
 import {AuthenticationService} from "../services/auth/authentication.service";
@@ -57,6 +57,7 @@ export class HeaderComponent implements AfterViewChecked {
 
   ngAfterViewChecked() {
 
+
   }
 
   @HostListener('window:scroll')// listen to the scroll event;
@@ -79,10 +80,13 @@ export class HeaderComponent implements AfterViewChecked {
   }
 
   openProfiler() {
-    let profilerContainer = this.profileContainer.nativeElement;
-    let arrowProfiler = this.profilerOpenArrow.nativeElement;
-    profilerContainer.classList.toggle("opennedProfiler");
-    arrowProfiler.classList.toggle("openedArrow");
+    // we add a condition
+    if (this.profileContainer && this.profilerOpenArrow) {
+      let profilerContainer = this.profileContainer.nativeElement;
+      let arrowProfiler = this.profilerOpenArrow.nativeElement;
+      profilerContainer.classList.toggle("openedProfiler");
+      arrowProfiler.classList.toggle("openedArrow");
+    }
   }
 
   checkUser() {
@@ -90,7 +94,6 @@ export class HeaderComponent implements AfterViewChecked {
     if (token) {
       this.authService.getUser(token).subscribe(
         response => {
-
           this.userService.setUserInfo(response);
           this.userService.setLoggedUserStatus(true);
           this.loggedUser = response;

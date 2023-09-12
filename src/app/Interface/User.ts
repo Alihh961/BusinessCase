@@ -27,3 +27,9 @@ export interface User {
   dateOfBirth: Date | null,
   isVerified: boolean,
 }
+
+export interface UserEdit {
+  firstName : string ,
+  lastName : string ,
+  password : string,
+}

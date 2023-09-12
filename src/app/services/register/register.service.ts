@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {User} from "../../Interface/User";
+import {User, UserInscription} from "../../Interface/User";
 import {apiURL} from "../../../environment/environment";
+import {ResponseSuccess} from "../../Interface/Response";
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,9 @@ export class RegisterService {
   constructor(private http :HttpClient) { }
 
 
-  register(data :User){
+  register(data :UserInscription){
     let header :HttpHeaders = new HttpHeaders({"Content-Type" : "application/json"});
 
-    return this.http.post<User>(`${apiURL}register` ,data , {headers : header});
+    return this.http.post<ResponseSuccess>(`${apiURL}register` ,data , {headers : header});
   }
 }

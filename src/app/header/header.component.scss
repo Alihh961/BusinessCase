@@ -40,7 +40,7 @@ header {
         transition: 0.7s;
 
         &.openedArrow{
-          transform:rotateZ(90deg);
+          transform:rotateZ(-90deg) rotateY(180deg);
         }
       }
     }
@@ -63,13 +63,16 @@ header {
         width: 100%;
         text-align: center;
         cursor: pointer;
+        text-decoration: none;
+        color: black;
 
         &:hover{
           background-color: grey;
         }
       }
-  &.opennedProfiler{
+  &.openedProfiler{
     height: 182px;
+    overflow: scroll;
   }
     }
   }

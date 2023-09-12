@@ -14,6 +14,16 @@ html {
   background-color: transparent;
 }
 
+app-dashboard {
+  display: block;
+  min-height: 90vh;
+}
+
+app-profile {
+  display: block;
+  min-height: 90vh;
+}
+
 .banner {
   background-color: #0d192b;
   background-image: radial-gradient(circle at 28% 50%, #362871 80px, transparent 100px), radial-gradient(circle at 64% 71%, #655223 10px, transparent 50px);

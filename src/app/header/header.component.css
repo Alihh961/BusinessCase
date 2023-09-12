@@ -14,6 +14,16 @@ html {
   background-color: transparent;
 }
 
+app-dashboard {
+  display: block;
+  min-height: 90vh;
+}
+
+app-profile {
+  display: block;
+  min-height: 90vh;
+}
+
 header {
   display: flex;
   justify-content: space-around;
@@ -52,7 +62,7 @@ header .profile > a span {
   transition: 0.7s;
 }
 header .profile > a span.openedArrow {
-  transform: rotateZ(90deg);
+  transform: rotateZ(-90deg) rotateY(180deg);
 }
 header .profile div {
   position: absolute;
@@ -72,12 +82,15 @@ header .profile div a {
   width: 100%;
   text-align: center;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 }
 header .profile div a:hover {
   background-color: grey;
 }
-header .profile div.opennedProfiler {
+header .profile div.openedProfiler {
   height: 182px;
+  overflow: scroll;
 }
 header.onScroll {
   background: rgb(150, 150, 150) !important;

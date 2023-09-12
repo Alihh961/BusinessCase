@@ -1,18 +1,17 @@
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {Feature, FeatureCollection} from '../Interface/Address';
+import {Feature, FeatureCollection, Iaddress} from '../Interface/Address';
 import {UserInscription, User, UserLogin} from '../Interface/User';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {AuthenticationService} from '../services/auth/authentication.service';
-import {InputvalidationsService} from '../services/inputvalidator/inputvalidations.service';
+import {DateOfBirthValidator} from '../validators/inputvalidator/dateOfBirth.validator';
 import {CookieService} from '../services/cookie/cookie.service';
-import {LoggedInUserService} from '../services/loggedinuser/logged-in-user.service';
 import {UserService} from "../services/user/user.service";
 import {Router} from "@angular/router";
-import {catchError} from "rxjs";
 import {AddressService} from "../services/address/address.service";
-
+import {RegisterService} from "../services/register/register.service";
+import {PasswordmatchValidator} from "../validators/passwordMatchValidator/passwordmatch.validator";
 
 
 @Component({
@@ -23,23 +22,20 @@ import {AddressService} from "../services/address/address.service";
 export class LoginComponent {
 
   constructor(private http: HttpClient, private authService: AuthenticationService,
-              private ageIsValid: InputvalidationsService, private cookieService: CookieService,
+              private ageIsValid: DateOfBirthValidator, private cookieService: CookieService,
               private userService: UserService, private addressService: AddressService,
-              private router: Router,
+              private router: Router, private registerService: RegisterService,
   ) {
 
   }
 
   //* Variables related to the view template
-
-  passwordMatch !: boolean;
-  patternRespected: boolean = false;
-  pattern: any = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
   loginForm !: FormGroup;
   registrationFormGroup !: FormGroup;
+  addressObject !: Iaddress; // we use addressOBject to assign its value to userincriptiondetails.address
   addressResultsStatus: boolean = false; // for displaying the results of address from api external
-  addressErrorStatus: boolean =true; // for displaying an error if the path number doesn't start with number
-  addressInputDisplayStatus :boolean = true;// for displaying the input of address
+  addressErrorStatus: boolean = true; // for displaying an error if the path number doesn't start with number
+  addressInputDisplayStatus: boolean = true;// for displaying the input of address
 
 
   userinscriptiondetails: UserInscription = {
@@ -53,16 +49,13 @@ export class LoginComponent {
     address: {
       id: null,
       municipality: '',
-      departement: '',
+      department: '',
       region: '',
       path: '',
       buildingNumber: 0,
       postCode: 0
     }
   };
-
-
-  maxDate!: string; // maxDate for the calendar to prevent under 18 from inscrire
 
 
   // * Variables related to the component class file
@@ -82,8 +75,6 @@ export class LoginComponent {
     this.initLogForm();
     this.initRegistrationForm();
     this.checker();
-    console.log(this.loginForm);
-
   }
 
   //* Searching for address when a change happens
@@ -103,10 +94,10 @@ export class LoginComponent {
             console.log("Error");
           }
         )
-      }else{
+      } else {
         this.addressErrorStatus = true;
       }
-    }else{
+    } else {
       this.addressErrorStatus = true;
       console.log("no Value");
     }
@@ -116,61 +107,67 @@ export class LoginComponent {
   selectaddress(divElement: MouseEvent): void {
 
     // targeting the click Div
-    const addressDiv :HTMLDivElement = divElement.target as HTMLDivElement;
-    const address :string = (addressDiv.innerHTML).trim();
+    const addressDiv: HTMLDivElement = divElement.target as HTMLDivElement;
+    const address: string = (addressDiv.innerHTML).trim();
     const addressArray: string[] = address.split(",");
-    const number:number = parseInt(address.charAt(0));// we take the first index of the string to check if there is
+    const number: number = parseInt(address.charAt(0));// we take the first index of the string to check if there is
     // a building number at the start ot the input
-
-    console.log(parseInt(address.charAt(0)));
 
 
     if (!isNaN(number)) {
       // we check if we have a building number at the start , then we split the first index of addressArray
       // to get building number and path
       const pathArray = addressArray[0].split(" ");
-      const buildingNumber :number = parseInt(pathArray[0]);
+      const buildingNumber: number = parseInt(pathArray[0]);
       let path: string = "";
-      const postCode:number = parseInt(addressArray[2].trim());
+      const postCode: number = parseInt(addressArray[2].trim());
 
       //we don't know the number of words of the path then we do a loop, and we ignore the first index(building Number)
-      for(let i = 1 ; i < pathArray.length; i++){
+      for (let i = 1; i < pathArray.length; i++) {
         path += " " + pathArray[i].trim();
       }
 
       this.addressErrorStatus = false;
-      this.userinscriptiondetails.address = {
-        id : null,
+      this.addressObject = {// we use addressOBject to asign its value to userincriptiondetails.address
+        id: null,
         municipality: addressArray[1].trim(),
-        departement: addressArray[4].trim(),
+        department: addressArray[4].trim(),
         region: addressArray[5].trim(),
         path: path.trim(),
         buildingNumber: buildingNumber,
         postCode: postCode,
       };
+      this.userinscriptiondetails.address = this.addressObject;
       this.addressInputDisplayStatus = false;
       this.addressResultsStatus = false;
-    }else{
+    } else {
       console.log("not a number");
       this.addressErrorStatus = true;
     }
-    console.log(this.userinscriptiondetails);
-
-    console.log(this.userinscriptiondetails.address);
   }
 
   //* Reset the input to set a new address
   resetInput(): void {
     this.userinscriptiondetails.address = {
-      id : null,
+      id: null,
       municipality: "",
-      departement: "",
+      department: "",
       region: "",
       path: "",
       buildingNumber: null,
       postCode: null,
     };
-    this.addressInputDisplayStatus= true;
+    this.addressInputDisplayStatus = true;
+    this.addressObject = {
+      id: null,
+      municipality: "",
+      department: "",
+      region: "",
+      path: "",
+      buildingNumber: null,
+      postCode: null,
+    }
+    this.registrationFormGroup.get('thirdFaceGroup.street')?.setValue("");
 
   }
 
@@ -190,66 +187,36 @@ export class LoginComponent {
 
   //* Submitting the form
   onRegFormSubmit(): void {
-    console.log(this.registrationFormGroup);
-    // this.userinscriptiondetails = {
-    //   firstName: this.registrationFormGroup.get("firstFaceGroup")?.get("firstName")?.value,
-    //   lastName: this.registrationFormGroup.get("firstFaceGroup")?.get("lastName")?.value,
-    //   dateOfBirth: this.registrationFormGroup.get("firstFaceGroup")?.get("birthdate")?.value,
-    //   email: this.registrationFormGroup.get("secondFaceGroup")?.get("email")?.value,
-    //   password: this.registrationFormGroup.get("secondFaceGroup")?.get("password")?.value,
-    //   confPassword: this.registrationFormGroup.get("secondFaceGroup")?.get("confPassword")?.value,
-    //   path: this.registrationFormGroup.get("thirdFaceGroup")?.get("path")?.value,
-    //   buildingNumber: '',
-    //   municipality: '',
-    //   department: "" ,
-    //   postCode: 0,
-    //   region: '',
-    //   gender: ''
-    // };
-    console.log(this.registrationFormGroup.get('firstFaceGroup'));
-    console.log(this.registrationFormGroup.get('secondFaceGroup'));
-    console.log(this.registrationFormGroup.get('thirdFaceGroup'));
-
+    //   console.log(this.registrationFormGroup);
+    this.userinscriptiondetails = {
+      firstName: this.firstFaceGroup?.value.firstName,
+      lastName: this.firstFaceGroup?.value.lastName,
+      dateOfBirth: this.firstFaceGroup?.value.dateOfBirth,
+      email: this.secondFaceGroup?.value.email,
+      password: this.secondFaceGroup?.value.password,
+      confPassword: this.secondFaceGroup?.value.confPassword,
+      address: this.addressObject,
+      gender: this.thirdFaceGroup?.value.gender,
+    };
     console.log(this.userinscriptiondetails);
 
+    this.registerService.register(this.userinscriptiondetails).subscribe(
+      response => {
+        Swal.fire(
+          "Cool",
+          response.message,
+          "success"
+        )
+      },
+      (error) => {
+        Swal.fire(
+          "Ops",
+          error.error.detail,
+          "error"
+        )
 
-    // this.http.post<string[]>(url, this.userinscriptiondetails).subscribe(
-    //   (response) => {
-    //     // Handle success response
-    //     console.log(response[0]);
-    //     if (response[0] === "An account associated to this email!") {
-    //       Swal.fire(
-    //         'Ops',
-    //         response[0],
-    //         'error'
-    //       )
-    //     } else if (response[0] === "Account has been successfully registered") {
-    //       Swal.fire(
-    //         'Good job!',
-    //         response[0],
-    //         'success'
-    //       )
-    //     } else {
-    //       Swal.fire({
-    //         title: 'Error!',
-    //         text: response[0],
-    //         icon: 'error',
-    //         confirmButtonText: 'Try Again'
-    //       })
-    //     }
-    //
-    //   },
-    //   (error) => {
-    //     // Handle error response
-    //     Swal.fire({
-    //       title: 'Error!',
-    //       text: error,
-    //       icon: 'error',
-    //       confirmButtonText: 'Cool'
-    //     })
-    //   }
-    // );
-
+      }
+    )
   }
 
   //* Displaying only the valid date of people over than 18 years old
@@ -289,35 +256,11 @@ export class LoginComponent {
     }
   }
 
-  //* Check the password match using ngModelChange
-  checkPasswordMatch(): void {
-
-    if (this.userinscriptiondetails.password == this.userinscriptiondetails.confPassword) {
-      console.log("Passwords are equal");
-      this.passwordMatch = true;
-    } else {
-      console.log("Passwords are not equal");
-      this.passwordMatch = false;
-    }
-  }
-
-  passwordIsValid(event: Event): void {
-    const input = event.target as HTMLInputElement;
-
-    if (this.passwordMatch && this.pattern.test(input.value)) {
-      this.patternRespected == true;
-    } else {
-      this.patternRespected = false;
-
-    }
-
-  }
 
   initLogForm() {
     this.loginForm = new FormGroup({
       logemail: new FormControl("", [
-        Validators.required,
-        Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+        Validators.required
       ]),
       logpassword: new FormControl("", [Validators.required])
 
@@ -338,13 +281,13 @@ export class LoginComponent {
       firstFaceGroup: new FormGroup({
         firstName: new FormControl(null, [
           Validators.required,
-          // Validators.pattern("^[a-zA-Z]+$")
+          Validators.pattern("^[a-zA-Z]+$")
         ]),
         lastName: new FormControl(null, [
           Validators.required,
-          // Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)?$")
+          Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)?( [a-zA-Z]+)?$")
         ]),
-        birthdate: new FormControl(null, [
+        dateOfBirth: new FormControl(null, [
           Validators.required,
           this.ageValidator?.bind(this)
         ])
@@ -353,21 +296,24 @@ export class LoginComponent {
       secondFaceGroup: new FormGroup({
         email: new FormControl(null, [
           Validators.required,
-          // Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+          Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
         ]),
         password: new FormControl(null, [
           Validators.required,
-          // Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
+          Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
         ]),
         confPassword: new FormControl(null, [
           Validators.required,
-          // Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
+          Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
         ])
-      }),
+      }
+      // , {
+      //   validators : PasswordmatchValidator('password', 'confPassword')
+      // }
+      ),
 
       thirdFaceGroup: new FormGroup({
         street: new FormControl(null, Validators.required),
-        buildingNumber: new FormControl(null, Validators.required),
         gender: new FormControl(null, Validators.required)
       })
     })
@@ -381,8 +327,8 @@ export class LoginComponent {
     return this.registrationFormGroup.get('firstFaceGroup.lastName');
   }
 
-  get birthdate() {
-    return this.registrationFormGroup.get('firstFaceGroup.birthdate');
+  get dateOfBirth() {
+    return this.registrationFormGroup.get('firstFaceGroup.dateOfBirth');
   }
 
   get password() {
@@ -397,21 +343,21 @@ export class LoginComponent {
     return this.registrationFormGroup.get('secondFaceGroup.email');
   }
 
-  get street() {
-    return this.registrationFormGroup.get('thirdFaceGroup.street');
+  get firstFaceGroup(){
+    return this.registrationFormGroup.get("firstFaceGroup");
   }
 
-  get buildingNumber() {
-    return this.registrationFormGroup.get('thirdFaceGroup.buildingNumber');
+  get secondFaceGroup(){
+    return this.registrationFormGroup.get("secondFaceGroup");
   }
 
-  get gender() {
-    return this.registrationFormGroup.get('thirdFaceGroup.gender');
+  get thirdFaceGroup(){
+    return this.registrationFormGroup.get("thirdFaceGroup");
   }
+
 
   // check if the user is logged in , then navigate to home page
   checker() {
-    console.log(this.userService.getLoggedUserStatus());
     if (this.userService.getLoggedUserStatus() || this.userService.getUserInfo() || this.cookieService.getToken()) {
       this.router.navigate(["home"]);
     }

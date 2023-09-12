@@ -23,6 +23,8 @@ import {Console, DateFormatPipe} from './pipes/date-transform.pipe';
 import { ShownftComponent } from './shownft/shownft.component';
 import { EthchartComponent } from './ethchart/ethchart.component';
 import {HttpinterceptorInterceptor} from "./services/httpinterceptor/httpinterceptor.interceptor";
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const appRoutes: Routes = [
   ];
@@ -46,6 +48,8 @@ const appRoutes: Routes = [
         Console,
         ShownftComponent,
         EthchartComponent,
+        DashboardComponent,
+        ProfileComponent,
     ],
   imports: [
     BrowserModule,

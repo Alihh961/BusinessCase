@@ -107,7 +107,8 @@
                         <small class="alert alert-danger" *ngIf="lastName?.errors?.['pattern']
                                                     && (lastName?.touched ||
                                                     lastName?.dirty)">
-                          Only letters are allowed and one white space Max!
+                          Only letters and up to two non-consecutive white spaces are allowed
+                          !
                         </small>
                       </div>
 
@@ -116,22 +117,22 @@
                       <div class="form-group mt-2 d-flex flex-column">
                         <span class="position-absolute dob">Date of Birth</span>
                         <input type="date" class="form-style" autocomplete="off"
-                               formControlName="birthdate">
+                               formControlName="dateOfBirth">
                         <i class="input-icon uil uil-calendar-alt"></i>
 
-                        <small class="alert alert-danger" *ngIf="birthdate?.errors?.['required']
-                                                    && (birthdate?.touched ||
-                                                    birthdate?.dirty)">
-                          Birthdate is required!
+                        <small class="alert alert-danger" *ngIf="dateOfBirth?.errors?.['required']
+                                                    && (dateOfBirth?.touched ||
+                                                    dateOfBirth?.dirty)">
+                          dateOfBirth is required!
                         </small>
-                        <small class="alert alert-danger" *ngIf="birthdate?.hasError('ageInvalid')
-  && (birthdate?.touched || birthdate?.dirty)">
+                        <small class="alert alert-danger" *ngIf="dateOfBirth?.hasError('ageInvalid')
+  && (dateOfBirth?.touched || dateOfBirth?.dirty)">
                           Sorry, you must be at least 18 years old!
                         </small>
 
                       </div>
 
-                      <svg class="nextArrow toSecondFace" (click)="changingFace($event)"
+                      <svg *ngIf="firstFaceGroup?.valid" class="nextArrow toSecondFace" (click)="changingFace($event)"
                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                            stroke-linecap="round" stroke-linejoin="round">
@@ -166,7 +167,6 @@
                         <input type="password" class="form-style" placeholder="Your Password"
                                autocomplete="off" formControlName="password">
 
-                        <!-- (ngModelChange)="checkPasswordMatch();passwordIsValid($event)" -->
                         <i class="input-icon uil uil-lock-alt"></i>
                         <small class="alert alert-danger"
                                *ngIf="password?.errors?.['pattern'] && (password?.touched || password?.dirty)">
@@ -178,9 +178,6 @@
                           Password Required!
                         </small>
 
-                        <small class="alert alert-danger">
-                          Password doesn't match!
-                        </small>
 
 
                       </div>
@@ -192,19 +189,13 @@
                                placeholder="Confirmed Password" autocomplete="off"
                                formControlName="confPassword">
                         <i class="input-icon uil uil-lock-alt"></i>
-                        <!-- (ngModelChange)="checkPasswordMatch();passwordIsValid($event)" -->
                       </div>
                       <small class="alert alert-danger"
-                             *ngIf="confPassword?.errors?.['pattern'] && (confPassword?.touched || confPassword?.dirty)">
-                        At Least one LowerCase,UpperCase,SpaecialCharacter
-                        ,Number(total of 8 characters)
-                      </small>
-                      <small class="alert alert-danger"
-                             *ngIf="confPassword?.errors?.['required'] && (confPassword?.touched || confPassword?.dirty)">
-                        Password Required!
+                             *ngIf="confPassword?.errors?.['pattern'] && (password?.touched || password?.dirty)">
+                        Password doesn't match!
                       </small>
 
-                      <svg (click)="changingFace($event)" class='nextArrow toThirdFace'
+                      <svg *ngIf="secondFaceGroup?.valid" (click)="changingFace($event)" class='nextArrow toThirdFace'
                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                            stroke-linecap="round" stroke-linejoin="round">
@@ -279,7 +270,7 @@
                       </div>
 
 
-                      <button class="btn" [disabled]="" #submitButton>Submit
+                      <button class="btn" [disabled]="!registrationFormGroup.valid">Submit
                       </button>
                       <svg class=" previousArrow toSecondFace" (click)=" changingFace($event)"
                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
