@@ -2,32 +2,46 @@
 
 /* You can add global styles to this file, and also import other style files */
 $bgColor: #0d192b;
-$hoverLinkedColor : #088178;
-$bgGlass :rgb(150 150 150);
-$bgColorForm : #2a2b38 ;
-body{
+$hoverLinkedColor: #088178;
+$bgGlass: rgb(150 150 150);
+$bgColorForm: #2a2b38;
+body {
 
-    // overflow: hidden;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
   background-color: #0d192b;
 }
 
 html {
-    height: 100vh;
+  height: 100vh;
 }
 
-*::selection{
-    background-color: transparent;
+*::selection {
+  background-color: transparent;
 }
 
-app-dashboard{
+app-dashboard {
   display: block;
   min-height: 90vh;
 }
 
-app-profile{
+app-profile {
   display: block;
-  min-height: 90vh;
+}
+
+
+app-loading {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.21);
+  backdrop-filter: blur(50px);
+  width: 100%;
+  z-index: 200;
+}
+
+app-verifyemailalert {
+  position: sticky;
+  bottom: 0;
 }

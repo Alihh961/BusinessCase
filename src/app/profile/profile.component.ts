@@ -1,4 +1,4 @@
-import {AfterViewChecked, AfterViewInit, Component, OnChanges} from '@angular/core';
+import {Component} from '@angular/core';
 import {User} from "../Interface/User";
 import {UserService} from "../services/user/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -29,7 +29,7 @@ export class ProfileComponent {
   }
 
   getUser(){
-    // we use a subjectBehaivor in the service so it will send a value everytime the property changes in the service
+    // we use a subject behavior in the service so , it will send a value everytime the property changes in the service
     this.userService.loggedUser$.subscribe(
       (userInfo: User | undefined) => {
         if (userInfo) {
@@ -43,7 +43,6 @@ export class ProfileComponent {
       }
     );
   }
-
 
 
   initEditForm() {
@@ -79,6 +78,8 @@ export class ProfileComponent {
   editProfileMethod() {
     console.log(this.editForm?.value);
     console.log(this.currentUser);
+
+
   }
 
 }

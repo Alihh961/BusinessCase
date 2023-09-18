@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule, Routes} from '@angular/router';
@@ -26,8 +26,18 @@ import {HttpinterceptorInterceptor} from "./services/httpinterceptor/httpinterce
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ProfileComponent} from './profile/profile.component';
 import {AuthGuard} from "./guard/auth.guard";
+import {UserService} from "./services/user/user.service";
+import { InitializerModule } from './initializer/initializer.module';
+import { LoadingComponent } from './loading/loading.component';
+import {StartupService} from "./services/startUp/startup.service";
+import { VerifyemailalertComponent } from './verifyemailalert/verifyemailalert.component';
+import { EmailverificationComponent } from './emailverification/emailverification.component';
 
 const appRoutes: Routes = [];
+
+export function initConfig(StartUpService :StartupService){
+
+}
 
 @NgModule({
   declarations: [
@@ -50,6 +60,9 @@ const appRoutes: Routes = [];
     EthchartComponent,
     DashboardComponent,
     ProfileComponent,
+    LoadingComponent,
+    VerifyemailalertComponent,
+    EmailverificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,16 +73,22 @@ const appRoutes: Routes = [];
     RouterModule.forRoot(appRoutes, {
       useHash: false,
 
-    })
+    }),
+    InitializerModule
   ],
   providers: [
     CookieService,
-    AuthGuard
+    AuthGuard,
+    // StartupService,
     // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: HttpinterceptorInterceptor,
-    //   multi: true,
-    // },
+    //   provide : APP_INITIALIZER,
+    //   multi:true,
+    //   useFactory:
+    //     (StartUpService :StartupService)=>{
+    //       return StartUpService.load();
+    //   },
+    //   deps:[StartupService]
+    // }
   ],
   exports: [
     RouterModule

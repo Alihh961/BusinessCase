@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 import {AddressService} from "../services/address/address.service";
 import {RegisterService} from "../services/register/register.service";
 import {PasswordmatchValidator} from "../validators/passwordMatchValidator/passwordmatch.validator";
+import {StartupService} from "../services/startUp/startup.service";
 
 
 @Component({
@@ -25,6 +26,7 @@ export class LoginComponent {
               private ageIsValid: DateOfBirthValidator, private cookieService: CookieService,
               private userService: UserService, private addressService: AddressService,
               private router: Router, private registerService: RegisterService,
+              private startUpService : StartupService
   ) {
 
   }
@@ -371,8 +373,11 @@ export class LoginComponent {
     };
 
     if (this.loginForm.valid) {
+      this.startUpService.setLoadingStatus(true);
+
       this.authService.login(user).subscribe(
         (response: User | any): void => {
+          this.startUpService.setLoadingStatus(false);
           this.userService.setUserInfo(response);
           this.userService.setLoggedUserStatus(true);
           this.router.navigate(['home']);

@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent, pathMatch: 'full'},
   {path: 'nfts', component: NftsComponent, pathMatch: 'full',canActivate: [AuthGuard]},
-  {path: 'nft/:i', component: ShownftComponent, pathMatch: 'full',canActivate: [AuthGuard]},
+  {path: 'nft', component: ShownftComponent, pathMatch: 'full',canActivate: [AuthGuard]},
   {path: 'ethchart', component: EthchartComponent, pathMatch: 'full',canActivate: [AuthGuard]},
   {path: 'contact', component: ContactComponent, pathMatch: 'full',canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent, pathMatch: 'full'},

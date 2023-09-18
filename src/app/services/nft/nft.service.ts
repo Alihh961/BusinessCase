@@ -24,7 +24,6 @@ export class NftService {
 
   }
 
-
   getAllNftsQuantity():Observable<number>{
    return  this.http.get<number>(`${apiURL}nftsquantity`);
   }

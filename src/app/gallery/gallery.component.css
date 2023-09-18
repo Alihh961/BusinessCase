@@ -21,7 +21,21 @@ app-dashboard {
 
 app-profile {
   display: block;
-  min-height: 90vh;
+}
+
+app-loading {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.21);
+  backdrop-filter: blur(50px);
+  width: 100%;
+  z-index: 200;
+}
+
+app-verifyemailalert {
+  position: sticky;
+  bottom: 0;
 }
 
 .searchFilterDiv {

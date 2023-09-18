@@ -13,6 +13,7 @@ import {AuthenticationService} from "../services/auth/authentication.service";
 import {CookieService} from "../services/cookie/cookie.service";
 import {UserService} from "../services/user/user.service";
 import {NavigationEnd, Router} from "@angular/router";
+import {StartupService} from "../services/startUp/startup.service";
 
 
 @Component({
@@ -21,12 +22,13 @@ import {NavigationEnd, Router} from "@angular/router";
   styleUrls: ['./header.component.scss'],
 
 })
-export class HeaderComponent implements AfterViewChecked {
+export class HeaderComponent {
 
   constructor(private authService: AuthenticationService,
               private cookieService: CookieService,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private startUpService : StartupService) {
   }
 
 
@@ -44,6 +46,7 @@ export class HeaderComponent implements AfterViewChecked {
 
     // Forcing the information related to the loggeduser and loginstatus to be changed
     // if we don't force it , the informations related to the user will stay the say (full name for example)
+    // or the full name wont be displayed in the header section
     this.router.events.subscribe(
       event => {
         if (event instanceof NavigationEnd) {
@@ -52,13 +55,13 @@ export class HeaderComponent implements AfterViewChecked {
         }
       }
     )
-  }
 
-
-  ngAfterViewChecked() {
 
 
   }
+
+
+
 
   @HostListener('window:scroll')// listen to the scroll event;
 
@@ -94,8 +97,9 @@ export class HeaderComponent implements AfterViewChecked {
     if (token) {
       this.authService.getUser(token).subscribe(
         response => {
-          this.userService.setUserInfo(response);
-          this.userService.setLoggedUserStatus(true);
+          this.startUpService.setLoadingStatus(false);// hide loading component
+          this.userService.setUserInfo(response);// save the user info in the service
+          this.userService.setLoggedUserStatus(true);// set logged in user status to true
           this.loggedUser = response;
           this.loginInStatus = true;
         },

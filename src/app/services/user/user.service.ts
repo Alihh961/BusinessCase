@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CookieService as CookieNgx } from 'ngx-cookie-service';
 import {User} from "../../Interface/User";
 import {BehaviorSubject, Observable, of} from "rxjs";
 
@@ -8,9 +7,11 @@ import {BehaviorSubject, Observable, of} from "rxjs";
 })
 export class UserService {
 
-  constructor( private CookieService : CookieNgx) { }
+  constructor() { }
 
-  private loggedStatus :boolean = false;
+  private loggedStatusSubject : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  loggedStatus$ :Observable<boolean> = this.loggedStatusSubject.asObservable();
+
   private loggedUserSubject : BehaviorSubject<User | undefined> = new BehaviorSubject<User | undefined>(undefined);
   loggedUser$ : Observable<User | undefined> = this.loggedUserSubject.asObservable();
 
@@ -24,11 +25,11 @@ export class UserService {
   }
 
   setLoggedUserStatus(value :boolean): void{
-    this.loggedStatus = value;
+    this.loggedStatusSubject.next(value);
   }
 
   getLoggedUserStatus() :boolean{
-    return this.loggedStatus;
+    return this.loggedStatusSubject.value;
   }
 
 

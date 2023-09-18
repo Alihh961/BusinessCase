@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Nft} from "../Interface/Nft";
 import {apiURL} from "../../environment/environment";
 import {ActivatedRoute} from "@angular/router";
+import {StartupService} from "../services/startUp/startup.service";
 
 @Component({
   selector: 'app-shownft',
@@ -13,7 +14,8 @@ export class ShownftComponent {
 
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private startUpService : StartupService
   ) {
   }
 
@@ -28,11 +30,14 @@ export class ShownftComponent {
 
   getANft(): void {
     let url = `${apiURL}nft?i=${this.nftId}`;
+    this.startUpService.setLoadingStatus(true);
     this.http.get<Nft>(url).subscribe(
       nft => {
 
-        nft.image.url = "assets/imgs/nfts/" + nft.image.url;
+        nft.image.url = "https://127.0.0.1:8000/uploads/" + nft.image.url;
         this.nft = nft;
+        this.startUpService.setLoadingStatus(false);
+
       }
     );
   }

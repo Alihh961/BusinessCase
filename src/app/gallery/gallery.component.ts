@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Nft} from "../Interface/Nft";
 import {NftService} from "../services/nft/nft.service";
-import {CookieService} from "../services/cookie/cookie.service";
-import { from } from "rxjs";
-import { switchMap } from "rxjs/operators";
+import {StartupService} from "../services/startUp/startup.service";
+
 
 
 @Component({
@@ -23,7 +22,7 @@ export class GalleryComponent implements OnInit {
   // checked radio button is all by default
   subCategoryFilterValue: string = "";
 
-  constructor(private nftService: NftService , private CookieService :CookieService) {
+  constructor(private nftService: NftService,private startUpService : StartupService) {
   }
 
 
@@ -40,12 +39,17 @@ export class GalleryComponent implements OnInit {
 
   // get all nfts
   getAllNfts(): void {
+    if(this.numberOfNftsToShow == 7){
+    this.startUpService.setLoadingStatus(true);
+    }
     this.nftService.getAllNfts(this.numberOfNftsToShow).subscribe(
       data => {
         for (let i = 0; i < data.length; i++) {
-          data[i].image.url = "assets/imgs/nfts/" + data[i].image.url;
+          data[i].image.url = "https://127.0.0.1:8000/uploads/" + data[i].image.url;
         }
         this.nfts = data;
+        this.startUpService.setLoadingStatus(false);
+
       },
       error => {
         console.log(error);
@@ -53,13 +57,12 @@ export class GalleryComponent implements OnInit {
     )
   }
 
-
   // If a filter is added
   getFilteredNfts(): void {
     this.nftService.getFilteredNfts(this.searchInputValue, this.subCategoryFilterValue, this.orderBy, this.numberOfNftsToShow).subscribe(
       (data: Nft[]): void => {
         for (let i = 0; i < data.length; i++) {
-          data[i].image.url = "assets/imgs/nfts/" + data[i].image.url;
+          data[i].image.url = "https://127.0.0.1:8000/uploads/" + data[i].image.url;
         }
         this.nfts = data;
 
@@ -97,7 +100,7 @@ export class GalleryComponent implements OnInit {
   // show more nfts if there is more on button clicked
   showMoreNfts() {
     this.numberOfNftsToShow += 5;
-
+// we chek when we reach the max number of nfts in database then we hide the show button
     if (this.nftTotalquantity) {
       if (this.numberOfNftsToShow >= this.nftTotalquantity) {
         this.showMoreButtonStatus = false;

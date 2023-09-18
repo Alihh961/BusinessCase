@@ -13,9 +13,6 @@ export class NftsComponent implements OnInit {
 
   ngOnInit(): void {
     this.titlePage.setTitle("NFTs");
-    console.log(this.userService.getUserInfo());
-    console.log(this.userService.getLoggedUserStatus());
-
 
   }
 }
