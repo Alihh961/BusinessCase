@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubcategoryService} from '../services/subcategory/subcategory.service';
-import {SubCategory} from "../Interface/SubCategory";
+import {SubcategoryService} from '../_services/subcategory/subcategory.service';
+import {SubCategory} from "../_Interface/SubCategory";
 
 @Component({
   selector: 'app-filter',

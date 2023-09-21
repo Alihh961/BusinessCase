@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Nft} from "../Interface/Nft";
+import {Nft} from "../_Interface/Nft";
 import {apiURL} from "../../environment/environment";
 import {ActivatedRoute} from "@angular/router";
-import {StartupService} from "../services/startUp/startup.service";
+import {StartupService} from "../_services/startUp/startup.service";
 
 @Component({
   selector: 'app-shownft',

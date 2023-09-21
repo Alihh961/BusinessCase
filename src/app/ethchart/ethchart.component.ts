@@ -1,9 +1,8 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Eth} from "../Interface/Eth";
-import {apiURL} from "../../environment/environment";
+import {Eth} from "../_Interface/Eth";
 import {Chart} from "chart.js/auto";
-import {EthvaluesService} from "../services/eth/ethvalues.service";
+import {EthvaluesService} from "../_services/eth/ethvalues.service";
 
 
 

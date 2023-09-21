@@ -1,18 +1,18 @@
 import {HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {Feature, FeatureCollection, Iaddress} from '../Interface/Address';
-import {UserInscription, User, UserLogin} from '../Interface/User';
+import {Feature, FeatureCollection, Iaddress} from '../_Interface/Address';
+import {UserInscription, User, UserLogin} from '../_Interface/User';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {AuthenticationService} from '../services/auth/authentication.service';
-import {DateOfBirthValidator} from '../validators/inputvalidator/dateOfBirth.validator';
-import {CookieService} from '../services/cookie/cookie.service';
-import {UserService} from "../services/user/user.service";
+import {AuthenticationService} from '../_services/auth/authentication.service';
+import {DateOfBirthValidator} from '../_validators/inputvalidator/dateOfBirth.validator';
+import {CookieService} from '../_services/cookie/cookie.service';
+import {UserService} from "../_services/user/user.service";
 import {Router} from "@angular/router";
-import {AddressService} from "../services/address/address.service";
-import {RegisterService} from "../services/register/register.service";
-import {PasswordmatchValidator} from "../validators/passwordMatchValidator/passwordmatch.validator";
-import {StartupService} from "../services/startUp/startup.service";
+import {AddressService} from "../_services/address/address.service";
+import {RegisterService} from "../_services/register/register.service";
+import {PasswordmatchValidator} from "../_validators/passwordMatchValidator/passwordmatch.validator";
+import {StartupService} from "../_services/startUp/startup.service";
 
 
 @Component({
@@ -258,7 +258,6 @@ export class LoginComponent {
     }
   }
 
-
   initLogForm() {
     this.loginForm = new FormGroup({
       logemail: new FormControl("", [
@@ -381,8 +380,7 @@ export class LoginComponent {
           this.userService.setUserInfo(response);
           this.userService.setLoggedUserStatus(true);
           this.router.navigate(['home']);
-          console.log(response)
-          ;
+
           const fullName: string | undefined = `${response.firstName} ${response?.lastName}`.toUpperCase();
 
           Swal.fire({
@@ -393,12 +391,23 @@ export class LoginComponent {
           });
         }
         ,
-        () => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error...',
-            text: 'Please Check your Email and Password!',
-          });
+        (error) => {
+          console.log(error);
+          if(error.status === 500){
+            Swal.fire({
+              icon: 'error',
+              title: 'Internal Error ,pleas try again later',
+              text: 'Please Check your Email and Password!',
+            })
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Error...',
+              text: 'Please Check your Email and Password!',
+            });
+          }
+
+          this.startUpService.setLoadingStatus(false);
         })
     }
 

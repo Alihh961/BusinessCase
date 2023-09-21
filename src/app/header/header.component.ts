@@ -8,12 +8,12 @@ import {
   Input,
   AfterViewChecked, AfterContentInit
 } from '@angular/core';
-import {User} from '../Interface/User';
-import {AuthenticationService} from "../services/auth/authentication.service";
-import {CookieService} from "../services/cookie/cookie.service";
-import {UserService} from "../services/user/user.service";
+import {User} from '../_Interface/User';
+import {AuthenticationService} from "../_services/auth/authentication.service";
+import {CookieService} from "../_services/cookie/cookie.service";
+import {UserService} from "../_services/user/user.service";
 import {NavigationEnd, Router} from "@angular/router";
-import {StartupService} from "../services/startUp/startup.service";
+import {StartupService} from "../_services/startUp/startup.service";
 
 
 @Component({

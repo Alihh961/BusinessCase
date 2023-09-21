@@ -4,7 +4,7 @@
   <app-filter (filterBySubCategoryChangedEvent)="onFilterSelectionChanged($event)"></app-filter>
 
 </div>
-<section class="homePageGallery">
+<section class="homePageGallery" *ngIf="nfts">
 
   <ng-container *ngFor="let nft of nfts">
     <div class="product-accueil" (mouseenter)="hovered=true" (mouseleave)="hovered=false"
@@ -33,6 +33,10 @@
   </ng-container>
 
 
+
+
 </section>
+
+
   <button *ngIf="showMoreButtonStatus" (click)="showMoreNfts()" class="showMore">Show More</button>
 <button (click)="showes()">toto</button>

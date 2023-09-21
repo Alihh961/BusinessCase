@@ -1,4 +1,4 @@
-import { Component, Output ,Renderer2 } from '@angular/core';
+import { Component,Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-cookies-notification',
@@ -8,7 +8,7 @@ import { Component, Output ,Renderer2 } from '@angular/core';
 export class CookiesNotificationComponent {
 
   constructor( private renderer :Renderer2 ){}
-  
+
   cookiesAccepted:boolean =false;
 
   notificationAccepted() {
@@ -17,6 +17,6 @@ export class CookiesNotificationComponent {
     console.log("Cookies was Accepted!");
   }
 
-  
+
 
 }

@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
-import {User} from "../Interface/User";
-import {UserService} from "../services/user/user.service";
+import {User} from "../_Interface/User";
+import {UserService} from "../_services/user/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ProfileService} from "../_services/profile/profile.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +19,8 @@ export class ProfileComponent {
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private profileService : ProfileService
   ) {
 
     this.initEditForm();
@@ -67,18 +70,41 @@ export class ProfileComponent {
         Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"),
         Validators.required,
       ]],
-
-      confNewPassword: ["", [
-        Validators.required,
-        Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
-      ]]
+      //
+      // confNewPassword: ["", [
+      //   Validators.required,
+      //   Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
+      // ]]
     });
   }
 
   editProfileMethod() {
-    console.log(this.editForm?.value);
-    console.log(this.currentUser);
 
+    let object = Object.assign({},{id : this.userService.getUserInfo()?.id} , this.editForm.value);
+    console.log(object);
+    this.profileService.updateUserInfo(object).subscribe(
+      response=>{
+        this.editForm.get("newPassword")?.reset();
+        this.editForm.get("currentPassword")?.reset();
+
+        Swal.fire(
+          "success",
+          response,
+          "success"
+        )
+      },
+      error=>{
+        if(error.status == 500){
+          error.error = "Internal Error , please again later!";
+        }
+        Swal.fire({
+            title: "Error",
+            text :error.error,
+            icon :"error"
+          }
+        )
+      }
+    )
 
   }
 

@@ -1,7 +1,7 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
-import {RouterModule, Routes} from '@angular/router';
+import {Router, RouterModule, Routes} from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
@@ -19,25 +19,24 @@ import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {LoginComponent} from './login/login.component';
 import {CookieService} from 'ngx-cookie-service';
-import {Console, DateFormatPipe} from './pipes/date-transform.pipe';
+import {Console, DateFormatPipe} from './_pipes/date-transform.pipe';
 import {ShownftComponent} from './shownft/shownft.component';
 import {EthchartComponent} from './ethchart/ethchart.component';
-import {HttpinterceptorInterceptor} from "./services/httpinterceptor/httpinterceptor.interceptor";
+import {HttpinterceptorInterceptor} from "./_services/httpinterceptor/httpinterceptor.interceptor";
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {ProfileComponent} from './profile/profile.component';
-import {AuthGuard} from "./guard/auth.guard";
-import {UserService} from "./services/user/user.service";
-import { InitializerModule } from './initializer/initializer.module';
-import { LoadingComponent } from './loading/loading.component';
-import {StartupService} from "./services/startUp/startup.service";
-import { VerifyemailalertComponent } from './verifyemailalert/verifyemailalert.component';
-import { EmailverificationComponent } from './emailverification/emailverification.component';
+import {AuthGuard} from "./_guard/auth.guard";
+import {UserService} from "./_services/user/user.service";
+import {InitializerModule} from './_initializer/initializer.module';
+import {LoadingComponent} from './loading/loading.component';
+import {StartupService} from "./_services/startUp/startup.service";
+import {VerifyemailalertComponent} from './verifyemailalert/verifyemailalert.component';
+import {AuthenticationService} from "./_services/auth/authentication.service";
+import {map, take, tap} from "rxjs";
+import {NftService} from "./_services/nft/nft.service";
 
 const appRoutes: Routes = [];
 
-export function initConfig(StartUpService :StartupService){
-
-}
 
 @NgModule({
   declarations: [
@@ -62,7 +61,6 @@ export function initConfig(StartUpService :StartupService){
     ProfileComponent,
     LoadingComponent,
     VerifyemailalertComponent,
-    EmailverificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,16 +77,13 @@ export function initConfig(StartUpService :StartupService){
   providers: [
     CookieService,
     AuthGuard,
-    // StartupService,
-    // {
-    //   provide : APP_INITIALIZER,
-    //   multi:true,
-    //   useFactory:
-    //     (StartUpService :StartupService)=>{
-    //       return StartUpService.load();
-    //   },
-    //   deps:[StartupService]
-    // }
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : HttpinterceptorInterceptor,
+      multi : true,
+    },
+    StartupService,
+
   ],
   exports: [
     RouterModule

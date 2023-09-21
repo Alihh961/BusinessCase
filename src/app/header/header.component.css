@@ -104,7 +104,20 @@ header .profile div a:hover {
 }
 header .profile div.openedProfiler {
   height: 182px;
-  overflow: scroll;
+  overflow-y: scroll;
+}
+header .profile div.openedProfiler::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+header .profile div.openedProfiler::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+header .profile div.openedProfiler::-webkit-scrollbar-thumb {
+  background-color: #5e5e5c;
+  border-radius: 10px;
 }
 header.onScroll {
   background: rgb(150, 150, 150) !important;

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Nft} from "../Interface/Nft";
-import {NftService} from "../services/nft/nft.service";
-import {StartupService} from "../services/startUp/startup.service";
+import {Nft} from "../_Interface/Nft";
+import {NftService} from "../_services/nft/nft.service";
+import {StartupService} from "../_services/startUp/startup.service";
 
 
 
@@ -76,6 +76,16 @@ export class GalleryComponent implements OnInit {
   }
 
   onSearchTextEntered(inputValue: string): void {
+    if(this.nftTotalquantity) {// show all the results of the search without show button and without max number of nfts
+      this.numberOfNftsToShow = this.nftTotalquantity;
+    }
+    if(!inputValue){ // when the search input is empty , we will show the button
+      this.showMoreButtonStatus = true;
+      this.numberOfNftsToShow = 7;
+    }else{
+      this.showMoreButtonStatus = false;// hide the button when we search because no more max number of nft to show
+    }
+
     this.searchInputValue = inputValue;
     this.getFilteredNfts();
   }
@@ -107,7 +117,7 @@ export class GalleryComponent implements OnInit {
       }
     }
     this.getFilteredNfts();
-    this.getAllNfts();
+    // this.getAllNfts();
   }
 
 }

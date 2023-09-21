@@ -9,7 +9,7 @@ import {LoginComponent} from "./login/login.component";
 import {Error404Component} from "./error404/error404.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {ProfileComponent} from "./profile/profile.component";
-import {AuthGuard} from "./guard/auth.guard";
+import {AuthGuard} from "./_guard/auth.guard";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
