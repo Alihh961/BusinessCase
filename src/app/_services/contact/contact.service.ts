@@ -12,7 +12,6 @@ export class ContactService {
 
 
   sendMessageContact(formData :any) :Observable<Object>{
-    console.log(formData);
     return this.http.post(`${apiURL}contact` , formData);
   }
 
