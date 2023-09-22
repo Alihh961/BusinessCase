@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Title} from '@angular/platform-browser';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UploadfileService} from "../_services/uploadfile.service";
+import {ContactService} from "../_services/contact/contact.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-contact',
@@ -10,46 +10,82 @@ import {UploadfileService} from "../_services/uploadfile.service";
 })
 export class ContactComponent {
 
-  constructor(private fb: FormBuilder, private uploadFileService : UploadfileService) {
+  constructor(private fb: FormBuilder, private contactService: ContactService) {
   }
 
   form !: FormGroup;
-  fileToUpload :File | null = null;
+  uploadedFile: File | null = null;
 
   ngOnInit() {
-  this.initForm();
+    this.initForm();
 
   }
-
 
   initForm() {
     this.form = this.fb.group({
-      name: ["" , Validators.required],
+      senderName: ["", Validators.required],
       email: ["", Validators.required],
       subject: ["", Validators.required],
       message: ["", Validators.required],
-      image : [""]
+      image: [""]
     })
   }
 
-  // handleFileInput(files: FileList) {
-  //     this.fileToUpload = files.item(0);
-  //     console.log("lksdhlfk")
-  // }
 
-  uploadFileToActivity() {
-    // if(this.fileToUpload){
-    //   this.uploadFileService.postFile(this.fileToUpload).subscribe(response => {
-    //     console.log(response);
-    //   }, error => {
-    //     console.log(error);
-    //   });
-    // }
+  addFile(event: any): void {
+    if (event.target.files.length > 0) {
+      this.uploadedFile = event.target.files[0];
+    } else {
+      // we set it to null because maybe the client upload a file and later he remove it !
+      this.uploadedFile = null;
+    }
   }
 
 
   sendMessage() {
-    console.log(this.form?.value);
-    console.log(this.uploadFileService.postFile(this.form.get("image")?.value));
+
+    if (this.form.valid) {
+      let formData :FormData = new FormData();
+      if (this.uploadedFile) {
+        formData.append("image", this.uploadedFile);
+      }
+      formData.append("senderName" , this.form.get("senderName")?.value);
+      formData.append("message" , this.form.get("message")?.value);
+      formData.append("subject" , this.form.get("subject")?.value);
+      formData.append("email" , this.form.get("email")?.value);
+
+      this.contactService.sendMessageContact(formData).subscribe(
+        (response) => {
+    Swal.fire(
+      {
+        "text" : "Thank you for your message !",
+        "icon" : "success" ,
+        "title" : "Success"
+      }
+    )
+        },
+        (error) => {
+          Swal.fire(
+            {
+              "title" : "Error",
+              "icon" : "error",
+              "text" : error.error
+            }
+          )
+        }
+      )
+    }else{
+      Swal.fire(
+        {
+          'title' : "Error",
+          'icon' : "error",
+          "text" : "All Fields are required"
+        }
+      )
+    }
+
+
   }
+
+
 }

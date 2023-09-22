@@ -1,6 +1,6 @@
 <form (ngSubmit)="sendMessage()" [formGroup]="form">
   <label for="name">Name:</label>
-  <input type="text" id="name" formControlName="name" required><br><br>
+  <input type="text" id="name" formControlName="senderName" required><br><br>
 
   <label for="email">Email:</label>
   <input type="email" id="email" formControlName="email" required><br><br>
@@ -12,7 +12,7 @@
   <textarea id="message" formControlName="message" rows="4" cols="50" required></textarea><br><br>
 
   <label for="file">Upload Image:</label>
-  <input type="file" id="file" formControlName="image" ><br><br>
+  <input type="file" id="file" formControlName="image" (change)="addFile($event)"><br><br>
 
   <input type="submit" value="Submit">
 </form>

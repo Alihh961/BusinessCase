@@ -21,25 +21,8 @@ export class HttpinterceptorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-const token = localStorage.getItem("token");
-console.log("interceptor");
+  return next.handle(request);
 
-      return next.handle(request.clone({ setHeaders : { Authorization : 'bearer'+token, "Content-Type" : "application/json"}}))
-        .pipe(
-          tap({
-            error: (err: any)=>{
-              if(err instanceof HttpErrorResponse){
-                if (err.status != 401){ // if the error is not an un authorized
-                  return;
-                }
-
-                // if the error is un authorized (401)
-                this.authService.logout();
-                this.router.navigate(["home"])
-              }
-            }
-          })
-        );
 
   }
 }

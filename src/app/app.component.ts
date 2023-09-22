@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, Renderer2} from '@angular/core';
 import {StartupService} from "./_services/startUp/startup.service";
 import {CookieService} from "./_services/cookie/cookie.service";
 import {UserService} from "./_services/user/user.service";
@@ -10,17 +10,19 @@ import {TogglebodyclassService} from "./_services/body/togglebodyclass.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit{
   constructor(
     private startUpService: StartupService,
     private cookieService: CookieService,
     private userService: UserService,
     private toggleBody: TogglebodyclassService,
+    private renderer : Renderer2
   ) {
   }
 
   loadingStatus: boolean = false;
   userVerified: boolean | undefined = false;
+
 
   ngOnInit() {
 
@@ -71,5 +73,12 @@ export class AppComponent {
     )
   }
 
+  ngAfterViewInit() {
+
+    // we add the file js to the DOM after the Init of the view to avoid undefined html tags
+    const script = this.renderer.createElement('script');
+    script.src = 'assets/javascript.js';
+    document.body.appendChild(script);
+  }
 
 }
