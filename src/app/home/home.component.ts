@@ -23,18 +23,6 @@ export class HomeComponent implements OnInit{
       );
     }
 
-    toto(){
-// this.authService.login({username:"hajhassan.ali@outlook.com" , password :"1"}).subscribe(
-//   (response)=>{
-//     console.log(response);
-//   }
-// )
-
-        }
-
-
-
-
 
 
     // banner: string ='./assets/imgs/imageHomePage.jpg'; // Slider Image

@@ -224,11 +224,9 @@ header .openedMenu span:nth-of-type(3) {
 }
 
 @media all and (max-width: 925px) {
-  /* header img {
-
-      margin: 0 -65px;
-
-  } */
+  header {
+    padding: 10px 15px;
+  }
   header div {
     position: fixed;
     width: 100%;
