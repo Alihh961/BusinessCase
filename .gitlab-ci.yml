@@ -3,8 +3,8 @@ stages :
   - deploy
 
 building the application:
-  image: node:18
   stage: build
+  image: node:18
   script:
     - npm install --force
     - npm run build
@@ -13,7 +13,7 @@ building the application:
       - dist/
 
 deploying the application:
-  image: pockost/phploy:4.9.3
   stage: deploy
+  image: pockost/phploy:4.8.5
   script:
     - phploy -s production
