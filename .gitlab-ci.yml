@@ -5,7 +5,9 @@ stages :
 building the application:
   image: node:18
   stage: build
-  script: "npm install --force && npm run build"
+  script:
+    - npm install --force
+    - npm run build
   artifacts:
     - dist/
 
