@@ -1,0 +1,16 @@
+stages :
+  - build
+  - deploy
+
+building the application:
+  image: node:18
+  stage: build
+  script: "npm install --force && npm run build"
+  artifacts:
+    - dist/
+
+deploying the application:
+  image: pockost/phploy:4.9.3
+  stage: deploy
+  script:
+    - phploy -s production

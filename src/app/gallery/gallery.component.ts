@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Nft} from "../_Interface/Nft";
 import {NftService} from "../_services/nft/nft.service";
 import {StartupService} from "../_services/startUp/startup.service";
+import {uploadsApiUrl} from "../../environment/environment";
 
 
 
@@ -33,9 +34,6 @@ export class GalleryComponent implements OnInit {
     this.getAllNftsQuantity();
   }
 
-  showes(){
-  //   console.log(this.CookieService.getUserInfo());
-  }
 
   // get all nfts
   getAllNfts(): void {
@@ -45,7 +43,7 @@ export class GalleryComponent implements OnInit {
     this.nftService.getAllNfts(this.numberOfNftsToShow).subscribe(
       data => {
         for (let i = 0; i < data.length; i++) {
-          data[i].image.url = "https://127.0.0.1:8000/uploads/" + data[i].image.url;
+          data[i].image.url = uploadsApiUrl + data[i].image.url;
         }
         this.nfts = data;
         this.startUpService.setLoadingStatus(false);
@@ -62,7 +60,7 @@ export class GalleryComponent implements OnInit {
     this.nftService.getFilteredNfts(this.searchInputValue, this.subCategoryFilterValue, this.orderBy, this.numberOfNftsToShow).subscribe(
       (data: Nft[]): void => {
         for (let i = 0; i < data.length; i++) {
-          data[i].image.url = "https://127.0.0.1:8000/uploads/" + data[i].image.url;
+          data[i].image.url = uploadsApiUrl + data[i].image.url;
         }
         this.nfts = data;
 
