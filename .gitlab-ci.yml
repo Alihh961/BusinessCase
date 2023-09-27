@@ -9,7 +9,8 @@ building the application:
     - npm install --force
     - npm run build
   artifacts:
-    - dist/
+    paths:
+      - dist/
 
 deploying the application:
   image: pockost/phploy:4.9.3
