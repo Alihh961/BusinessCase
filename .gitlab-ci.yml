@@ -14,6 +14,6 @@ building the application:
 
 deploying the application:
   stage: deploy
-  image: pockost/phploy:4.8.5
+  image: pockost/phploy:4.9.3
   script:
     - phploy -s production
