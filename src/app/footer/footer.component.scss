@@ -23,6 +23,15 @@ footer {
 
             h3 {
                 margin-bottom: 10px;
+              @media (max-width: 1012px){
+                font-size: 20px;
+              }
+              @media (max-width: 914px){
+                font-size: 18px;
+              }
+              @media (max-width: 700px){
+                font-size: 16px;
+              }
 
             }
 
@@ -32,6 +41,10 @@ footer {
                 a {
                     text-decoration: none;
                     color: white;
+
+                  @media( max-width: 700px){
+                    font-size: 14px;
+                  }
 
                     &:hover {
                         color: $hoverLinkedColor;
@@ -46,10 +59,15 @@ footer {
         background-color: #8080808c;
         text-align: center;
         width: 55%;
+      min-width: fit-content;
         padding: 10px;
         margin: 20px auto 0 auto;
         border-radius: 10px;
         color: #ffffff;
+
+      @media(max-width: 700px){
+        font-size: 14px;
+      }
     }
 
 }

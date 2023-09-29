@@ -89,7 +89,7 @@ app-verifyemailalert {
 }
 @media (max-width: 600px) {
   .banner div h2 {
-    font-size: 14px;
+    font-size: 18px;
   }
 }
 .banner div h2::after {
@@ -273,18 +273,12 @@ section:nth-of-type(1) p:nth-of-type(1) {
 }
 @media (max-width: 914px) {
   section:nth-of-type(1) p:nth-of-type(1) {
-    font-size: 14px;
-    background: rgba(8, 129, 120, 0.4);
+    font-size: 16px;
   }
 }
 @media (max-width: 700px) {
   section:nth-of-type(1) p:nth-of-type(1) {
-    font-size: 12px;
-  }
-}
-@media (max-width: 500px) {
-  section:nth-of-type(1) p:nth-of-type(1) {
-    font-size: 8px;
+    font-size: 14px;
   }
 }
 section:nth-of-type(1) p:nth-of-type(2) {
@@ -309,18 +303,13 @@ section:nth-of-type(1) p:nth-of-type(2) {
 }
 @media (max-width: 914px) {
   section:nth-of-type(1) p:nth-of-type(2) {
-    font-size: 14px;
+    font-size: 16px;
     background: rgba(121, 108, 29, 0.7);
   }
 }
 @media (max-width: 700px) {
   section:nth-of-type(1) p:nth-of-type(2) {
-    font-size: 12px;
-  }
-}
-@media (max-width: 500px) {
-  section:nth-of-type(1) p:nth-of-type(2) {
-    font-size: 8px;
+    font-size: 14px;
   }
 }
 
