@@ -16,47 +16,50 @@
                    (click)="changingColorOfSpan()"/>
             <label for="reg-log"></label>
             <h6 class="mb-0 pb-3"><span #signinspan>Sign In </span><span #signupspan>Sign Up</span></h6>
-            <div class="card-3d-wrap mx-auto my-0">
+            <div class="card-3d-wrap mx-auto my-0 col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-4 ">
               <div class="card-3d-wrapper">
 
 
                 <!-- Login form  -->
                 <form class="card-front" (ngSubmit)="loginMethod()" [formGroup]="loginForm">
-                  <div class="center-wrap full-height">
-                    <div class="section text-center">
-                      <h4 class="mb-4 pb-3">Log In</h4>
-                      <div class="form-group m-auto">
-                        <input type="email" class="form-style" placeholder="Your Email"
-                               autocomplete="off" formControlName="logemail">
-                        <i class="input-icon uil uil-at"></i>
-                        <small
-                          *ngIf="logemail?.errors?.['required'] && logemail?.touched ">Email
-                          is Required!</small>
-                        <small
-                          *ngIf="logemail?.errors?.['pattern'] && (logemail?.touched || logemail?.dirty)">
-                          Invalid email format!
-                        </small>
-                      </div>
 
 
-                      <div class="form-group m-auto mt-2">
-                        <input type="password" class="form-style" placeholder="Your Password"
-                               autocomplete="off" formControlName="logpassword">
-                        <i class="input-icon uil uil-lock-alt"></i>
-                        <small *ngIf="logPassword?.invalid &&
+                    <div class="center-wrap full-height p-2">
+                      <div class="section text-center">
+                        <h4 class="mb-4 pb-3">Log In</h4>
+                        <div class="form-group m-auto">
+                          <input type="email" class="form-style" placeholder="Your Email"
+                                 autocomplete="off" formControlName="logemail">
+                          <i class="input-icon uil uil-at"></i>
+                          <small
+                            *ngIf="logemail?.errors?.['required'] && logemail?.touched ">Email
+                            is Required!</small>
+                          <small
+                            *ngIf="logemail?.errors?.['pattern'] && (logemail?.touched || logemail?.dirty)">
+                            Invalid email format!
+                          </small>
+                        </div>
+
+
+                        <div class="form-group m-auto mt-2">
+                          <input type="password" class="form-style" placeholder="Your Password"
+                                 autocomplete="off" formControlName="logpassword">
+                          <i class="input-icon uil uil-lock-alt"></i>
+                          <small *ngIf="logPassword?.invalid &&
                                                 (logPassword?.touched || logPassword?.dirty)">Password is
-                          Required!</small>
+                            Required!</small>
 
+                        </div>
+
+
+                        <button [disabled]="loginForm.invalid" class="btn mt-4">Log-in</button>
+
+
+                        <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your
+                          password?</a></p>
                       </div>
-
-
-                      <button [disabled]="loginForm.invalid" class="btn mt-4">Log-in</button>
-
-
-                      <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your
-                        password?</a></p>
                     </div>
-                  </div>
+
                 </form>
 
 
@@ -179,7 +182,6 @@
                         </small>
 
 
-
                       </div>
 
 
@@ -225,12 +227,13 @@
                           <div *ngIf="addressErrorStatus" class="alert-danger  px-3 py-2">Building Number,Street Name,
                             Post Code
                           </div>
-                          <input *ngIf="addressInputDisplayStatus; else status " class="form-style p-0 text-center " #input type="text"
+                          <input *ngIf="addressInputDisplayStatus; else status " class="form-style p-0 text-center "
+                                 #input type="text"
                                  placeholder="Bld. № Rue Name ..." autocomplete="off"
                                  formControlName="street" (ngModelChange)="searchingAddress($event)" required>
                           <ng-template #status>
                             <span class="alert-info">Your address is: <b>{{userinscriptiondetails.address.buildingNumber
-                              + " " + userinscriptiondetails.address.path + " " + userinscriptiondetails.address.postCode}}</b></span>
+                            + " " + userinscriptiondetails.address.path + " " + userinscriptiondetails.address.postCode}}</b></span>
                           </ng-template>
                           <div *ngIf="addressResultsStatus" class="addressResults">
 

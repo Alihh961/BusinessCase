@@ -145,7 +145,6 @@ h6 span:first-child {
 
 .card-3d-wrap {
   position: relative;
-  width: 40%;
   height: 500px;
   transform-style: preserve-3d;
   perspective: 800px;
@@ -165,8 +164,9 @@ h6 span:first-child {
 .card-front,
 .card-back {
   width: 100%;
-  height: 100%;
+  height: 85%;
   background-color: #2a2b38;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg");
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: 300%;
@@ -184,6 +184,7 @@ h6 span:first-child {
 
 .card-front .form-group {
   width: 65%;
+  min-width: 195px;
 }
 
 .face {
@@ -238,7 +239,7 @@ h6 span:first-child {
 .form-control {
   padding: 13px 20px;
   padding-left: 55px;
-  height: 48px;
+  height: 35px;
   width: 100%;
   font-weight: 500;
   border-radius: 4px;
@@ -251,6 +252,12 @@ h6 span:first-child {
   border: none;
   transition: all 200ms linear;
   box-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+}
+@media (max-width: 576px) {
+  .form-style,
+  .form-control {
+    height: 25px;
+  }
 }
 
 .form-floating > label {
@@ -266,14 +273,19 @@ h6 span:first-child {
 
 .input-icon {
   position: absolute;
-  top: 0;
+  top: -2.5px;
   left: 18px;
-  height: 48px;
+  height: 35px;
   font-size: 24px;
-  line-height: 48px;
   text-align: left;
   color: #088178;
   transition: all 200ms linear;
+}
+@media (max-width: 576px) {
+  .input-icon {
+    font-size: 20px;
+    top: -3.5px;
+  }
 }
 
 .form-group input:-ms-input-placeholder {
@@ -282,40 +294,7 @@ h6 span:first-child {
   transition: all 200ms linear;
 }
 
-.form-group input::-moz-placeholder {
-  color: #c4c3ca;
-  opacity: 0.7;
-  transition: all 200ms linear;
-}
-
-.form-group input:-moz-placeholder {
-  color: #c4c3ca;
-  opacity: 0.7;
-  transition: all 200ms linear;
-}
-
-.form-group input::-webkit-input-placeholder {
-  color: #c4c3ca;
-  opacity: 0.7;
-  transition: all 200ms linear;
-}
-
 .form-group input:focus:-ms-input-placeholder {
-  opacity: 0;
-  transition: all 200ms linear;
-}
-
-.form-group input:focus::-moz-placeholder {
-  opacity: 0;
-  transition: all 200ms linear;
-}
-
-.form-group input:focus:-moz-placeholder {
-  opacity: 0;
-  transition: all 200ms linear;
-}
-
-.form-group input:focus::-webkit-input-placeholder {
   opacity: 0;
   transition: all 200ms linear;
 }
