@@ -98,7 +98,7 @@
 
 
                       <!-- Last name -->
-                      <div class="form-group mt-2">
+                      <div class="form-group mt-4">
                         <input type="text" class="form-style" placeholder="Last Name"
                                autocomplete="off" formControlName="lastName">
                         <i class="input-icon uil uil-user"></i>
@@ -117,7 +117,7 @@
 
 
                       <!-- Date Of Birth -->
-                      <div class="form-group mt-2 d-flex flex-column">
+                      <div class="form-group mt-4 d-flex flex-column">
                         <span class="position-absolute dob">Date of Birth</span>
                         <input type="date" class="form-style" autocomplete="off"
                                formControlName="dateOfBirth">
@@ -151,7 +151,7 @@
                     <div class="secondFace face" #secondFace formGroupName="secondFaceGroup">
 
                       <!-- EMail -->
-                      <div class="form-group mt-2">
+                      <div class="form-group">
                         <input type="email" class="form-style" placeholder="Your Email"
                                autocomplete="off" formControlName="email">
                         <i class="input-icon uil uil-at"></i>
@@ -166,7 +166,7 @@
 
 
                       <!-- Password -->
-                      <div class="form-group mt-2">
+                      <div class="form-group mt-3">
                         <input type="password" class="form-style" placeholder="Your Password"
                                autocomplete="off" formControlName="password">
 
@@ -186,7 +186,7 @@
 
 
                       <!-- Confirmed Password -->
-                      <div class="form-group mt-2">
+                      <div class="form-group mt-3">
                         <input type="password" class="form-style"
                                placeholder="Confirmed Password" autocomplete="off"
                                formControlName="confPassword">
@@ -224,7 +224,7 @@
 
 
                         <div class="d-flex justify-content-between align-items-center flex-column gap-2">
-                          <div *ngIf="addressErrorStatus" class="alert-danger  px-3 py-2">Building Number,Street Name,
+                          <div *ngIf="addressErrorStatus" class="alert-danger  px-3 py-1">Building Number,Street Name,
                             Post Code
                           </div>
                           <input *ngIf="addressInputDisplayStatus; else status " class="form-style p-0 text-center "
