@@ -11,7 +11,7 @@ import {UserService} from "../_services/user/user.service";
 import {Router} from "@angular/router";
 import {AddressService} from "../_services/address/address.service";
 import {RegisterService} from "../_services/register/register.service";
-import {PasswordmatchValidator} from "../_validators/passwordMatchValidator/passwordmatch.validator";
+import {passwordMatchValidator} from "../_validators/passwordMatchValidator/passwordmatch.validator";
 import {StartupService} from "../_services/startUp/startup.service";
 
 
@@ -307,17 +307,26 @@ export class LoginComponent {
           Validators.required,
           Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
         ])
-      }
-      // , {
-      //   validators : PasswordmatchValidator('password', 'confPassword')
-      // }
+      }, { validators: passwordMatchValidator }
+
+
       ),
 
       thirdFaceGroup: new FormGroup({
         street: new FormControl(null, Validators.required),
         gender: new FormControl(null, Validators.required)
       })
-    })
+    });
+
+    this.registrationFormGroup.get('secondFaceGroup')?.get("email")?.valueChanges.subscribe(value => {
+      console.log(this.registrationFormGroup.get('secondFaceGroup')?.get('email')?.errors);
+    });
+    this.registrationFormGroup.get('secondFaceGroup')?.get("password")?.valueChanges.subscribe(value => {
+      console.log(this.registrationFormGroup.get('secondFaceGroup')?.get('password')?.errors);
+    });
+    this.registrationFormGroup.get('secondFaceGroup')?.get("passwordConf")?.valueChanges.subscribe(value => {
+      console.log(this.registrationFormGroup.get('secondFaceGroup')?.get('passwordConf')?.errors);
+    });
   }
 
   get firstName() {

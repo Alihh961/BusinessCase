@@ -1,19 +1,15 @@
-import {FormGroup} from "@angular/forms";
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
+export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const password = control.get('password')?.value;
+  const confPassword = control.get('confPassword')?.value;
 
-export function PasswordmatchValidator(password :string , confPassword :string){
+  if(password === confPassword && password && confPassword){
 
-return (formGroup : FormGroup)=>{
-  const passwordControl = formGroup.controls[password];
-  const confPasswordControl = formGroup.controls[confPassword];
-// && !confPasswordControl.errors.passwordmatchValidator
-  if(confPasswordControl.errors){
-    return;
-  }else if(passwordControl.value !== confPasswordControl.value){
-    return confPasswordControl.setErrors({passwordMatchs :true})
-  }else{
-    return confPasswordControl.setErrors(null);
+    return null;
+
+  }else {
+    return { passwordMatchError: true}
   }
-}
 
-}
+};

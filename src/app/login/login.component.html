@@ -193,7 +193,7 @@
                         <i class="input-icon uil uil-lock-alt"></i>
                       </div>
                       <small class="alert alert-danger"
-                             *ngIf="confPassword?.errors?.['pattern'] && (password?.touched || password?.dirty)">
+                             *ngIf="secondFaceGroup?.errors?.['passwordMatchError'] && (confPassword?.touched || confPassword?.dirty)">
                         Password doesn't match!
                       </small>
 
