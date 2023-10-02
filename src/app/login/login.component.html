@@ -118,7 +118,7 @@
 
                       <!-- Date Of Birth -->
                       <div class="form-group mt-4 d-flex flex-column">
-                        <span class="position-absolute dob">Date of Birth</span>
+                        <span class="position-absolute dob">DOB</span>
                         <input type="date" class="form-style" autocomplete="off"
                                formControlName="dateOfBirth">
                         <i class="input-icon uil uil-calendar-alt"></i>
@@ -272,16 +272,16 @@
                         </div>
                       </div>
 
-
-                      <button class="btn" [disabled]="!registrationFormGroup.valid">Submit
-                      </button>
-                      <svg class=" previousArrow toSecondFace" (click)=" changingFace($event)"
+                      <svg class=" previousArrow toSecondFace position-absolute" (click)=" changingFace($event)"
                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                            stroke-linecap="round" stroke-linejoin="round">
                         <path d="M19 12H5M12 19L5 12l7-7" class="previousArrow toSecondFace"
                               (click)=" changingFace($event)"/>
                       </svg>
+
+                      <button class="btn" [disabled]="!registrationFormGroup.valid">Submit
+                      </button>
 
                     </div>
                     <!-- End of Third Face  -->

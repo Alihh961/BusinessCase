@@ -190,8 +190,14 @@ h6 span:first-child {
 .dob {
   //span of date of bidrth div
 
-  left: 50%;
-  top: 20%;
+  left: 68%;
+  top: 23%;
+  font-weight: 700;
+  color: #1e735f;
+
+  @media (max-width: 576px) {
+
+  }
 
   i {
     z-index: 0;
@@ -223,8 +229,7 @@ h6 span:first-child {
   padding: 0;
 }
 
-.form-style,
-.form-control {
+.form-style{
   padding: 13px 20px 13px 55px;
   height: 35px;
   width: 100%;
@@ -240,11 +245,6 @@ h6 span:first-child {
   transition: all 200ms linear;
   box-shadow: 0 4px 8px 0 rgba(21, 21, 21, .2);
 
-  @media (max-width: 576px) {
-
-    height: 30px;
-
-  }
 
 }
 
@@ -272,7 +272,7 @@ h6 span:first-child {
 
   @media (max-width: 576px) {
     font-size: 20px;
-    top: -1.5px;
+    top: 0;
   }
 }
 
@@ -352,12 +352,9 @@ input[value="Reset Address"] {
   text-transform: uppercase;
   transition: all 200ms linear;
   padding: 10px 15px;
-  margin-top: 90px;
   letter-spacing: 1px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  display: block;
+  margin: 50px auto;
   border: none;
   background-color: #ffeba7;
   color: #102770;
@@ -489,7 +486,9 @@ input:disabled {
   cursor: pointer;
   float: right;
   margin-top: 30px;
-  box-shadow: 0 8px 24px 0 rgba(8, 129, 120, 0.3)
+  box-shadow: 0 8px 24px 0 rgba(8, 129, 120, 0.3);
+  left: 0; // this will affect only the last arrow because we added position absolute to it html tag
+
 
 }
 
