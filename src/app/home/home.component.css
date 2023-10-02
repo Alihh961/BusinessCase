@@ -41,18 +41,18 @@ app-verifyemailalert {
 .banner {
   background-color: #0d192b;
   background-image: radial-gradient(circle at 28% 50%, #362871 80px, transparent 100px), radial-gradient(circle at 64% 71%, #655223 10px, transparent 50px);
-  min-height: 750px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 50px;
-  padding: 0 7%;
+  padding: 100px 7%;
   text-align: center;
+  margin-top: 15px;
 }
 @media (max-width: 1100px) {
   .banner {
     flex-direction: column;
-    min-height: 650px;
+    padding: 150px 7%;
   }
   .banner > div {
     flex: 0 !important;
@@ -63,12 +63,12 @@ app-verifyemailalert {
 }
 @media (max-width: 1012px) {
   .banner {
-    min-height: 550px;
+    padding: 55px 7% 55px 7%;
   }
 }
 @media (max-width: 600px) {
   .banner {
-    min-height: 450px;
+    padding: 55px 7% 30px 7%;
   }
 }
 .banner div {
@@ -90,6 +90,11 @@ app-verifyemailalert {
 @media (max-width: 600px) {
   .banner div h2 {
     font-size: 18px;
+  }
+}
+@media (max-width: 360px) {
+  .banner div h2 {
+    font-size: 14px;
   }
 }
 .banner div h2::after {
@@ -120,10 +125,16 @@ app-verifyemailalert {
   max-width: 500px;
   background: linear-gradient(180deg, rgb(156, 156, 156) 14%, rgb(13, 25, 43) 69%);
   padding: 10px;
+  height: 210px;
 }
-@media (max-width: 600px) {
+@media (max-width: 550px) {
   .banner img {
-    height: 250px;
+    height: 210px;
+  }
+}
+@media (max-width: 350px) {
+  .banner img {
+    height: 180px;
   }
 }
 
@@ -242,6 +253,14 @@ section:nth-of-type(1) {
     height: 80vh;
     min-height: 700px;
     padding: 7%;
+  }
+}
+@media (max-width: 450px) {
+  section:nth-of-type(1) {
+    padding: 10px;
+  }
+  section:nth-of-type(1) p {
+    min-width: 95% !important;
   }
 }
 section:nth-of-type(1) p:nth-of-type(1) {
