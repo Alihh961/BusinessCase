@@ -125,7 +125,7 @@ app-verifyemailalert {
   max-width: 500px;
   background: linear-gradient(180deg, rgb(156, 156, 156) 14%, rgb(13, 25, 43) 69%);
   padding: 10px;
-  height: 210px;
+  height: 260px;
 }
 @media (max-width: 550px) {
   .banner img {

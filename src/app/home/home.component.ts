@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import {UserService} from "../_services/user/user.service";
 import {AuthenticationService} from "../_services/auth/authentication.service";
@@ -11,6 +11,7 @@ import {StartupService} from "../_services/startUp/startup.service";
 })
 export class HomeComponent implements OnInit{
 
+
   constructor(private pageTitle: Title , private userService :UserService,private authService :AuthenticationService ,
               private StartUpService: StartupService){ }
 
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit{
             // console.log(r);
           }
       );
+
     }
 
 

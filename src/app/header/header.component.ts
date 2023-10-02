@@ -58,9 +58,17 @@ export class HeaderComponent {
 
 
 
+
   }
 
 
+  // close the menu after navigating
+checkMenu(){
+
+    if(window.innerWidth < 925){
+      this.isOpened = !this.isOpened;
+    }
+}
 
 
   @HostListener('window:scroll')// listen to the scroll event;

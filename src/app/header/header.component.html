@@ -3,11 +3,11 @@
   <div class="" id="menuList" [ngClass]="{'openedMenu': isOpened}">
 
     <ul class="nav">
-      <li [routerLinkActive]="'activeLink'" [routerLinkActiveOptions]="{exact: true}"><a routerLink="">Home</a></li>
-      <li routerLinkActive="activeLink"><a routerLink="/nfts">NFTs</a></li>
-      <li routerLinkActive="activeLink"><a routerLink="/ethchart">Eth Chart</a></li>
-      <li routerLinkActive="activeLink"><a routerLink="/contact">Contact</a></li>
-      <li *ngIf="!loggedUser" routerLinkActive="activeLink"><a routerLink="/login">Sign in / Sign up</a></li>
+      <li [routerLinkActive]="'activeLink'" [routerLinkActiveOptions]="{exact: true}"><a routerLink="" (click)="checkMenu()">Home</a></li>
+      <li routerLinkActive="activeLink"><a routerLink="/nfts" (click)="checkMenu()">NFTs</a></li>
+      <li routerLinkActive="activeLink"><a routerLink="/ethchart" (click)="checkMenu()">Eth Chart</a></li>
+      <li routerLinkActive="activeLink"><a routerLink="/contact" (click)="checkMenu()">Contact</a></li>
+      <li *ngIf="!loggedUser" routerLinkActive="activeLink" (click)="checkMenu()"><a routerLink="/login">Sign in / Sign up</a></li>
     </ul>
 
     <div class="profile" (click)="openProfiler()">
