@@ -73,6 +73,11 @@ footer .container div h3 {
     font-size: 16px;
   }
 }
+@media (max-width: 500px) {
+  footer .container div h3 {
+    font-size: 14px;
+  }
+}
 footer .container div ul li {
   list-style-type: none;
 }
@@ -83,6 +88,11 @@ footer .container div ul li a {
 @media (max-width: 700px) {
   footer .container div ul li a {
     font-size: 14px;
+  }
+}
+@media (max-width: 500px) {
+  footer .container div ul li a {
+    font-size: 12px;
   }
 }
 footer .container div ul li a:hover {
