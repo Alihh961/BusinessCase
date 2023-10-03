@@ -227,8 +227,9 @@
                           <div *ngIf="addressErrorStatus" class="alert-danger  px-3 py-1">Building Number,Street Name,
                             Post Code
                           </div>
+
                           <input *ngIf="addressInputDisplayStatus; else status " class="form-style p-0 text-center "
-                                 #input type="text"
+                                 type="text"
                                  placeholder="Bld. № Rue Name ..." autocomplete="off"
                                  formControlName="street" (ngModelChange)="searchingAddress($event)" required>
                           <ng-template #status>

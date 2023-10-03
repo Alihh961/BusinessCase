@@ -6,9 +6,15 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): V
 
   if(password === confPassword && password && confPassword){
 
+    if(control.get("confPassword")?.hasError("toto") ){ // we check if the error exists we remove it
+      control.get("confPassword")?.updateValueAndValidity();
+    }
     return null;
 
   }else {
+
+    //we add an error to the confPassword Abstract control because the validator is attached to the second face
+    control.get('confPassword')?.setErrors({"toto" : true});
     return { passwordMatchError: true}
   }
 

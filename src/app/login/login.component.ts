@@ -93,7 +93,6 @@ export class LoginComponent {
 
           },
           error => {
-            console.log("Error");
           }
         )
       } else {
@@ -101,7 +100,6 @@ export class LoginComponent {
       }
     } else {
       this.addressErrorStatus = true;
-      console.log("no Value");
     }
   }
 
@@ -143,7 +141,6 @@ export class LoginComponent {
       this.addressInputDisplayStatus = false;
       this.addressResultsStatus = false;
     } else {
-      console.log("not a number");
       this.addressErrorStatus = true;
     }
   }
@@ -187,39 +184,6 @@ export class LoginComponent {
 
   };
 
-  //* Submitting the form
-  onRegFormSubmit(): void {
-    //   console.log(this.registrationFormGroup);
-    this.userinscriptiondetails = {
-      firstName: this.firstFaceGroup?.value.firstName,
-      lastName: this.firstFaceGroup?.value.lastName,
-      dateOfBirth: this.firstFaceGroup?.value.dateOfBirth,
-      email: this.secondFaceGroup?.value.email,
-      password: this.secondFaceGroup?.value.password,
-      confPassword: this.secondFaceGroup?.value.confPassword,
-      address: this.addressObject,
-      gender: this.thirdFaceGroup?.value.gender,
-    };
-    console.log(this.userinscriptiondetails);
-
-    this.registerService.register(this.userinscriptiondetails).subscribe(
-      response => {
-        Swal.fire(
-          "Cool",
-          response.message,
-          "success"
-        )
-      },
-      (error) => {
-        Swal.fire(
-          "Ops",
-          error.error.detail,
-          "error"
-        )
-
-      }
-    )
-  }
 
   //* Displaying only the valid date of people over than 18 years old
   ageValidator(control: FormControl): ValidationErrors | null {
@@ -266,7 +230,6 @@ export class LoginComponent {
       logpassword: new FormControl("", [Validators.required])
 
     })
-    // console.log(this.loginForm);
   };
 
   get logemail() {
@@ -318,15 +281,6 @@ export class LoginComponent {
       })
     });
 
-    this.registrationFormGroup.get('secondFaceGroup')?.get("email")?.valueChanges.subscribe(value => {
-      console.log(this.registrationFormGroup.get('secondFaceGroup')?.get('email')?.errors);
-    });
-    this.registrationFormGroup.get('secondFaceGroup')?.get("password")?.valueChanges.subscribe(value => {
-      console.log(this.registrationFormGroup.get('secondFaceGroup')?.get('password')?.errors);
-    });
-    this.registrationFormGroup.get('secondFaceGroup')?.get("passwordConf")?.valueChanges.subscribe(value => {
-      console.log(this.registrationFormGroup.get('secondFaceGroup')?.get('passwordConf')?.errors);
-    });
   }
 
   get firstName() {
@@ -391,6 +345,7 @@ export class LoginComponent {
           this.router.navigate(['home']);
 
           const fullName: string | undefined = `${response.firstName} ${response?.lastName}`.toUpperCase();
+          this.loginForm.reset();
 
           Swal.fire({
             icon: 'success',
@@ -401,7 +356,7 @@ export class LoginComponent {
         }
         ,
         (error) => {
-          console.log(error);
+          this.loginForm.get("password")?.reset();
           if(error.status === 500){
             Swal.fire({
               icon: 'error',
@@ -422,6 +377,39 @@ export class LoginComponent {
 
 
   } ;
+
+  //* Submitting the form
+  onRegFormSubmit(): void {
+    this.userinscriptiondetails = {
+      firstName: this.firstFaceGroup?.value.firstName,
+      lastName: this.firstFaceGroup?.value.lastName,
+      dateOfBirth: this.firstFaceGroup?.value.dateOfBirth,
+      email: this.secondFaceGroup?.value.email,
+      password: this.secondFaceGroup?.value.password,
+      confPassword: this.secondFaceGroup?.value.confPassword,
+      address: this.addressObject,
+      gender: this.thirdFaceGroup?.value.gender,
+    };
+    this.regForm.reset();
+    this.registerService.register(this.userinscriptiondetails).subscribe(
+
+      response => {
+        Swal.fire(
+          "Cool",
+          response.message,
+          "success"
+        )
+      },
+      (error) => {
+        Swal.fire(
+          "Ops",
+          error.error,
+          "error"
+        )
+
+      }
+    )
+  }
 }
 
 
