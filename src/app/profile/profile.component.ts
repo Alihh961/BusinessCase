@@ -4,6 +4,7 @@ import {UserService} from "../_services/user/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProfileService} from "../_services/profile/profile.service";
 import Swal from 'sweetalert2';
+import {passwordMatchValidator} from "../_validators/passwordMatchValidator/passwordmatch.validator";
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +21,7 @@ export class ProfileComponent {
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private profileService : ProfileService
+    private profileService: ProfileService
   ) {
 
     this.initEditForm();
@@ -31,7 +32,7 @@ export class ProfileComponent {
     this.getUser();
   }
 
-  getUser(){
+  getUser() {
     // we use a subject behavior in the service so , it will send a value everytime the property changes in the service
     this.userService.loggedUser$.subscribe(
       (userInfo: User | undefined) => {
@@ -51,39 +52,42 @@ export class ProfileComponent {
   initEditForm() {
 
     this.editForm = this.fb.group({
-      firstName: ["", [
-        Validators.required,
-        Validators.pattern("^[a-zA-Z]+$")
-      ]],
+        firstName: ["", [
+          Validators.required,
+          Validators.pattern("^[a-zA-Z]+$")
+        ]],
 
-      lastName: ["", [
-        Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)?( [a-zA-Z]+)?$"),
-        Validators.required,
-      ]],
+        lastName: ["", [
+          Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)?( [a-zA-Z]+)?$"),
+          Validators.required,
+        ]],
 
-      currentPassword: ["", [
-        Validators.required,
-        Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
-      ]],
+        currentPassword: ["", [
+          Validators.required
+        ]],
 
-      newPassword: ["", [
-        Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"),
-        Validators.required,
-      ]],
-      //
-      // confNewPassword: ["", [
-      //   Validators.required,
-      //   Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")
-      // ]]
-    });
+        password: ["", [
+          Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"),
+          Validators.required,
+        ]],
+
+        confPassword: ["", [
+          Validators.required
+        ]]
+      },
+      {validators : passwordMatchValidator}
+    );
   }
 
   editProfileMethod() {
 
-    let object = Object.assign({},{id : this.userService.getUserInfo()?.id} , this.editForm.value);
-    console.log(object);
+    let object = Object.assign({}, {id: this.userService.getUserInfo()?.id}, this.editForm.value);
+    this.editForm.reset();
+    this.editForm.get("firstName")?.setValue(this.currentUser?.firstName) ;
+    this.editForm.get("lastName")?.setValue(this.currentUser?.lastName) ;
+
     this.profileService.updateUserInfo(object).subscribe(
-      response=>{
+      response => {
         this.editForm.get("newPassword")?.reset();
         this.editForm.get("currentPassword")?.reset();
 
@@ -93,14 +97,14 @@ export class ProfileComponent {
           "success"
         )
       },
-      error=>{
-        if(error.status == 500){
+      error => {
+        if (error.status == 500) {
           error.error = "Internal Error , please again later!";
         }
         Swal.fire({
             title: "Error",
-            text :error.error,
-            icon :"error"
+            text: error.error,
+            icon: "error"
           }
         )
       }

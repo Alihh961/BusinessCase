@@ -11,13 +11,13 @@
   <label for="currentPassword">Current Password</label>
   <input type="password" id="currentPassword" formControlName="currentPassword" required>
 
-  <label for="newPassword">New Password</label>
-  <input type="password" id="newPassword" formControlName="newPassword" required>
+  <label for="password">New Password</label>
+  <input type="password" id="password" formControlName="password" required>
 
-<!--  <label for="confNewPassword">Re-type New Password</label>-->
-<!--  <input type="password" id="confNewPassword" formControlName="confNewPassword" required>-->
+  <label for="confPassword">Re-type New Password</label>
+  <input type="password" id="confPassword" formControlName="confPassword" required>
 
-  <button type="submit">Submit</button>
+  <button type="submit" class="btn" [disabled]="!editForm.valid">Submit</button>
 
 </form>
 
