@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {Feature, FeatureCollection, Iaddress} from '../_Interface/Address';
 import {UserInscription, User, UserLogin} from '../_Interface/User';
 import {FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
@@ -20,7 +20,7 @@ import {StartupService} from "../_services/startUp/startup.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit{
 
   constructor(private http: HttpClient, private authService: AuthenticationService,
               private ageIsValid: DateOfBirthValidator, private cookieService: CookieService,
@@ -79,6 +79,10 @@ export class LoginComponent {
     this.checker();
   }
 
+  ngAfterViewInit(){
+
+  }
+
   //* Searching for address when a change happens
   searchingAddress(value: string) {
 
@@ -127,7 +131,8 @@ export class LoginComponent {
         path += " " + pathArray[i].trim();
       }
 
-      this.addressErrorStatus = false;
+      this.addressErrorStatus = false;//hiding the hint of the address format
+      this.registrationFormGroup.setErrors(null);
       this.addressObject = {// we use addressOBject to asign its value to userincriptiondetails.address
         id: null,
         municipality: addressArray[1].trim(),
@@ -145,7 +150,7 @@ export class LoginComponent {
     }
   }
 
-  //* Reset the input to set a new address
+  //* Reset the address input to set a new address
   resetInput(): void {
     this.userinscriptiondetails.address = {
       id: null,
@@ -156,7 +161,8 @@ export class LoginComponent {
       buildingNumber: null,
       postCode: null,
     };
-    this.addressInputDisplayStatus = true;
+    this.addressInputDisplayStatus = true;//display the address input
+    this.addressErrorStatus = true;//display the address format hint
     this.addressObject = {
       id: null,
       municipality: "",
@@ -166,7 +172,8 @@ export class LoginComponent {
       buildingNumber: null,
       postCode: null,
     }
-    this.registrationFormGroup.get('thirdFaceGroup.street')?.setValue("");
+    this.registrationFormGroup.get('thirdFaceGroup.street')?.reset();
+    this.registrationFormGroup.get('thirdFaceGroup.gender')?.reset();
 
   }
 
@@ -229,7 +236,9 @@ export class LoginComponent {
       ]),
       logpassword: new FormControl("", [Validators.required])
 
-    })
+    });
+
+
   };
 
   get logemail() {
@@ -260,7 +269,7 @@ export class LoginComponent {
       secondFaceGroup: new FormGroup({
         email: new FormControl(null, [
           Validators.required,
-          Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+          Validators.pattern("^[a-zA-Z0-9._-]+@[a-zA-Z.-]+[a-zA-Z]+\\.[a-zA-Z]{1,}$")
         ]),
         password: new FormControl(null, [
           Validators.required,
@@ -390,7 +399,6 @@ export class LoginComponent {
       address: this.addressObject,
       gender: this.thirdFaceGroup?.value.gender,
     };
-    this.regForm.reset();
     this.registerService.register(this.userinscriptiondetails).subscribe(
 
       response => {
@@ -398,7 +406,8 @@ export class LoginComponent {
           "Cool",
           response.message,
           "success"
-        )
+        );
+        window.location.reload();
       },
       (error) => {
         Swal.fire(
