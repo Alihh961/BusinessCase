@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild , HostListener} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Eth} from "../_Interface/Eth";
 import {Chart} from "chart.js/auto";
@@ -72,7 +72,7 @@ export class EthchartComponent {
             labels: {
               // This more specific font property overrides the global property
               font: {
-                size: 24
+                size: 12
               }
             }
           }
@@ -81,11 +81,24 @@ export class EthchartComponent {
           y: {
             stacked: true
           }
-        }
+        },
+        responsive :true,
+        maintainAspectRatio: false
       }
     });
 
   }
+
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event: Event) {
+  //   this.updateChartSize();
+  // }
+  //
+  // updateChartSize() {
+  //   if (this.chart) {
+  //     this.chart.resize();
+  //   }
+  // }
 
 
 

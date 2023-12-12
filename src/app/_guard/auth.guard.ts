@@ -18,7 +18,12 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this.startUpService.setLoadingStatus(true);
-    // the guard here will check if we have a valid token that returns an user then it will display the page
+
+    this.authService.isAuthenticated().subscribe(data=>{
+      console.log(data);
+    });
+
+    // the guard here will check if we have a valid token that returns a user then it will display the page
     return this.authService.isAuthenticated().pipe(
       switchMap((response: boolean) => {
         if (response) {

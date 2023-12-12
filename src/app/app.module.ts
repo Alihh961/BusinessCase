@@ -29,6 +29,7 @@ import {InitializerModule} from './_initializer/initializer.module';
 import {LoadingComponent} from './loading/loading.component';
 import {StartupService} from "./_services/startUp/startup.service";
 import {VerifyemailalertComponent} from './verifyemailalert/verifyemailalert.component';
+import {HttpinterceptorInterceptor} from "./_services/httpinterceptor/httpinterceptor.interceptor";
 const appRoutes: Routes = [];
 
 
@@ -71,11 +72,11 @@ const appRoutes: Routes = [];
   providers: [
     CookieService,
     AuthGuard,
-    // {
-    //   provide : HTTP_INTERCEPTORS,
-    //   useClass : HttpinterceptorInterceptor,
-    //   multi : true,
-    // },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : HttpinterceptorInterceptor,
+      multi : true,
+    },
     StartupService,
 
   ],

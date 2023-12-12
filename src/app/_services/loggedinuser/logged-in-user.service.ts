@@ -1,41 +1,56 @@
-import { Injectable } from '@angular/core';
-import { User } from '../../_Interface/User';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {LoggedUser, User} from '../../_Interface/User';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Iaddress} from "../../_Interface/Address";
 
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class LoggedInUserService {
 
-  constructor() { }
+  constructor() {
+  }
 
-  private loggedInUserInfo: BehaviorSubject<User> = new BehaviorSubject<any>(  {firstName: '',
-  lastName: '',
-  email: '',
-  dateOfBirth: new Date(),
-  address:undefined ,
-  gender: '',
-    isVerified: false,
-});
+
+  private loggedInUserInfo: BehaviorSubject<User> = new BehaviorSubject<User>({
+      id: 0,
+      email: "",
+      firstName: "",
+      lastName: "",
+      gender: "",
+      address: {
+        id: null,
+        municipality: "",
+        department: "",
+        region: "",
+        path: "",
+        buildingNumber: null,
+        postCode: null,
+      },
+      dateOfBirth: null,
+      isVerified: false,
+    }
+  )
+  ;
+
+  loggedInUserInfo$: Observable<User> = this.loggedInUserInfo.asObservable();
 
   private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isLoggedIn$ = this.isLoggedIn.asObservable();
 
 
-  setLoggedInUserInfo(data: User): void {
+  setLoggedInUserInfo(data: User ):void {
     this.loggedInUserInfo.next(data);
   }
 
-  getLoggedInUserInfo(): Observable<User> {
-    return this.loggedInUserInfo.asObservable();
-  }
 
-  setLoggedInStatus(value: boolean): void {
+
+  setLoggedInStatus(value : boolean ):void {
     this.isLoggedIn.next(value);
   }
 
-  getLoggedInStatus(): Observable<boolean> {
-    return this.isLoggedIn.asObservable();
-  }
 
 }

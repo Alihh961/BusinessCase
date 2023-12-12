@@ -13,6 +13,7 @@ import {AddressService} from "../_services/address/address.service";
 import {RegisterService} from "../_services/register/register.service";
 import {passwordMatchValidator} from "../_validators/passwordMatchValidator/passwordmatch.validator";
 import {StartupService} from "../_services/startUp/startup.service";
+import {LoggedInUserService} from "../_services/loggedinuser/logged-in-user.service";
 
 
 @Component({
@@ -26,7 +27,7 @@ export class LoginComponent implements AfterViewInit{
               private ageIsValid: DateOfBirthValidator, private cookieService: CookieService,
               private userService: UserService, private addressService: AddressService,
               private router: Router, private registerService: RegisterService,
-              private startUpService : StartupService
+              private startUpService : StartupService,private loggedInUserService :LoggedInUserService
   ) {
 
   }
@@ -97,6 +98,7 @@ export class LoginComponent implements AfterViewInit{
 
           },
           error => {
+            console.log("error");
           }
         )
       } else {
@@ -193,10 +195,10 @@ export class LoginComponent implements AfterViewInit{
 
 
   //* Displaying only the valid date of people over than 18 years old
-  ageValidator(control: FormControl): ValidationErrors | null {
+  ageValidator(formControl: FormControl): ValidationErrors | null {
 
 
-    if (this.ageIsValid.ageIsValid(control)) {
+    if (this.ageIsValid.ageIsValid(formControl)) {
       return null; // Valid age
     } else {
 
@@ -347,9 +349,11 @@ export class LoginComponent implements AfterViewInit{
       this.startUpService.setLoadingStatus(true);
 
       this.authService.login(user).subscribe(
-        (response: User | any): void => {
+        (response: User ): void => {
+          console.log(response);
           this.startUpService.setLoadingStatus(false);
           this.userService.setUserInfo(response);
+          this.loggedInUserService.setLoggedInUserInfo(response);
           this.userService.setLoggedUserStatus(true);
           this.router.navigate(['home']);
 

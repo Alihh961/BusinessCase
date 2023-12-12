@@ -1,1 +1,34 @@
-<p>dashboard works!</p>
+<section class="mt-5 pt-3">
+  <div class="row gap-xl-5 gap-lg-4 gap-md-5 gap-sm-4 gap-4 justify-content-center mt-3" *ngIf="nfts.length > 0 ; else lol">
+    <ng-container *ngFor="let nft of nfts">
+      <div class="product-accueil col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 position-relative" >
+
+        <img [src]="nft.image.url">
+
+        <div>
+          <p>{{nft.image.name}}</p>
+
+          <div class="info">
+            <div class="price">
+              <h6>{{nft.price}}</h6>
+              <img src="../../assets/imgs/Ethereum.png" alt="ETH">
+            </div>
+            <!--          <h6>{{nft.createdAt | dateFormat}}</h6>-->
+          </div>
+        </div>
+          <button class="deleteNft" [attr.data-nft-id]="nft.id" (click)="deleteNft($event)">X</button>
+
+      </div>
+
+    </ng-container>
+
+
+  </div>
+
+</section>
+<ng-template #lol>
+  <div class="noNfts">
+  <h5>No Nfts added to your dashboard</h5>
+  <a routerLink="/nfts">Go to gallery to add Nfts</a>
+  </div>
+</ng-template>

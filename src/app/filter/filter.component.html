@@ -1,9 +1,10 @@
-<div class="filterDiv">
-  <div>
-    <h5>Filter By SubCategory:</h5>
+<div class="filterDiv align-items-center">
+  <div class="flex-sm-row flex-column">
+    <label for="selectCategory">By SubCategory:</label>
 
 
-    <select (change)="onFilterChange()" [(ngModel)]="subCategoryFilterValue" [value]="subCategoryFilterValue">
+    <select id="selectCategory" (change)="onFilterChange()" [(ngModel)]="subCategoryFilterValue" [value]="subCategoryFilterValue" >
+      <option value="all">All</option>
       <ng-container *ngFor="let subCategory of subCategories">
         <option [value]="subCategory.name">
           {{subCategory.name}}
@@ -11,11 +12,12 @@
       </ng-container>
     </select>
   </div>
-  <div>
-    <label for="orderBy">Order :</label>
-    <select id="orderBy" [(ngModel)]="orderBy">
-      <option value="ASC">ASC</option>
-      <option Value="DESC">DESC</option>
+  <div class="flex-sm-row flex-column">
+    <label for="orderBy">Order By Date :</label>
+    <select id="orderBy" (change)="orderChanged($event)">
+      <option value=""></option>
+      <option value="asc">ASC</option>
+      <option Value="desc">DESC</option>
     </select>
   </div>
   <button (click)="onResetFilter()">Reset filter</button>

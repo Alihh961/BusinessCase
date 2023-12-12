@@ -1,13 +1,10 @@
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable, switchMap, tap, catchError, BehaviorSubject, filter, map, of, observable} from 'rxjs';
-import {throwError} from 'rxjs';
+import {Observable, switchMap, catchError, map, of, tap} from 'rxjs';
 import {apiURL} from 'src/environment/environment';
 import {User, UserLogin} from "../../_Interface/User";
-import {Itoken} from "../../_Interface/Token";
 import {CookieService} from "../cookie/cookie.service";
 import {UserService} from "../user/user.service";
-
 
 
 @Injectable({
@@ -16,69 +13,50 @@ import {UserService} from "../user/user.service";
 export class AuthenticationService {
 
 
-  private testToken: BehaviorSubject<string> = new BehaviorSubject<string>("");
-  testToken$ = this.testToken.asObservable();
-
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private userService: UserService,
   ) {
   }
 
-  login(credentials: UserLogin): Observable<User | any> {
+  login(credentials: UserLogin): Observable<any> {
     let headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.post<Itoken>(`${apiURL}login_check`, credentials, {headers: headers}).pipe(
-      switchMap((data: Itoken) => {
-        localStorage.setItem("token" , data.token);
+    return this.http.post<{ token: string, user: User}>(`${apiURL}login_user`, credentials, {headers: headers}).pipe(
+      switchMap((data: { token: string, user: User }) => {
+
         this.cookieService.setToken(data.token);
         this.cookieService.setTokenInService(data.token);
-        this.testToken.next(data.token);
-        return this.getUser(data.token);
-      }),
-      catchError((error: HttpErrorResponse) => {
-        return throwError('Error getting token');
+
+        return of(data.user);
+
       })
     );
   }
 
-
-  getUser(token: string): Observable<User | any> {
-
-    const headers: HttpHeaders = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    });
-    const httpOptions = {
-      headers: headers
-    };
-    return this.http.get<User>(`${apiURL}user`, httpOptions).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.cookieService.removeCookie("token");// remove the token if login failled
-        return throwError("Errrrrrror")
-      }));
+  getUser(token: string): Observable<User> {
+    return this.http.post<User>(`${apiURL}check_token`, {token : token});
   }
 
 
-  isAuthenticated(): Observable<boolean> {
+// I use for guard to check if the token is for a valid user
+  isAuthenticated():Observable<boolean> {
 
     if (this.cookieService.getToken()) {
       const token: string = this.cookieService.getToken();
+
+      console.log(token);
       return this.getUser(token).pipe(
-        map(response => response instanceof Object && "firstName" in response),
+        tap(response=> console.log({"response" :response})),
+        map(response => typeof response === 'object' && "firstName" in response),
         catchError(error => {
+          console.log({"error :" : error});
           return of(false);
         })
       );
     } else {
-      return of(false);
+    return of(false);
     }
   }
 
-
-  logout() {
-    this.cookieService.removeCookie('token');
-    this.userService.setLoggedUserStatus(false);
-
-  }
 
 }

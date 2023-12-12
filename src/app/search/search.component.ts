@@ -1,4 +1,5 @@
 import { Component, EventEmitter,Output } from '@angular/core';
+import {SubcategoryService} from "../_services/subcategory/subcategory.service";
 
 
 @Component({
@@ -14,8 +15,25 @@ searchInputValue: string = "";
 @Output()
 searchInputValueEvent: EventEmitter<string> = new EventEmitter<string>();
 
+constructor(
+  private subCategoryService :SubcategoryService
+) {
+}
+
+ngOnInit(){
+  this.setSearchInputValue();
+}
+
 onSearchValueChange(){
   this.searchInputValueEvent.emit(this.searchInputValue);
+}
+
+setSearchInputValue(){
+  this.subCategoryService.inputValue$.subscribe(
+    data => {
+      this.searchInputValue = data;
+    }
+  )
 }
 
 }

@@ -15,6 +15,11 @@ div .searchDiv {
   border-radius: 5px;
   overflow: hidden;
 }
+@media (max-width: 767px) {
+  div .searchDiv {
+    height: 22px;
+  }
+}
 
 div input {
   border-top-right-radius: 5px;
@@ -24,6 +29,17 @@ div input {
   text-align: center;
   width: 75px;
   transition: 1s;
+  font-size: 14px;
+}
+@media (max-width: 767px) {
+  div input {
+    font-size: 12px;
+  }
+}
+@media (max-width: 767px) {
+  div input::placeholder {
+    font-size: 12px;
+  }
 }
 
 svg {
@@ -35,14 +51,31 @@ svg {
 div input:focus, div input:hover {
   width: 165px;
 }
+@media (max-width: 767px) {
+  div input:focus, div input:hover {
+    width: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  span {
+    font-size: 12px;
+  }
+}
 
 .searchDiv:focus-within, .searchDiv:hover {
   border: 0.5px solid #FFFFFF;
-  box-shadow: 0px 0px 10px 5px rgba(103, 89, 227, 0.89);
+  box-shadow: 0 0 10px 5px rgba(103, 89, 227, 0.89);
 }
 
 .resultSpan {
   color: #ff0000;
+  font-size: 14px;
+}
+@media (max-width: 767px) {
+  .resultSpan {
+    font-size: 12px;
+  }
 }
 
 /*# sourceMappingURL=search.component.css.map */

@@ -34,7 +34,7 @@ export class ShownftComponent {
     this.http.get<Nft>(url).subscribe(
       nft => {
 
-        nft.image.url = "https://127.0.0.1:8000/uploads/" + nft.image.url;
+        nft.image.url = "https://127.0.0.1:8000/uploads/nfts/" + nft.image.url;
         this.nft = nft;
         this.startUpService.setLoadingStatus(false);
 

@@ -1,29 +1,36 @@
 <header class="" #header>
   <a routerLink=""><img [src]="logoSource" alt='Logo'></a>
-  <div class="" id="menuList" [ngClass]="{'openedMenu': isOpened}">
+  <div class="" id="menuList" [ngClass]="{'openedMenu': isOpened ,'closingFast' : !isOpened }">
 
     <ul class="nav">
-      <li [routerLinkActive]="'activeLink'" [routerLinkActiveOptions]="{exact: true}"><a routerLink="" (click)="checkMenu()">Home</a></li>
+      <li [routerLinkActive]="'activeLink'" [routerLinkActiveOptions]="{exact: true}"><a routerLink=""
+                                                                                         (click)="checkMenu()">Home</a>
+      </li>
       <li routerLinkActive="activeLink"><a routerLink="/nfts" (click)="checkMenu()">NFTs</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/ethchart" (click)="checkMenu()">Eth Chart</a></li>
       <li routerLinkActive="activeLink"><a routerLink="/contact" (click)="checkMenu()">Contact</a></li>
-      <li *ngIf="!loggedUser" routerLinkActive="activeLink" (click)="checkMenu()"><a routerLink="/login">Sign in / Sign up</a></li>
+      <li *ngIf="!loggedUser.firstName && !loggedUser.lastName" routerLinkActive="activeLink" (click)="checkMenu()"><a
+        routerLink="/login">Sign in / Sign up</a></li>
+
+      <li class="profile" (click)="openProfiler()">
+
+        <a class="no" *ngIf="loginInStatus"
+        >{{loggedUser.firstName + " " + loggedUser.lastName }} <span class="no"
+                                                                     [ngClass]="{'openedArrow' : profilerIsOpened}"></span></a>
+
+        <div *ngIf="loginInStatus" [ngClass]="{'openedProfiler' : profilerIsOpened }">
+          <!-- we add *ngIf to display none fast when we logout-->
+          <a routerLink="/dashboard">Dashboard</a>
+          <a routerLink="/profile">My Profile</a>
+          <a>Portfolio</a>
+          <a (click)="logout()">Logout</a>
+        </div>
+
+
+      </li>
     </ul>
 
-    <div class="profile" (click)="openProfiler()">
 
-      <a *ngIf="loggedUser"
-         >{{loggedUser.firstName + " " + loggedUser.lastName }} <span #profilerOpenArrow></span></a>
-
-      <div *ngIf="loggedUser" #profilerContainer><!-- we add *ngIf to display none fast when we logout-->
-        <a routerLink="/dashboard">Dashboard</a>
-        <a routerLink="/profile">My Profile</a>
-        <a>Basket</a>
-        <a (click)="logout()">Logout</a>
-      </div>
-
-
-    </div>
   </div>
 
   <a class="menuburger-icon" id="menuburger-icon"

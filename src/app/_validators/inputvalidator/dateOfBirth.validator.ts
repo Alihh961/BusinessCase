@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, ValidationErrors } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +9,19 @@ export class DateOfBirthValidator {
   constructor() { }
 
   ageIsValid(control: FormControl): boolean {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1; // Adding 1 since getMonth() returns zero-based index
-    const currentDay = currentDate.getDate();
+    const currentDate :Date = new Date();
+    const currentYear :number = currentDate.getFullYear();
+    const currentMonth :number = currentDate.getMonth() + 1; // Adding 1 since getMonth() returns zero-based index
+    const currentDay:number = currentDate.getDate();
 
-    const birthdate = new Date(control.value);
-    const birthYear = birthdate.getFullYear();
-    const birthMonth = birthdate.getMonth() + 1;
-    const birthDay = birthdate.getDate();
+    const birthdate :Date = new Date(control.value);
+    const birthYear :number = birthdate.getFullYear();
+    const birthMonth: number = birthdate.getMonth() + 1;
+    const birthDay: number = birthdate.getDate();
 
-    const ageYears = currentYear - birthYear;
-    const ageMonths = currentMonth - birthMonth;
-    const ageDays = currentDay - birthDay;
+    const ageYears :number = currentYear - birthYear;
+    const ageMonths :number = currentMonth - birthMonth;
+    const ageDays :number = currentDay - birthDay;
 
 
     if (ageYears > 18) {

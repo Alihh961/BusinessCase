@@ -2,16 +2,16 @@
 
   <h2>{{nft.image.name}}</h2>
 
-  <div class="d-flex justify-content-evenly my-5">
+  <div class="d-flex justify-content-evenly my-5 flex-wrap gap-3">
 
     <img [src]="nft.image.url" [alt]="nft.image.name">
 
     <div class="d-flex flex-column">
 
       <div class="info d-flex flex-column justify-content-center h-100">
-          <h4>Price : {{nft.price}} <img src="../../assets/imgs/Ethereum.png" alt="ETH"></h4>
+        <h4>Price : {{nft.price}} <img src="../../assets/imgs/Ethereum.png" alt="ETH"></h4>
 
-        <h5>Created Date : {{nft.createdAt | dateFormat}}</h5>
+        <h4>Created Date : {{nft.createdAt | dateFormat}}</h4>
       </div>
     </div>
 

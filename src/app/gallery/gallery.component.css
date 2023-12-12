@@ -66,18 +66,27 @@ app-filter {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 15%;
-  /* max-width: 150px; */
-  height: 335px;
+  min-width: 125px;
+  height: 310px;
   padding: 5px;
   margin-top: 30px;
-  margin-right: 20px;
   color: #8bacda;
   background-color: rgb(20, 37, 61);
   border-radius: 20px;
   position: relative;
   overflow: hidden;
   transition: 0.2s ease;
+  word-break: break-all;
+}
+@media (max-width: 992px) {
+  .homePageGallery .product-accueil {
+    height: 260px;
+  }
+}
+@media (max-width: 992px) {
+  .homePageGallery .product-accueil {
+    height: 222px;
+  }
 }
 .homePageGallery .product-accueil:hover {
   filter: brightness(1.1);
@@ -114,10 +123,27 @@ app-filter {
   transition: 1s;
   border-radius: 25px;
 }
+@media (max-width: 992px) {
+  .homePageGallery .product-accueil img:not(.price > img) {
+    height: 150px;
+  }
+}
+@media (max-width: 767px) {
+  .homePageGallery .product-accueil img:not(.price > img) {
+    height: 125px;
+  }
+}
 .homePageGallery .product-accueil p {
+  font-size: 14px;
   color: white !important;
   text-decoration: underline;
-  padding: 5px 10px 0 10px;
+  padding: 5px 0;
+  margin: 0;
+}
+@media (max-width: 992px) {
+  .homePageGallery .product-accueil p {
+    font-size: 12px;
+  }
 }
 .homePageGallery .product-accueil p::before {
   position: absolute;
@@ -133,7 +159,7 @@ app-filter {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 0 5px;
 }
 .homePageGallery .product-accueil .price {
   display: flex;
@@ -142,11 +168,12 @@ app-filter {
 }
 .homePageGallery .product-accueil .price img {
   width: 10px;
+  margin-bottom: 0.5rem;
 }
-.homePageGallery .product-accueil .quantity-div h5 {
+.homePageGallery .product-accueil .quantity-div h6 {
   display: inline;
 }
-.homePageGallery .product-accueil > h5 {
+.homePageGallery .product-accueil > h6 {
   border-top: 1px solid #ddd;
   padding-top: 10px;
 }
@@ -157,51 +184,60 @@ app-filter {
 }
 .homePageGallery .product-accueil .buttons {
   display: flex;
+  font-size: 14px;
   align-items: center;
   justify-content: center;
   gap: 5px;
   position: absolute;
   width: 100%;
   bottom: 0;
-  right: 0%;
+  right: 0;
   opacity: 0;
   transition: 1s;
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(34px);
 }
-.homePageGallery .product-accueil .buttons input[value="Add To Carte"] {
+@media (max-width: 992px) {
+  .homePageGallery .product-accueil .buttons {
+    background: none;
+    opacity: 1;
+    position: static;
+  }
+}
+.homePageGallery .product-accueil .buttons input[value=Add] {
   width: fit-content;
-  padding: 2%;
+  padding: 2% 4%;
   background-color: #5cb85c;
-  border-color: #4cae4c;
   color: #fff;
   border: 1px solid transparent;
   border-radius: 4px;
   cursor: pointer;
 }
-.homePageGallery .product-accueil .buttons input[value="Add To Carte"]:hover {
+.homePageGallery .product-accueil .buttons input[value=Add]:hover {
   transform: scale(0.9);
   opacity: 0.9;
 }
 .homePageGallery .product-accueil .buttons input[value=View] {
   width: fit-content;
-  padding: 2%;
+  padding: 2% 4%;
   background-color: #5cb85c;
-  border-color: #4cae4c;
   color: #fff;
   border: 1px solid transparent;
   border-radius: 4px;
   cursor: pointer;
 }
+@media (max-width: 992px) {
+  .homePageGallery .product-accueil .buttons input[value=View] {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}
 .homePageGallery .product-accueil .buttons input[value=View]:hover {
   transform: scale(0.9);
   opacity: 0.9;
 }
-.homePageGallery .product-accueil h5 {
+.homePageGallery .product-accueil h6 {
   text-transform: capitalize;
-}
-.homePageGallery .product-accueil > h5:first-of-type {
-  color: #ff0000;
+  font-size: 14px;
 }
 
 .showMore {
@@ -226,6 +262,11 @@ app-filter {
   background-color: #102770;
   color: #ffeba7;
   box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+}
+@media (max-width: 767px) {
+  .showMore {
+    padding: 7px 10px;
+  }
 }
 
 /*# sourceMappingURL=gallery.component.css.map */

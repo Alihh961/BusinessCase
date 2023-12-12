@@ -1,14 +1,17 @@
 <div class="searchFilterDiv">
 
   <app-search (searchInputValueEvent)="onSearchTextEntered($event)"></app-search>
-  <app-filter (filterBySubCategoryChangedEvent)="onFilterSelectionChanged($event)"></app-filter>
+  <app-filter (filterBySubCategoryChangedEvent)="onFilterSelectionChanged($event)"
+              (orderByChangedEvent) = "getFilteredNfts()"></app-filter>
 
 </div>
-<section class="homePageGallery" *ngIf="nfts">
+<!--<div class="row">-->
+<section class="homePageGallery" *ngIf="nfts  else noResults">
 
+<div class=" w-100 row gap-xl-5 gap-lg-4 gap-md-5 gap-sm-4 gap-4 justify-content-center">
   <ng-container *ngFor="let nft of nfts">
-    <div class="product-accueil" (mouseenter)="hovered=true" (mouseleave)="hovered=false"
-         *ngIf="subCategoryFilterValue === '' || nft.image.name.toLowerCase().includes(searchInputValue.toLowerCase())">
+    <div class="product-accueil col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2" (mouseenter)="hovered=true" (mouseleave)="hovered=false"
+         *ngIf=" subCategoryFilterValue === '' || nft.image.name.toLowerCase().includes(searchInputValue.toLowerCase())">
       <img [src]="nft.image.url">
 
       <div>
@@ -16,26 +19,29 @@
 
         <div class="info">
           <div class="price">
-            <h4>{{nft.price}}</h4>
+            <h6>{{nft.price}}</h6>
             <img src="../../assets/imgs/Ethereum.png" alt="ETH">
           </div>
-          <h5>{{nft.createdAt | dateFormat}}</h5>
+<!--          <h6>{{nft.createdAt | dateFormat}}</h6>-->
         </div>
       </div>
       <div class="buttons">
-        <a href=""><input type="button" value="Add To Carte"></a>
+        <span href=""><input type="button" value="Add" id='{{nft.id}}' (click)="addToDashboard($event)"></span>
         <a [routerLink]="['/nft']" [queryParams]="{ i: nft.id }"><input type="button" value="View"></a>
       </div>
 
     </div>
 
-
   </ng-container>
 
 
-
+</div>
 
 </section>
+<!--</div>-->
+<ng-template #noResults>
+  <h4>No results for this search</h4>
+</ng-template>
 
 
   <button *ngIf="showMoreButtonStatus" (click)="showMoreNfts()" class="showMore">Show More</button>

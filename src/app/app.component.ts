@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, Renderer2 , HostListener} from '@angular/core';
 import {StartupService} from "./_services/startUp/startup.service";
 import {CookieService} from "./_services/cookie/cookie.service";
 import {UserService} from "./_services/user/user.service";
 import {TogglebodyclassService} from "./_services/body/togglebodyclass.service";
+import {DropDownMenuService} from "./_services/dropDownMenu/drop-down-menu.service";
 
 
 @Component({
@@ -10,18 +11,20 @@ import {TogglebodyclassService} from "./_services/body/togglebodyclass.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent{
   constructor(
     private startUpService: StartupService,
     private cookieService: CookieService,
     private userService: UserService,
     private toggleBody: TogglebodyclassService,
-    private renderer : Renderer2
+    private renderer : Renderer2,
+    private dropDownMenuService : DropDownMenuService
   ) {
   }
 
   loadingStatus: boolean = false;
   userVerified: boolean | undefined = false;
+  dropDownMenuStatus!:boolean;
 
 
   ngOnInit() {
@@ -30,6 +33,31 @@ export class AppComponent implements AfterViewInit{
     this.loading();
     this.isVerified();
     this.toggleBodyClass();
+    this.dropDownMenu();
+  }
+
+  dropDownMenu(){
+    this.dropDownMenuService.dropDownMenuStatus$.subscribe(
+      value=>{
+        this.dropDownMenuStatus = value;
+      }
+    )
+  }
+
+
+  // we use Hostlistener to close the menu burger whenever a click happened and the menu is opened
+  @HostListener('document:click' , ['$event'])
+  handleClick(event:Event):void{
+
+    const element = event.target as HTMLElement;
+
+    // here I prevent the confusion when the user click at the green that open the  dropdown menu
+    if(!element.classList.contains('no')){
+      if(this.dropDownMenuStatus){
+        this.dropDownMenuService.setDropDownMenu(false);
+      }
+    }
+
   }
 
   setLoadingStatus() {
@@ -41,7 +69,7 @@ export class AppComponent implements AfterViewInit{
   }
 
 
-  // we check if we have a token and no user returned yet then we display the loading component
+  // we check if we have a token and no user returned yet, then we display the loading component
   loading() {
     if (this.cookieService.getToken() && !this.userService.getLoggedUserStatus()) {
       this.startUpService.setLoadingStatus(true);
@@ -73,12 +101,12 @@ export class AppComponent implements AfterViewInit{
     )
   }
 
-  ngAfterViewInit() {
-
-    // we add the file js to the DOM after the Init of the view to avoid undefined html tags
-    const script = this.renderer.createElement('script');
-    script.src = 'assets/javascript.js';
-    document.body.appendChild(script);
-  }
+  // ngAfterViewInit() {
+  //
+  //   // we add the file js to the DOM after the Init of the view to avoid undefined html tags
+  //   const script = this.renderer.createElement('script');
+  //   script.src = 'assets/javascript.js';
+  //   document.body.appendChild(script);
+  // }
 
 }

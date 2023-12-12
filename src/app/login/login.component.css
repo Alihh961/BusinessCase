@@ -146,8 +146,6 @@ h6 span:first-child {
 .card-3d-wrap {
   position: relative;
   height: 500px;
-  transform-style: preserve-3d;
-  perspective: 800px;
   margin-top: 60px;
 }
 
@@ -228,7 +226,7 @@ h6 span:first-child {
   padding: 0 35px;
   top: 50%;
   left: 0;
-  transform: translate3d(0, -50%, 35px) perspective(100px);
+  transform: translate3d(0, -50%, 35px);
   z-index: 20;
   display: block;
 }

@@ -14,4 +14,5 @@ export class AddressService {
     let url:string = `https://api-adresse.data.gouv.fr/search/?q=${value}&limit=10`;
     return this.http.get<FeatureCollection>(url);
   }
+
 }

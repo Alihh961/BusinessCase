@@ -39,18 +39,30 @@ app-filter {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 15%;
-    /* max-width: 150px; */
-    height: 335px;
+    min-width: 125px;
+    height: 310px;
     padding: 5px;
     margin-top: 30px;
-    margin-right: 20px;
+    //margin-right: 20px;
     color: #8bacda;
     background-color: rgb(20 37 61);
     border-radius: 20px;
     position: relative;
     overflow: hidden;
     transition: 0.2s ease;
+    word-break: break-all;
+
+    @media (max-width:992px) {
+
+      height: 260px;
+
+    }
+
+    @media (max-width:992px) {
+
+      height: 222px;
+
+    }
 
     &:hover {
       filter: brightness(1.1);
@@ -69,6 +81,7 @@ app-filter {
       }
 
       p {
+
 
         &::before {
           top: -178%;
@@ -103,13 +116,30 @@ app-filter {
       transition: 1s;
       border-radius: 25px;
 
+      @media (max-width:992px) {
+
+        height: 150px;
+
+      }
+      @media (max-width:767px) {
+
+        height: 125px;
+
+      }
     }
 
     p {
-
+      font-size: 14px;
       color: white !important;
       text-decoration: underline;
-      padding: 5px 10px 0 10px;
+      padding: 5px 0;
+      margin: 0;
+
+      @media (max-width:992px) {
+
+        font-size: 12px;
+
+      }
 
       &::before {
 
@@ -132,7 +162,7 @@ app-filter {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px;
+      padding: 0 5px;
 
     }
 
@@ -143,17 +173,18 @@ app-filter {
 
       img {
         width: 10px;
+        margin-bottom: 0.5rem;
       }
     }
 
-    .quantity-div h5 {
+    .quantity-div h6 {
 
       display: inline;
 
 
     }
 
-    > h5 {
+    > h6 {
 
       border-top: 1px solid #ddd;
       padding-top: 10px;
@@ -171,24 +202,33 @@ app-filter {
     .buttons {
 
       display: flex;
+      font-size: 14px;
       align-items: center;
       justify-content: center;
       gap: 5px;
       position: absolute;
       width: 100%;
       bottom: 0;
-      right: 0%;
+      right: 0;
       opacity: 0;
       transition: 1s;
       background-color: #ffffff33;
       backdrop-filter: blur(34px);
 
-      input[value="Add To Carte"] {
+
+      @media (max-width: 992px){
+
+        background: none;
+        opacity: 1;
+        position: static;
+
+      }
+
+      input[value="Add"] {
 
         width: fit-content;
-        padding: 2%;
+        padding: 2% 4%;
         background-color: #5cb85c;
-        border-color: #4cae4c;
         color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -203,16 +243,20 @@ app-filter {
         }
       }
 
-      input[value="View"] {
+      input[value="View"]{
 
         width: fit-content;
-        padding: 2%;
+        padding: 2% 4%;
         background-color: #5cb85c;
-        border-color: #4cae4c;
         color: #fff;
         border: 1px solid transparent;
         border-radius: 4px;
         cursor: pointer;
+
+        @media (max-width: 992px){
+          background-color: rgba(255, 255, 255, 0.3);
+
+        }
 
         &:hover {
 
@@ -227,17 +271,13 @@ app-filter {
 
     }
 
-    h5 {
+    h6 {
 
       text-transform: capitalize;
+      font-size: 14px;
 
     }
 
-    > h5:first-of-type {
-
-      color: #ff0000;
-
-    }
 
   }
 }
@@ -264,5 +304,10 @@ app-filter {
     background-color: #102770;
     color: #ffeba7;
     box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+  }
+
+  @media (max-width:767px) {
+
+    padding: 7px 10px;
   }
 }

@@ -3,4 +3,8 @@ div {
   margin-top: 150px;
 }
 
+canvas {
+  min-height: 200px;
+}
+
 /*# sourceMappingURL=ethchart.component.css.map */

@@ -55,26 +55,26 @@ footer .container {
   justify-content: space-around;
   max-width: 100%;
 }
-footer .container div h3 {
+footer .container div p {
   margin-bottom: 10px;
 }
 @media (max-width: 1012px) {
-  footer .container div h3 {
+  footer .container div p {
     font-size: 20px;
   }
 }
 @media (max-width: 914px) {
-  footer .container div h3 {
+  footer .container div p {
     font-size: 18px;
   }
 }
 @media (max-width: 700px) {
-  footer .container div h3 {
+  footer .container div p {
     font-size: 16px;
   }
 }
 @media (max-width: 500px) {
-  footer .container div h3 {
+  footer .container div p {
     font-size: 14px;
   }
 }
@@ -107,10 +107,13 @@ footer .copywrite {
   margin: 20px auto 0 auto;
   border-radius: 10px;
   color: #ffffff;
+  font-size: 14px;
 }
-@media (max-width: 700px) {
+@media (max-width: 767px) {
   footer .copywrite {
-    font-size: 14px;
+    font-size: 12px;
+    padding: 5px;
+    margin: 10px auto 0 auto;
   }
 }
 

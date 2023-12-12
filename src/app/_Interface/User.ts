@@ -34,3 +34,8 @@ export interface UserEdit {
   currentPassword : string,
   newPassword :string
 }
+
+export interface LoggedUser {
+  firstName: string,
+  lastName: string
+}

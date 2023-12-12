@@ -1,5 +1,14 @@
 @import "../../styles.scss";
 
+// Mixins
+@mixin linkStyles {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 5px;
+}
+
 header {
 
   display: flex;
@@ -15,6 +24,7 @@ header {
 
   .profile {
     position: relative;
+    text-align: center;
 
     > a {
       background-color: #22bc29;
@@ -22,13 +32,13 @@ header {
       margin-right: 25px;
       border-radius: 5px;
       text-transform: capitalize;
-      color: white;
       font-weight: 500;
-      text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: space-around;
       gap: 10px;
+      @include linkStyles;
+
 
       span { // Open profiler list arrow
         display: inline-block;
@@ -39,8 +49,13 @@ header {
         transform: rotateZ(90deg) rotateY(180deg);
         transition: 0.7s;
 
-        &.openedArrow{
-          transform:rotateZ(-90deg) rotateY(180deg);
+        @media (max-width: 925px) {
+
+          display: none;
+        }
+
+        &.openedArrow {
+          transform: rotateZ(-90deg) rotateY(180deg);
         }
       }
     }
@@ -54,8 +69,13 @@ header {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      transition: 1s;
+      transition: height 1s ease-in-out;
       overflow: hidden;
+
+      @media (max-width: 925px){
+        top: -182px;
+        flex-direction: column-reverse;
+      }
 
       a {
         display: inline-block;
@@ -64,32 +84,36 @@ header {
         text-align: center;
         cursor: pointer;
         text-decoration: none;
-        color: black;
+        color: black!important;
 
-        &:hover{
+        &:hover {
           background-color: grey;
         }
       }
-  &.openedProfiler{
-    height: 182px;
-    overflow-y: scroll;
 
-    &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      background-color: #F5F5F5;
-      border-radius: 10px;
-    }
+      &.openedProfiler {
+        height: 182px;
+        overflow-y: scroll;
+        a {
+          color: black !important;
+        }
 
-    &::-webkit-scrollbar {
-      width: 10px;
-      background-color: #F5F5F5;
-    }
+        &::-webkit-scrollbar-track {
+          -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+          background-color: #F5F5F5;
+          border-radius: 10px;
+        }
 
-    &::-webkit-scrollbar-thumb {
-      background-color: #5e5e5c;
-      border-radius: 10px;
-    }
-  }
+        &::-webkit-scrollbar {
+          width: 10px;
+          background-color: #F5F5F5;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: #5e5e5c;
+          border-radius: 10px;
+        }
+      }
     }
   }
 
@@ -102,22 +126,17 @@ header {
 
 
   ul.nav li a {
-    text-decoration: none;
-    color: white;
-    cursor: pointer;
-    position: relative;
-    padding-bottom: 5px;
-
+    @include linkStyles;
 
   }
 
-  ul.nav li:hover a,
-  ul.nav li.activeLink a {
+  ul.nav li:not(.profile):hover a,
+  ul.nav li:not(.profile).activeLink a {
 
     color: $hoverLinkedColor;
   }
 
-  ul.nav li a::before {
+  ul.nav li:not(.profile) a::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -130,8 +149,8 @@ header {
     transition: transform 0.5s ease-in-out;
   }
 
-  ul.nav li:hover a::before,
-  ul.nav li.activeLink a::before {
+  ul.nav li:hover:not(.profile) a::before,
+  ul.nav li.activeLink:not(.profile) a::before {
     transform: scaleX(1);
     transform-origin: left;
   }
@@ -175,17 +194,22 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-basis: 66%;
+    flex-basis: 100%;
     margin: 0;
 
-    @media (max-width: 925px){
-      padding-top: 85px;
-      gap: 40px;
+    @media (max-width: 925px) {
+      padding-top: 70px;
+      gap: 20px;
+      justify-content: space-around;
+
+      li a {
+        color: black;
+      }
     }
 
   }
 
-  div ul.nav li {
+  div ul.nav li:not(.profile) {
 
     list-style-type: none;
     font-weight: bold;
@@ -224,7 +248,13 @@ header {
 
     right: 0;
     top: 0;
+    transition: 1s;
 
+  }
+
+  //we add this class to change the position (close it) of the opened menu faster
+  .closingFast {
+    transition: transform 0.5s;
   }
 
   .openedMenu span {
@@ -255,9 +285,9 @@ header {
 
 @media all and (max-width: 925px) {
 
-   header {
+  header {
 
-      padding: 10px 15px;
+    padding: 10px 15px;
 
   }
 
@@ -269,7 +299,8 @@ header {
     top: 0%;
     flex-direction: column;
     height: 100vh;
-    backdrop-filter: blur(25px);
+    overflow-x: hidden;
+    backdrop-filter: blur(250px);
     transition: 2s;
 
   }
