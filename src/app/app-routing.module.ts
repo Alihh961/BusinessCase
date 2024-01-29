@@ -14,13 +14,13 @@ import {AuthGuard} from "./_guard/auth.guard";
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent, pathMatch: 'full'},
-  {path: 'nfts', component: NftsComponent, pathMatch: 'full',canActivate: [AuthGuard]},
-  {path: 'nft', component: ShownftComponent, pathMatch: 'full',canActivate: [AuthGuard]},
-  {path: 'ethchart', component: EthchartComponent, pathMatch: 'full',canActivate: [AuthGuard]},
-  {path: 'contact', component: ContactComponent, pathMatch: 'full',canActivate: [AuthGuard]},
+  {path: 'nfts', component: NftsComponent, pathMatch: 'full'},//,canActivate: [AuthGuard]},
+  {path: 'nft', component: ShownftComponent, pathMatch: 'full'},//,canActivate: [AuthGuard]},
+  {path: 'ethchart', component: EthchartComponent, pathMatch: 'full'},//,canActivate: [AuthGuard]},
+  {path: 'contact', component: ContactComponent, pathMatch: 'full'},//,canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent, pathMatch: 'full'},
-  {path: 'dashboard', component: DashboardComponent, pathMatch: 'full',canActivate: [AuthGuard]},
-  {path: 'profile', component: ProfileComponent, pathMatch: 'full' ,canActivate: [AuthGuard]},
+  {path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},//,canActivate: [AuthGuard]},
+  {path: 'profile', component: ProfileComponent, pathMatch: 'full' },//,canActivate: [AuthGuard]},
   {path: '**', component: Error404Component, pathMatch: 'full'},
 ];
 

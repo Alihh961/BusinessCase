@@ -26,7 +26,11 @@
         </div>
       </div>
       <div class="buttons">
+        <span *ngIf=true>
+
         <span href=""><input type="button" value="Add" id='{{nft.id}}' (click)="addToDashboard($event)"></span>
+        </span>
+
         <a [routerLink]="['/nft']" [queryParams]="{ i: nft.id }"><input type="button" value="View"></a>
       </div>
 
