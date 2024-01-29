@@ -33,7 +33,7 @@ import {HttpinterceptorInterceptor} from "./_services/httpinterceptor/httpinterc
 const appRoutes: Routes = [];
 
 
-@NgModule({
+  @NgModule({
   declarations: [
     AppComponent,
     ContactComponent,
@@ -66,22 +66,15 @@ const appRoutes: Routes = [];
     RouterModule.forRoot(appRoutes, {
       useHash: false,
 
-    }),
-    InitializerModule
+    })
   ],
   providers: [
-    CookieService,
-    AuthGuard,
+
     {
       provide : HTTP_INTERCEPTORS,
       useClass : HttpinterceptorInterceptor,
       multi : true,
     },
-    StartupService,
-
-  ],
-  exports: [
-    RouterModule
   ],
   bootstrap: [AppComponent]
 })
